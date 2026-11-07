@@ -6,6 +6,12 @@ Trò chơi học tập client-side tiếng Việt về đọc hồ sơ, đánh g
 
 Case duy nhất hiện có (`case_001`) là **bản nháp chưa thẩm định**: toàn bộ điều khoản, nhãn định danh và một số đáp án còn chờ người rà soát chuyên môn. Case vẫn chơi được nhưng bị chặn publish.
 
+## Demo
+
+Bản demo công khai: <https://ngminhduc129.github.io/tham-tu-hinh-su/>
+
+Demo giữ nguyên `case_001` ở nhãn draft/chưa thẩm định; publish gate vẫn chặn. Mỗi lần push lên `main`, GitHub Actions build và deploy lại qua `.github/workflows/deploy-pages.yml`.
+
 ## Chạy nhanh
 
 ```bash
