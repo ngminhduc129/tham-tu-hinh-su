@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "Thám tử Hình sự",
+    "version": "0.1.0",
+    "schemaVersion": "2.1.0",
+    "sessionSchemaVersion": 1,
+    "platform": "Web responsive, client-side"
+  },
+  "cases": [
+    {
+      "id": "case_001",
+      "version": "0.2.0",
+      "title": "Hồ sơ xưởng cơ khí Đông An",
+      "subtitle": "Một thùng linh kiện biến mất trong khoảng thời gian camera không ghi liên tục.",
+      "summary": "Đọc hồ sơ, tách nguồn tài liệu khỏi sự kiện, so sánh hai giả thuyết cạnh tranh và đánh giá từng dấu hiệu cấu thành trước khi chọn kết luận.",
+      "difficulty": "Nhập môn",
+      "durationMinutes": [10, 20],
+      "status": "draft",
+      "review": "not_reviewed",
+      "playable": true,
+      "publishable": false,
+      "lawBundleIds": ["law_bundle_v1"],
+      "learningOutcomeIds": [
+        "lo_source_fact_01",
+        "lo_evidence_01",
+        "lo_reasoning_01",
+        "lo_proof_01",
+        "lo_elements_01",
+        "lo_charge_01",
+        "lo_law_01"
+      ],
+      "notice": "Bản nháp nội dung: toàn bộ căn cứ pháp luật, nhãn định danh và một số đáp án còn chờ người rà soát chuyên môn xác nhận."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "note": "Catalog chuẩn cho learning outcome. Mọi outcome case công bố phải có trong catalog và phải được đo bởi ít nhất một criterion.",
+  "outcomes": [
+    {
+      "id": "lo_source_fact_01",
+      "label": "Phân biệt nguồn/tài liệu với sự kiện cần chứng minh",
+      "description": "Nhận ra rằng một tài liệu tồn tại không đồng nghĩa sự kiện đã được chứng minh; chỉ ra nguồn của từng dữ kiện."
+    },
+    {
+      "id": "lo_evidence_01",
+      "label": "Đánh giá chứng cứ theo bốn lớp",
+      "description": "Tách nguồn/tính toàn vẹn, vấn đề thủ tục, độ tin cậy và mức liên quan thay vì gộp thành một nhãn đúng/sai."
+    },
+    {
+      "id": "lo_reasoning_01",
+      "label": "Lập và so sánh giả thuyết cạnh tranh",
+      "description": "Gắn chứng cứ ủng hộ, phản bác hoặc chưa phân định cho từng giả thuyết và nhận diện dữ kiện còn thiếu."
+    },
+    {
+      "id": "lo_proof_01",
+      "label": "Đối chiếu nhiều nguồn với từng sự kiện cần chứng minh",
+      "description": "Lập ma trận chứng minh, phân biệt nguồn độc lập/phụ thuộc và giới hạn của từng suy luận."
+    },
+    {
+      "id": "lo_elements_01",
+      "label": "Ánh xạ dữ kiện vào dấu hiệu cấu thành",
+      "description": "Chỉ ra dấu hiệu có dữ kiện hỗ trợ, dấu hiệu chưa được hỗ trợ và tình tiết mà case yêu cầu đánh giá."
+    },
+    {
+      "id": "lo_charge_01",
+      "label": "Chọn định danh hoặc trạng thái chưa đủ căn cứ",
+      "description": "Gắn kết luận với người và hành vi cụ thể; không ép kết luận khi hồ sơ chưa đủ."
+    },
+    {
+      "id": "lo_law_01",
+      "label": "Dùng căn cứ pháp luật đúng phiên bản",
+      "description": "Chọn căn cứ từ thư viện case, nhận biết trạng thái chưa xác minh và giải thích mối liên hệ với kết luận."
+    }
+  ]
+}

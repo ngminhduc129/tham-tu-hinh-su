@@ -1,0 +1,15 @@
+{
+  "id": "law_bundle_v1",
+  "version": "placeholder-0.1.0",
+  "jurisdiction": "VN",
+  "provisions": [
+    {
+      "id": "provision_placeholder_01",
+      "citation": "[Chưa xác minh] Quy định giả định dùng cho bài học — reviewer phải thay bằng điều, khoản, điểm đã đối chiếu văn bản gốc",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer bổ sung URL/định danh nguồn chính thức và ngày đối chiếu]",
+      "review_status": "not_reviewed"
+    }
+  ]
+}

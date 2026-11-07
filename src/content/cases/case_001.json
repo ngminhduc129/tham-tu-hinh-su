@@ -1,0 +1,1183 @@
+{
+  "schema_version": "2.0.0",
+  "metadata": {
+    "id": "case_001",
+    "version": "0.2.0",
+    "title": "Hồ sơ xưởng cơ khí Đông An",
+    "status": "draft",
+    "jurisdiction": "VN",
+    "legal_time_anchor": "reviewer_defined",
+    "legal_time_anchor_reason": "[Reviewer xác nhận] Bản nháp dùng bối cảnh tháng 5–6/2024; chưa có kết luận về thời điểm áp dụng do toàn bộ căn cứ còn ở trạng thái chưa xác minh.",
+    "law_bundle_ids": ["law_bundle_v1"],
+    "learning_outcome_ids": [
+      "lo_source_fact_01",
+      "lo_evidence_01",
+      "lo_reasoning_01",
+      "lo_proof_01",
+      "lo_elements_01",
+      "lo_charge_01",
+      "lo_law_01"
+    ]
+  },
+  "brief": {
+    "narrative": "Khoảng 03:40 ngày 01/06/2024, bảo vệ ca đêm Trần Thị B kiểm tra khu kho số 2 của xưởng cơ khí Đông An (địa danh và nhân vật hư cấu) và ghi nhận cửa kho không khóa. Thùng linh kiện mã LX-24 không còn ở vị trí được kiểm kê lúc 21:00 ngày 31/05/2024.\n\nNhật ký ra vào ghi nhận Nguyễn Văn A quẹt thẻ vào khu kho lúc 22:10 và ra lúc 22:35. Camera hành lang có hình ảnh nhưng thiếu dữ liệu từ 22:35 đến 22:47. Phiếu xuất kho số 118 do quản lý Lê Minh C ký có ghi thùng LX-24, nhưng chưa xác định được ai là người nhận hàng.\n\nHồ sơ mô phỏng dừng ở việc xác định dữ kiện nào được ghi nhận trực tiếp, dữ kiện nào còn thiếu, và có đủ căn cứ để kết luận một định danh hay không. Đây không phải vụ việc thật và không phải tư vấn pháp lý.",
+    "task_prompt": "Trong phạm vi hồ sơ mô phỏng, hãy: (1) đánh giá nguồn và giới hạn của từng chứng cứ trọng tâm; (2) so sánh hai giả thuyết cạnh tranh; (3) đối chiếu mệnh đề trọng tâm với các nguồn; (4) ánh xạ dữ kiện vào từng dấu hiệu cấu thành; và (5) chọn kết luận có thể bảo vệ được bằng hồ sơ, kèm căn cứ.",
+    "player_role": "learner_case_analyst"
+  },
+  "law_bundles": [],
+  "temporal_context": {
+    "conduct_events": [
+      {
+        "id": "conduct_01",
+        "date_interval": {
+          "start_date": "2024-05-31",
+          "end_date": "2024-05-31",
+          "precision": "day",
+          "source_ids": ["ev_record_01"]
+        },
+        "law_resolution": {
+          "status": "unresolved",
+          "bundle_id": null,
+          "review_id": null
+        }
+      }
+    ]
+  },
+  "characters": [
+    {
+      "id": "person_a",
+      "display_name": "Nguyễn Văn A",
+      "roles": ["person_of_interest", "warehouse_worker"],
+      "birth_date_interval": {
+        "start_date": "1998-03-15",
+        "end_date": "1998-03-15",
+        "precision": "day",
+        "source_ids": ["ev_record_01"]
+      },
+      "notes": "Nhân viên kho, có mặt tại khu kho theo nhật ký ra vào."
+    },
+    {
+      "id": "person_b",
+      "display_name": "Trần Thị B",
+      "roles": ["witness", "security_guard"],
+      "birth_date_interval": {
+        "start_date": "1985-11-02",
+        "end_date": "1985-11-02",
+        "precision": "day",
+        "source_ids": ["ev_statement_01"]
+      },
+      "notes": "Bảo vệ ca đêm, người lập ghi nhận ban đầu."
+    },
+    {
+      "id": "person_c",
+      "display_name": "Lê Minh C",
+      "roles": ["warehouse_manager"],
+      "birth_date_interval": {
+        "start_date": "1980-07-21",
+        "end_date": "1980-07-21",
+        "precision": "day",
+        "source_ids": ["ev_record_01"]
+      },
+      "notes": "Quản lý kho, người ký phiếu xuất kho số 118."
+    }
+  ],
+  "facts": [
+    {
+      "id": "fact_01",
+      "text": "Thùng linh kiện LX-24 được ghi nhận có trong kho lúc 21:00 ngày 31/05/2024.",
+      "source_ids": ["ev_record_01", "ev_inventory_01"]
+    },
+    {
+      "id": "fact_02",
+      "text": "Cửa kho số 2 không khóa khi bảo vệ kiểm tra lúc 03:40 ngày 01/06/2024.",
+      "source_ids": ["ev_record_01"]
+    },
+    {
+      "id": "fact_03",
+      "text": "Nhật ký ra vào ghi Nguyễn Văn A vào khu kho lúc 22:10 và ra lúc 22:35 ngày 31/05/2024; camera không ghi rõ vật mang theo.",
+      "source_ids": ["ev_record_01"]
+    },
+    {
+      "id": "fact_04",
+      "text": "Phiếu xuất kho số 118 ghi thùng LX-24, có chữ ký của Lê Minh C nhưng không có chữ ký của Nguyễn Văn A.",
+      "source_ids": ["ev_receipt_01"]
+    },
+    {
+      "id": "fact_05",
+      "text": "Lời trình bày của Trần Thị B nêu A từng nói nếu thiếu hàng thì ghi đã xuất kho rồi tính sau; B không nhớ nguyên văn.",
+      "source_ids": ["ev_statement_01"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_record_01",
+      "type": "record",
+      "title": "Biên bản giao ca và trích xuất nhật ký ra vào",
+      "summary": "Ghi nhận thời điểm phát hiện cửa kho mở, lượt quẹt thẻ của A và việc thiếu dữ liệu camera.",
+      "content": "Biên bản giao ca ngày 01/06/2024 ghi: 03:40, cửa kho số 2 không khóa; thùng LX-24 không còn ở vị trí kiểm kê lúc 21:00 hôm trước. Nhật ký ra vào trích xuất từ phần mềm ghi nhận lượt quẹt thẻ của Nguyễn Văn A lúc 22:10 và 22:35 ngày 31/05/2024. Camera hành lang thiếu dữ liệu 22:35–22:47. Bản trích xuất không kèm biên bản xác nhận thời điểm và người thực hiện.",
+      "source": {
+        "origin": "Phòng bảo vệ xưởng Đông An (hư cấu)",
+        "integrity_notes": [
+          "Bản sao do quản lý ca in từ phần mềm, chưa đối chiếu bản gốc.",
+          "Nhật ký ra vào không có chữ ký xác nhận của người trực.",
+          "Không có biên bản xác nhận thời điểm trích xuất dữ liệu."
+        ]
+      },
+      "procedural_defect_ids": ["defect_01"],
+      "limitation_ids": ["limit_01"],
+      "issue_ids": ["issue_01", "issue_02"],
+      "discovery": { "kind": "always" }
+    },
+    {
+      "id": "ev_statement_01",
+      "type": "statement",
+      "title": "Lời trình bày của Trần Thị B",
+      "summary": "B khẳng định thùng LX-24 vẫn còn trong kho lúc 22:50 và thuật lại một câu nói của A.",
+      "content": "Trần Thị B trình bày: khoảng 22:50 ngày 31/05/2024, khi kiểm tra khu kho, bà thấy thùng LX-24 vẫn còn trong kho và cửa đã khóa. Bà chỉ phát hiện cửa mở lúc 03:40 ngày 01/06. Bà không trực tiếp nhìn thấy ai lấy thùng. Bà nhớ A từng nói nếu thiếu hàng thì ghi đã xuất kho rồi tính sau, nhưng không nhớ nguyên văn và không nhớ thời điểm.",
+      "source": {
+        "origin": "Biên bản ghi lời trình bày do tổ an ninh lập (hư cấu)",
+        "integrity_notes": [
+          "Bản ghi có chữ ký của người trình bày.",
+          "Lời trình bày được ghi lại sau sự việc khoảng 6 giờ.",
+          "Không có ghi âm kèm theo."
+        ]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": [],
+      "issue_ids": ["issue_02"],
+      "discovery": { "kind": "always" }
+    },
+    {
+      "id": "ev_receipt_01",
+      "type": "record",
+      "title": "Phiếu xuất kho số 118",
+      "summary": "Phiếu xuất thùng LX-24 do quản lý ký; không có chữ ký người nhận.",
+      "content": "Phiếu xuất kho số 118 ngày 31/05/2024 ghi: thùng linh kiện LX-24, số lượng 01. Người lập phiếu: Lê Minh C. Chữ ký quản lý: có. Chữ ký người nhận: để trống. Ghi chú: 'giao theo lịch kiểm kê'.",
+      "source": {
+        "origin": "Bộ phận kho xưởng Đông An (hư cấu)",
+        "integrity_notes": ["Bản giấy có chữ ký; bản scan thiếu góc phải."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_02"],
+      "issue_ids": ["issue_03"],
+      "discovery": { "kind": "viewed", "evidence_ids": ["ev_record_01"], "mode": "any" }
+    },
+    {
+      "id": "ev_inventory_01",
+      "type": "record",
+      "title": "Biên bản kiểm kê ngày 31/05/2024",
+      "summary": "Số liệu kiểm kê có chỗ sửa và không khớp giữa hai bảng.",
+      "content": "Biên bản kiểm kê lúc 21:00 ngày 31/05/2024 ghi thùng LX-24 có trong kho. Bảng đối chiếu kèm theo ghi số lượng 0 ở dòng LX-24. Có một chỗ sửa bằng bút xóa tại cột số lượng; người lập không ký xác nhận phần sửa.",
+      "source": {
+        "origin": "Bộ phận kho xưởng Đông An (hư cấu)",
+        "integrity_notes": ["Hai nhân viên lập; có chỗ sửa bằng bút xóa không có xác nhận."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_03"],
+      "issue_ids": ["issue_03"],
+      "discovery": {
+        "kind": "check",
+        "label": "Yêu cầu trích xuất biên bản kiểm kê",
+        "requires_viewed": ["ev_record_01"]
+      }
+    },
+    {
+      "id": "ev_camera_02",
+      "type": "record",
+      "title": "Nhật ký camera hành lang kho số 2",
+      "summary": "Còn ảnh chụp màn hình; thiếu 12 phút dữ liệu gốc.",
+      "content": "Nhật ký camera hành lang ghi: 22:10 A vào kho; 22:35 A rời kho, góc camera không ghi rõ vật mang theo; 22:47 hình ảnh trở lại, cửa kho đóng. Tệp gốc từ 22:35 đến 22:47 không còn; chỉ còn ảnh chụp màn hình do bảo vệ lưu.",
+      "source": {
+        "origin": "Hệ thống camera nội bộ xưởng Đông An (hư cấu)",
+        "integrity_notes": ["Tệp gốc bị ghi đè theo chu kỳ 30 ngày.", "Chỉ còn ảnh chụp màn hình, không có metadata."]
+      },
+      "procedural_defect_ids": ["defect_02"],
+      "limitation_ids": ["limit_04"],
+      "issue_ids": ["issue_01", "issue_02"],
+      "discovery": {
+        "kind": "check",
+        "label": "Yêu cầu trích xuất nhật ký camera",
+        "requires_viewed": ["ev_record_01"]
+      }
+    },
+    {
+      "id": "ev_message_01",
+      "type": "message",
+      "title": "Tin nhắn nội bộ do quản lý kho xuất trình",
+      "summary": "Tin nhắn chưa xác minh được người gửi và người nhận.",
+      "content": "Ảnh chụp tin nhắn do Lê Minh C xuất trình, nội dung: 'Thùng LX-24 em để ở cửa sau, anh kiểm tra giúp em.' Không hiển thị tên người gửi, thời gian gửi hoặc thông tin thiết bị.",
+      "source": {
+        "origin": "Điện thoại cá nhân của Lê Minh C (hư cấu)",
+        "integrity_notes": ["Không xác minh được người gửi/nhận.", "Không có dữ liệu gốc của tin nhắn."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_05"],
+      "issue_ids": ["issue_02"],
+      "discovery": { "kind": "viewed", "evidence_ids": ["ev_statement_01"], "mode": "any" }
+    }
+  ],
+  "procedural_defects": [
+    {
+      "id": "defect_01",
+      "evidence_id": "ev_record_01",
+      "step": "Trích xuất nhật ký ra vào",
+      "observed_issue": "Không có biên bản xác nhận thời điểm trích xuất, người thực hiện và phạm vi dữ liệu được trích xuất.",
+      "legal_basis_ids": ["provision_placeholder_01"],
+      "review_status": "not_reviewed",
+      "possible_effect_codes": ["effect_to_be_reviewed"]
+    },
+    {
+      "id": "defect_02",
+      "evidence_id": "ev_camera_02",
+      "step": "Thu thập dữ liệu camera",
+      "observed_issue": "Thiếu 12 phút dữ liệu gốc; không rõ nguyên nhân và không có biên bản ghi nhận việc thiếu dữ liệu tại thời điểm thu thập.",
+      "legal_basis_ids": ["provision_placeholder_01"],
+      "review_status": "not_reviewed",
+      "possible_effect_codes": ["effect_to_be_reviewed"]
+    }
+  ],
+  "evidence_limitations": [
+    {
+      "id": "limit_01",
+      "evidence_id": "ev_record_01",
+      "description": "Nhật ký ra vào chỉ ghi nhận lượt quẹt thẻ, không chứng minh người mang thẻ chính là người đi qua cửa."
+    },
+    {
+      "id": "limit_02",
+      "evidence_id": "ev_receipt_01",
+      "description": "Phiếu xuất kho chứng minh thủ tục xuất hàng, không chứng minh người nhận đã lấy hàng."
+    },
+    {
+      "id": "limit_03",
+      "evidence_id": "ev_inventory_01",
+      "description": "Số liệu kiểm kê có thể phản ánh sai lệch vận hành, chưa đủ để kết luận tài sản bị mất."
+    },
+    {
+      "id": "limit_04",
+      "evidence_id": "ev_camera_02",
+      "description": "Khoảng trống dữ liệu không chứng minh có hành vi nào xảy ra trong khoảng đó."
+    },
+    {
+      "id": "limit_05",
+      "evidence_id": "ev_message_01",
+      "description": "Tin nhắn chưa xác minh được người gửi, thời điểm và thiết bị; chỉ nên dùng làm bối cảnh."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis_a",
+      "label": "H1 — Thùng hàng bị dịch chuyển trong khoảng 22:10–22:47",
+      "description": "Thùng LX-24 bị đưa ra khỏi kho trong khoảng thời gian A có mặt và camera không ghi liên tục.",
+      "missing_information": [
+        "Lịch phân công ca làm việc đêm 31/05/2024.",
+        "Dữ liệu camera gốc từ 22:35 đến 22:47.",
+        "Biên bản giao nhận thùng LX-24 sau khi xuất kho."
+      ]
+    },
+    {
+      "id": "hypothesis_b",
+      "label": "H2 — Thùng hàng vẫn trong kho; chênh lệch do ghi chép",
+      "description": "Thùng LX-24 vẫn ở trong kho lúc 22:50; chênh lệch phát sinh từ phiếu xuất kho và bảng kiểm kê chưa khớp.",
+      "missing_information": [
+        "Bản gốc phiếu xuất kho số 118 và biên bản giao nhận.",
+        "Giải trình của quản lý kho về chỗ sửa trong biên bản kiểm kê.",
+        "Dữ liệu camera gốc từ 22:35 đến 22:47."
+      ]
+    }
+  ],
+  "proof_matrix": [
+    {
+      "id": "proof_row_01",
+      "proposition": "Có dữ kiện định hướng việc thùng LX-24 bị dịch chuyển trong khoảng 22:10–22:47 ngày 31/05/2024.",
+      "charge_element_ids": ["element_a_01"],
+      "evidence_links": [
+        { "evidence_id": "ev_record_01", "relation": "supports", "limitation_ids": ["limit_01"] },
+        { "evidence_id": "ev_statement_01", "relation": "challenges", "limitation_ids": [] },
+        { "evidence_id": "ev_receipt_01", "relation": "challenges", "limitation_ids": ["limit_02"] },
+        { "evidence_id": "ev_camera_02", "relation": "context", "limitation_ids": ["limit_04"] }
+      ]
+    }
+  ],
+  "candidate_charges": [
+    {
+      "id": "charge_a",
+      "display_label": "Định danh A — dấu hiệu hành vi (giả định học tập, chưa xác nhận)",
+      "person_id": "person_a",
+      "conduct_event_ids": ["conduct_01"],
+      "legal_basis_ids": ["provision_placeholder_01"],
+      "charge_element_ids": ["element_a_01"]
+    },
+    {
+      "id": "charge_b",
+      "display_label": "Định danh B — dấu hiệu mục đích (giả định học tập, chưa xác nhận)",
+      "person_id": "person_a",
+      "conduct_event_ids": ["conduct_01"],
+      "legal_basis_ids": ["provision_placeholder_01"],
+      "charge_element_ids": ["element_b_01"]
+    }
+  ],
+  "charge_elements": [
+    {
+      "id": "element_a_01",
+      "charge_id": "charge_a",
+      "element_type": "conduct",
+      "label": "Hành vi dịch chuyển tài sản ra khỏi khu vực quản lý",
+      "legal_test": "[Reviewer điền sau khi xác minh] Mô tả dấu hiệu hành vi theo văn bản được chọn.",
+      "required": true,
+      "fact_ids": ["fact_01", "fact_03"],
+      "evidence_ids": ["ev_record_01", "ev_camera_02", "ev_statement_01"],
+      "legal_basis_ids": ["provision_placeholder_01"]
+    },
+    {
+      "id": "element_b_01",
+      "charge_id": "charge_b",
+      "element_type": "mental_state",
+      "label": "Mục đích chiếm đoạt tồn tại trước hoặc tại thời điểm hành vi",
+      "legal_test": "[Reviewer điền sau khi xác minh] Mô tả dấu hiệu mục đích theo văn bản được chọn.",
+      "required": true,
+      "fact_ids": ["fact_05"],
+      "evidence_ids": ["ev_statement_01", "ev_message_01"],
+      "legal_basis_ids": ["provision_placeholder_01"]
+    }
+  ],
+  "charge_comparisons": [
+    {
+      "id": "comparison_ab",
+      "candidate_charge_ids": ["charge_a", "charge_b"],
+      "distinguishing_element_ids": ["element_a_01", "element_b_01"],
+      "explanation_id": "explanation_02"
+    }
+  ],
+  "age_rules": [
+    {
+      "id": "age_rule_01",
+      "candidate_charge_ids": ["charge_a", "charge_b"],
+      "conduct_event_ids": ["conduct_01"],
+      "law_bundle_ids": ["law_bundle_v1"],
+      "legal_basis_ids": ["provision_placeholder_01"],
+      "conditions": [],
+      "review_status": "not_reviewed"
+    }
+  ],
+  "circumstances": [
+    {
+      "id": "circumstance_01",
+      "category": "other",
+      "label": "A có mặt tại khu kho ngoài giờ theo lịch phân công hay không",
+      "person_id": "person_a",
+      "conduct_event_ids": ["conduct_01"],
+      "legal_basis_ids": ["provision_placeholder_01"],
+      "fact_ids": ["fact_03"],
+      "review_status": "not_reviewed"
+    }
+  ],
+  "conclusions": [
+    {
+      "id": "conclusion_a",
+      "type": "charge_supported",
+      "charge_id": "charge_a",
+      "person_id": "person_a",
+      "conduct_event_ids": ["conduct_01"],
+      "label": "Có dữ kiện hỗ trợ định danh A trong giới hạn hồ sơ (giả định học tập)"
+    },
+    {
+      "id": "conclusion_b",
+      "type": "charge_supported",
+      "charge_id": "charge_b",
+      "person_id": "person_a",
+      "conduct_event_ids": ["conduct_01"],
+      "label": "Có dữ kiện hỗ trợ định danh B trong giới hạn hồ sơ (giả định học tập)"
+    },
+    {
+      "id": "conclusion_insufficient",
+      "type": "insufficient_information",
+      "charge_id": null,
+      "person_id": "person_a",
+      "conduct_event_ids": ["conduct_01"],
+      "label": "Chưa đủ dữ kiện/căn cứ để kết luận trong hồ sơ mô phỏng"
+    }
+  ],
+  "answer_fields": [
+    {
+      "id": "source_assessment",
+      "scope": "evidence",
+      "target_ids": ["ev_record_01", "ev_statement_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "source_supported", "label": "Nguồn có căn cứ trong hồ sơ" },
+        { "id": "source_unresolved", "label": "Nguồn chưa rõ" }
+      ]
+    },
+    {
+      "id": "procedure_assessment",
+      "scope": "evidence",
+      "target_ids": ["ev_record_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "defect_identified", "label": "Nhận diện vấn đề thủ tục" },
+        { "id": "no_issue_identified", "label": "Không nhận diện vấn đề" },
+        { "id": "unresolved", "label": "Chưa rõ" }
+      ]
+    },
+    {
+      "id": "reliability_assessment",
+      "scope": "evidence",
+      "target_ids": ["ev_record_01", "ev_statement_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "reliable", "label": "Đáng tin trong giới hạn" },
+        { "id": "limited", "label": "Có giới hạn" },
+        { "id": "unresolved", "label": "Chưa rõ" }
+      ]
+    },
+    {
+      "id": "relevance_assessment",
+      "scope": "evidence",
+      "target_ids": ["ev_record_01", "ev_statement_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "supports", "label": "Hỗ trợ mệnh đề trọng tâm" },
+        { "id": "challenges", "label": "Phản bác mệnh đề trọng tâm" },
+        { "id": "context", "label": "Chỉ là bối cảnh" },
+        { "id": "unresolved", "label": "Chưa rõ" }
+      ]
+    },
+    {
+      "id": "proof_assessment",
+      "scope": "proof_row",
+      "target_ids": ["proof_row_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "supports", "label": "Đủ sức hỗ trợ trong giới hạn" },
+        { "id": "challenges", "label": "Thách thức mệnh đề" },
+        { "id": "unresolved", "label": "Chưa phân định" }
+      ]
+    },
+    {
+      "id": "hypothesis_support",
+      "scope": "hypothesis",
+      "target_ids": ["hypothesis_a", "hypothesis_b"],
+      "value_type": "multi_select",
+      "options": [
+        { "id": "ev_record_01", "label": "Biên bản giao ca và nhật ký ra vào" },
+        { "id": "ev_statement_01", "label": "Lời trình bày của bảo vệ B" }
+      ]
+    },
+    {
+      "id": "hypothesis_challenge",
+      "scope": "hypothesis",
+      "target_ids": ["hypothesis_a", "hypothesis_b"],
+      "value_type": "multi_select",
+      "options": [
+        { "id": "ev_record_01", "label": "Biên bản giao ca và nhật ký ra vào" },
+        { "id": "ev_statement_01", "label": "Lời trình bày của bảo vệ B" }
+      ]
+    },
+    {
+      "id": "element_status",
+      "scope": "charge_element",
+      "target_ids": ["element_a_01", "element_b_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "supported", "label": "Có dữ kiện hỗ trợ" },
+        { "id": "not_supported", "label": "Chưa được hỗ trợ" },
+        { "id": "unresolved", "label": "Chưa đủ thông tin" }
+      ]
+    },
+    {
+      "id": "selected_charge",
+      "scope": "person_conduct",
+      "target_ids": ["person_a:conduct_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "charge_a", "label": "Định danh A" },
+        { "id": "charge_b", "label": "Định danh B" }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "scope": "person_conduct",
+      "target_ids": ["person_a:conduct_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "conclusion_a", "label": "Kết luận A — hỗ trợ định danh A" },
+        { "id": "conclusion_b", "label": "Kết luận B — hỗ trợ định danh B" },
+        { "id": "conclusion_insufficient", "label": "Chưa đủ dữ kiện/căn cứ" }
+      ]
+    },
+    {
+      "id": "circumstance_status",
+      "scope": "circumstance",
+      "target_ids": ["circumstance_01"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "established", "label": "Có dữ kiện hỗ trợ" },
+        { "id": "not_established", "label": "Không được hỗ trợ" },
+        { "id": "unresolved", "label": "Chưa đủ thông tin" }
+      ]
+    },
+    {
+      "id": "legal_basis",
+      "scope": "conclusion",
+      "target_ids": ["conclusion_a", "conclusion_b", "conclusion_insufficient"],
+      "value_type": "multi_select",
+      "options": [
+        { "id": "provision_placeholder_01", "label": "[Nguồn luật chưa xác minh] Quy định giả định dùng cho bài học" }
+      ]
+    }
+  ],
+  "expected_responses": [
+    {
+      "id": "expect_source_record",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_record_01",
+      "accepted_values": ["source_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "explanation_source"
+    },
+    {
+      "id": "expect_source_statement",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_statement_01",
+      "accepted_values": ["source_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "explanation_source"
+    },
+    {
+      "id": "expect_procedure",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_record_01",
+      "accepted_values": ["defect_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "explanation_procedure"
+    },
+    {
+      "id": "expect_reliability_record",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_record_01",
+      "accepted_values": ["limited"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "explanation_reliability"
+    },
+    {
+      "id": "expect_reliability_statement",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_statement_01",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "explanation_reliability"
+    },
+    {
+      "id": "expect_relevance_record",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "relevance_assessment",
+      "target_id": "ev_record_01",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "explanation_relevance"
+    },
+    {
+      "id": "expect_relevance_statement",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "relevance_assessment",
+      "target_id": "ev_statement_01",
+      "accepted_values": ["challenges"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "explanation_relevance"
+    },
+    {
+      "id": "expect_hyp_a_support",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "hypothesis_support",
+      "target_id": "hypothesis_a",
+      "accepted_values": ["ev_record_01"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "explanation_hypothesis"
+    },
+    {
+      "id": "expect_hyp_a_challenge",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "hypothesis_challenge",
+      "target_id": "hypothesis_a",
+      "accepted_values": ["ev_statement_01"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "explanation_hypothesis"
+    },
+    {
+      "id": "expect_hyp_b_support",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "hypothesis_support",
+      "target_id": "hypothesis_b",
+      "accepted_values": ["ev_statement_01"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "explanation_hypothesis"
+    },
+    {
+      "id": "expect_hyp_b_challenge",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "hypothesis_challenge",
+      "target_id": "hypothesis_b",
+      "accepted_values": ["ev_record_01"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "explanation_hypothesis"
+    },
+    {
+      "id": "expect_proof",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_01",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "explanation_proof"
+    },
+    {
+      "id": "expect_circumstance",
+      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "field_id": "circumstance_status",
+      "target_id": "circumstance_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_circumstance",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_circumstance"
+    },
+    {
+      "id": "expect_path_insufficient_element_a_01",
+      "path_ids": ["path_insufficient"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_element_b_01",
+      "path_ids": ["path_insufficient"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_charge",
+      "path_ids": ["path_insufficient"],
+      "field_id": "selected_charge",
+      "target_id": "person_a:conduct_01",
+      "accepted_values": [],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "explanation_charge"
+    },
+    {
+      "id": "expect_path_insufficient_conclusion",
+      "path_ids": ["path_insufficient"],
+      "field_id": "conclusion",
+      "target_id": "person_a:conduct_01",
+      "accepted_values": ["conclusion_insufficient"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "explanation_insufficient"
+    },
+    {
+      "id": "expect_path_insufficient_basis",
+      "path_ids": ["path_insufficient"],
+      "field_id": "legal_basis",
+      "target_id": "conclusion_insufficient",
+      "accepted_values": [],
+      "weight": 1,
+      "criterion_id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "explanation_id": "explanation_law"
+    },
+    {
+      "id": "expect_path_a_element_a_01",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_a_element_b_01",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["not_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_a_charge",
+      "path_ids": ["path_a"],
+      "field_id": "selected_charge",
+      "target_id": "person_a:conduct_01",
+      "accepted_values": ["charge_a"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "explanation_charge"
+    },
+    {
+      "id": "expect_path_a_conclusion",
+      "path_ids": ["path_a"],
+      "field_id": "conclusion",
+      "target_id": "person_a:conduct_01",
+      "accepted_values": ["conclusion_a"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "explanation_charge"
+    },
+    {
+      "id": "expect_path_a_basis",
+      "path_ids": ["path_a"],
+      "field_id": "legal_basis",
+      "target_id": "conclusion_a",
+      "accepted_values": ["provision_placeholder_01"],
+      "weight": 1,
+      "criterion_id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "explanation_id": "explanation_law"
+    },
+    {
+      "id": "expect_path_b_element_a_01",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["not_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_b_element_b_01",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_b_charge",
+      "path_ids": ["path_b"],
+      "field_id": "selected_charge",
+      "target_id": "person_a:conduct_01",
+      "accepted_values": ["charge_b"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "explanation_charge"
+    },
+    {
+      "id": "expect_path_b_conclusion",
+      "path_ids": ["path_b"],
+      "field_id": "conclusion",
+      "target_id": "person_a:conduct_01",
+      "accepted_values": ["conclusion_b"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "explanation_charge"
+    },
+    {
+      "id": "expect_path_b_basis",
+      "path_ids": ["path_b"],
+      "field_id": "legal_basis",
+      "target_id": "conclusion_b",
+      "accepted_values": ["provision_placeholder_01"],
+      "weight": 1,
+      "criterion_id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "explanation_id": "explanation_law"
+    }
+  ],
+  "answer_paths": [
+    {
+      "id": "path_insufficient",
+      "label": "Chưa đủ dữ kiện để kết luận",
+      "description": "Hai dấu hiệu bắt buộc đều chưa được phân định, không chọn định danh và kết luận chưa đủ căn cứ.",
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "unresolved" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "unresolved" },
+          { "op": "is_empty", "field_id": "selected_charge", "target_id": "person_a:conduct_01" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_insufficient" }
+        ]
+      },
+      "conclusion_ids": ["conclusion_insufficient"],
+      "charge_ids": []
+    },
+    {
+      "id": "path_a",
+      "label": "Hỗ trợ định danh A",
+      "description": "Dấu hiệu hành vi được hỗ trợ, dấu hiệu mục đích chưa được hỗ trợ, chọn định danh A và kết luận A.",
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "not_supported" },
+          { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_a" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_a" }
+        ]
+      },
+      "conclusion_ids": ["conclusion_a"],
+      "charge_ids": ["charge_a"]
+    },
+    {
+      "id": "path_b",
+      "label": "Hỗ trợ định danh B",
+      "description": "Dấu hiệu mục đích được hỗ trợ, dấu hiệu hành vi chưa được hỗ trợ, chọn định danh B và kết luận B.",
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "not_supported" },
+          { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_b" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_b" }
+        ]
+      },
+      "conclusion_ids": ["conclusion_b"],
+      "charge_ids": ["charge_b"]
+    }
+  ],
+  "consistency_rules": [
+    {
+      "id": "rule_insufficient_excludes_charge",
+      "scope": { "person_id": "person_a", "conduct_event_id": "conduct_01" },
+      "when": { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_insufficient" },
+      "assert": { "op": "is_empty", "field_id": "selected_charge", "target_id": "person_a:conduct_01" },
+      "severity": "blocking",
+      "message": "Kết luận chưa đủ căn cứ loại trừ việc đồng thời chọn một định danh cho cùng người/hành vi."
+    },
+    {
+      "id": "rule_charge_a_element",
+      "scope": { "person_id": "person_a", "conduct_event_id": "conduct_01" },
+      "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_a" },
+      "assert": { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "supported" },
+      "severity": "blocking",
+      "message": "Định danh A cần dấu hiệu bắt buộc element_a_01 được đánh giá là có dữ kiện hỗ trợ."
+    },
+    {
+      "id": "rule_charge_b_element",
+      "scope": { "person_id": "person_a", "conduct_event_id": "conduct_01" },
+      "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_b" },
+      "assert": { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
+      "severity": "blocking",
+      "message": "Định danh B cần dấu hiệu bắt buộc element_b_01 được đánh giá là có dữ kiện hỗ trợ."
+    }
+  ],
+  "criteria": [
+    {
+      "id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01", "lo_source_fact_01"],
+      "answer_field_ids": ["source_assessment", "procedure_assessment", "reliability_assessment", "relevance_assessment"],
+      "label": "Đánh giá chứng cứ bốn lớp"
+    },
+    {
+      "id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "answer_field_ids": ["hypothesis_support", "hypothesis_challenge"],
+      "label": "So sánh giả thuyết"
+    },
+    {
+      "id": "criterion_proof",
+      "learning_outcome_ids": ["lo_source_fact_01", "lo_proof_01"],
+      "answer_field_ids": ["proof_assessment"],
+      "label": "Ma trận chứng minh"
+    },
+    {
+      "id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "answer_field_ids": ["element_status", "circumstance_status"],
+      "label": "Phân tích dấu hiệu cấu thành"
+    },
+    {
+      "id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "answer_field_ids": ["selected_charge", "conclusion"],
+      "label": "Chọn định danh và kết luận nhất quán"
+    },
+    {
+      "id": "criterion_circumstance",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "answer_field_ids": ["circumstance_status"],
+      "label": "Đánh giá tình tiết"
+    },
+    {
+      "id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "answer_field_ids": ["legal_basis"],
+      "label": "Căn cứ và phiên bản luật"
+    }
+  ],
+  "scoring": {
+    "path_weights": [
+      {
+        "path_id": "path_insufficient",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 20,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 15,
+          "criterion_circumstance": 5,
+          "criterion_law": 5
+        }
+      },
+      {
+        "path_id": "path_a",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 20,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 15,
+          "criterion_circumstance": 5,
+          "criterion_law": 5
+        }
+      },
+      {
+        "path_id": "path_b",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 20,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 15,
+          "criterion_circumstance": 5,
+          "criterion_law": 5
+        }
+      }
+    ],
+    "partial_credit": {
+      "method": "weighted_expectation_ratio",
+      "rounding": "nearest_integer"
+    }
+  },
+  "review": {
+    "status": "not_reviewed",
+    "review_ids": []
+  },
+  "explanations": [
+    {
+      "id": "explanation_01",
+      "title": "Cách đọc phản hồi",
+      "body": "Phản hồi đi theo chuỗi: dữ kiện được ghi nhận → suy luận được phép → dấu hiệu cấu thành → căn cứ. Điểm được tính theo trọng số của từng kỳ vọng đã cấu hình; phần giải thích không quyết định điểm.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_source",
+      "title": "Nguồn tài liệu không đồng nghĩa sự kiện đã được chứng minh",
+      "body": "Một biên bản hoặc lời trình bày chỉ chứng minh rằng tài liệu/lời khai đó tồn tại và ghi nhận điều gì. Cần phân biệt nguồn tạo ra tài liệu với sự kiện mà tài liệu được dùng để chứng minh, và ghi rõ nguồn của từng dữ kiện.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_procedure",
+      "title": "Nhận diện vấn đề thủ tục, không tự loại chứng cứ",
+      "body": "Bản trích xuất nhật ký không có biên bản xác nhận thời điểm, người thực hiện và phạm vi trích xuất. Trong bài học, người chơi nhận diện vấn đề và nêu hệ quả cần reviewer xác định; engine không tự động loại bỏ chứng cứ.",
+      "legal_basis_ids": ["provision_placeholder_01"]
+    },
+    {
+      "id": "explanation_reliability",
+      "title": "Độ tin cậy và giới hạn",
+      "body": "Biên bản giao ca là bản sao, không có xác nhận của người trực và không đối chiếu bản gốc, nên chỉ đáng tin trong giới hạn. Lời trình bày có chữ ký của người khai, nhưng được ghi lại sau sự việc; vẫn có thể dùng trong giới hạn mà nó được tạo ra.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_relevance",
+      "title": "Liên quan và sức hỗ trợ",
+      "body": "Nhật ký ra vào và khoảng trống camera định hướng khả năng thùng hàng bị dịch chuyển. Lời trình bày của B phản bác mệnh đề này vì B khẳng định thùng vẫn còn lúc 22:50. Liên quan không đồng nghĩa đủ sức chứng minh.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_hypothesis",
+      "title": "Hai giả thuyết cạnh tranh",
+      "body": "H1 được nhật ký ra vào và khoảng trống camera hỗ trợ, bị lời trình bày của B phản bác. H2 được lời trình bày của B hỗ trợ, bị nhật ký ra vào phản bác. Một bài học tốt phải giữ cả hai giả thuyết cho đến khi có dữ kiện độc lập.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_proof",
+      "title": "Mệnh đề trọng tâm chỉ được hỗ trợ trong giới hạn",
+      "body": "Mệnh đề về việc thùng hàng bị dịch chuyển có dữ kiện định hướng (sự có mặt của A, khoảng trống camera) nhưng chưa được chứng minh trọn vẹn. Cần phân biệt 'có dữ kiện hỗ trợ' với 'đã chứng minh'.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_elements",
+      "title": "Từng dấu hiệu cần dữ kiện riêng",
+      "body": "Dấu hiệu hành vi cần dữ kiện về việc tài sản bị dịch chuyển; dấu hiệu mục đích cần dữ kiện riêng về ý định tại thời điểm hành vi. Không được suy dấu hiệu này từ dấu hiệu kia. Trong cấu hình nháp, hãy đánh giá đúng mức dữ kiện hiện có và ghi nhận 'chưa đủ thông tin' khi cần.",
+      "legal_basis_ids": ["provision_placeholder_01"]
+    },
+    {
+      "id": "explanation_charge",
+      "title": "Kết luận phải gắn với người, hành vi và dấu hiệu",
+      "body": "Chọn định danh chỉ khi dấu hiệu bắt buộc của định danh đó có dữ kiện hỗ trợ. Nếu hồ sơ chưa đủ, chọn 'chưa đủ dữ kiện/căn cứ' và không đồng thời chọn một định danh. Kết luận phải nêu người, hành vi và căn cứ tương ứng.",
+      "legal_basis_ids": ["provision_placeholder_01"]
+    },
+    {
+      "id": "explanation_circumstance",
+      "title": "Tình tiết được case yêu cầu",
+      "body": "Hồ sơ không có lịch phân công ca, nên chưa thể xác nhận A có mặt tại kho theo phân công hay không. Trạng thái phù hợp là 'chưa đủ thông tin', trừ khi có dữ kiện bổ sung đã được reviewer chấp nhận.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_law",
+      "title": "Căn cứ pháp luật trong bản nháp",
+      "body": "Mọi căn cứ trong case này đang ở trạng thái chưa xác minh và chưa có ngày hiệu lực. Với nhánh 'chưa đủ dữ kiện', không nên gắn một căn cứ buộc tội; với nhánh hỗ trợ định danh, chỉ chọn căn cứ tương ứng đã được khai báo trong thư viện case. Reviewer phải thay bằng nguồn chính thức trước khi publish.",
+      "legal_basis_ids": ["provision_placeholder_01"]
+    },
+    {
+      "id": "explanation_insufficient",
+      "title": "Không ép kết luận khi hồ sơ chưa đủ",
+      "body": "Kết luận 'chưa đủ dữ kiện/căn cứ' là một kết quả học tập hợp lệ khi hồ sơ còn khoảng trống. Kết luận này phải đi kèm việc chỉ ra dấu hiệu chưa được phân định và dữ kiện còn thiếu; không đồng thời chọn một định danh.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "explanation_02",
+      "title": "Phân biệt định danh A và định danh B",
+      "body": "Hai định danh khác nhau ở dấu hiệu phân biệt: dấu hiệu hành vi (element_a_01) và dấu hiệu mục đích (element_b_01). Phải đánh giá từng dấu hiệu bằng dữ kiện riêng; không suy dấu hiệu mục đích chỉ từ việc có mặt tại kho.",
+      "legal_basis_ids": ["provision_placeholder_01"]
+    }
+  ],
+  "references": {
+    "legal_basis_ids": ["provision_placeholder_01"]
+  },
+  "issues": [
+    {
+      "id": "issue_01",
+      "label": "Nguồn và chuỗi bàn giao của nhật ký ra vào",
+      "description": "Nhật ký được trích xuất thế nào, ai xác nhận, và tài liệu này chứng minh được đến đâu.",
+      "evidence_ids": ["ev_record_01", "ev_camera_02"],
+      "answer_field_ids": ["source_assessment", "procedure_assessment", "reliability_assessment"],
+      "critical": true
+    },
+    {
+      "id": "issue_02",
+      "label": "Thời điểm, mục đích và giả thuyết cạnh tranh",
+      "description": "Các nguồn mâu thuẫn về việc thùng hàng còn trong kho hay đã bị dịch chuyển, và dấu hiệu mục đích có dữ kiện riêng hay không.",
+      "evidence_ids": ["ev_statement_01", "ev_message_01"],
+      "answer_field_ids": ["hypothesis_support", "hypothesis_challenge", "element_status"],
+      "critical": true
+    },
+    {
+      "id": "issue_03",
+      "label": "Giới hạn của số liệu kiểm kê và phiếu xuất kho",
+      "description": "Chênh lệch ghi chép có thể giải thích khác với việc tài sản bị mất.",
+      "evidence_ids": ["ev_inventory_01", "ev_receipt_01"],
+      "answer_field_ids": ["relevance_assessment"],
+      "critical": false
+    }
+  ],
+  "critical_issue_ids": ["issue_01", "issue_02"],
+  "hints": [
+    {
+      "id": "hint_01",
+      "level": 1,
+      "order": 1,
+      "issue_id": "issue_01",
+      "text": "Đối chiếu nguồn tạo ra nhật ký ra vào với sự kiện mà nó được dùng để chứng minh. Tài liệu tồn tại không có nghĩa sự kiện đã được chứng minh.",
+      "rubric_id": null
+    },
+    {
+      "id": "hint_02",
+      "level": 2,
+      "order": 2,
+      "issue_id": "issue_01",
+      "text": "Một bản sao không có biên bản xác nhận thời điểm trích xuất đặt ra vấn đề về quy trình. Hãy nhận diện vấn đề và nêu hệ quả cần reviewer xác định, thay vì tự loại chứng cứ.",
+      "rubric_id": null
+    },
+    {
+      "id": "hint_03",
+      "level": 3,
+      "order": 3,
+      "issue_id": "issue_02",
+      "text": "Hai định danh trong hồ sơ khác nhau ở đúng một dấu hiệu phân biệt. Chỉ một trong hai dấu hiệu có dữ kiện trực tiếp trong các nguồn đã đọc; dấu hiệu còn lại cần dữ kiện riêng.",
+      "rubric_id": null
+    },
+    {
+      "id": "hint_04",
+      "level": 1,
+      "order": 4,
+      "issue_id": "issue_02",
+      "text": "Lời trình bày của B vừa phản bác mệnh đề trọng tâm vừa cung cấp dữ kiện về một câu nói của A. Đọc lại cả hai phần trước khi gắn chứng cứ vào giả thuyết.",
+      "rubric_id": null
+    }
+  ],
+  "glossary": [
+    {
+      "id": "glossary_source",
+      "term": "Nguồn chứng cứ",
+      "definition": "Tài liệu, vật, lời trình bày hoặc dữ liệu được dùng để chứng minh một sự kiện. Nguồn tồn tại không đồng nghĩa sự kiện đã được chứng minh.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "glossary_element",
+      "term": "Dấu hiệu cấu thành",
+      "definition": "Các yếu tố mà một định danh hành vi yêu cầu. Cần xác định từng yếu tố bằng dữ kiện riêng thay vì chỉ nhìn tên định danh.",
+      "legal_basis_ids": ["provision_placeholder_01"]
+    },
+    {
+      "id": "glossary_limit",
+      "term": "Giới hạn suy luận",
+      "definition": "Phạm vi mà một chứng cứ có thể hỗ trợ. Kết luận vượt quá phạm vi đó là suy đoán, kể cả khi chứng cứ là thật.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "glossary_age",
+      "term": "Khoảng tuổi",
+      "definition": "Tuổi được tính từ khoảng ngày sinh và khoảng ngày hành vi. Khi dữ kiện không đủ chính xác, kết quả là một khoảng, không phải một số duy nhất.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "glossary_path",
+      "term": "Đường đáp án",
+      "definition": "Tổ hợp câu trả lời nhất quán đã được tác giả cấu hình trước để chấm điểm. Đáp án thay thế được biểu diễn thành một đường riêng.",
+      "legal_basis_ids": []
+    }
+  ]
+}
