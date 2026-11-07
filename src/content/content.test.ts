@@ -57,7 +57,7 @@ describe('content invariants C-01 → C-16', () => {
     }
   })
 
-  it('C-04: mỗi path có đúng 100 điểm và 18 expectation', () => {
+  it('C-04: mỗi path có đúng 100 điểm và đủ expectation theo loại path', () => {
     const file = caseFile()
     for (const path of file.answer_paths) {
       const weight = file.scoring.path_weights.find((entry) => entry.path_id === path.id)
@@ -65,7 +65,8 @@ describe('content invariants C-01 → C-16', () => {
       const sum = Object.values(weight?.criterion_points ?? {}).reduce((total, value) => total + value, 0)
       expect(sum, path.id).toBe(100)
       const expectations = file.expected_responses.filter((item) => item.path_ids.includes(path.id))
-      expect(expectations, path.id).toHaveLength(18)
+      const expectedCount = path.id.startsWith('path_insufficient') ? 18 : 17
+      expect(expectations, path.id).toHaveLength(expectedCount)
     }
   })
 
@@ -121,7 +122,7 @@ describe('content invariants C-01 → C-16', () => {
 
   it('C-07: mỗi path có match, conclusion và charge nhất quán', () => {
     const file = caseFile()
-    expect(file.answer_paths).toHaveLength(3)
+    expect(file.answer_paths).toHaveLength(6)
     for (const path of file.answer_paths) {
       expect(path.conclusion_ids.length, path.id).toBeGreaterThan(0)
       const atoms = flattenAtoms(path.match)
@@ -137,7 +138,7 @@ describe('content invariants C-01 → C-16', () => {
     }
   })
 
-  it('C-08: charge, conclusion và element nhất quán; ghi nhận thiếu rule conclusion → charge', () => {
+  it('C-08: charge, conclusion và element nhất quán; conclusion A/B buộc đúng định danh', () => {
     const file = caseFile()
     for (const charge of file.candidate_charges) {
       const actual = file.charge_elements
@@ -180,8 +181,10 @@ describe('content invariants C-01 → C-16', () => {
         whenValues.includes('conclusion_b')
       ) && assertFields.includes('selected_charge')
     })
-    // Known gap: chưa có rule blocking nối conclusion_a/b với selected_charge tương ứng.
-    expect(linksConclusionToCharge).toEqual([])
+    expect(linksConclusionToCharge.map((rule) => rule.id).sort()).toEqual([
+      'rule_conclusion_a_requires_charge_a',
+      'rule_conclusion_b_requires_charge_b',
+    ])
   })
 
   it('C-09: proof matrix phủ element_a_01 nhưng còn thiếu element_b_01 (known gap)', () => {
@@ -203,11 +206,15 @@ describe('content invariants C-01 → C-16', () => {
       ...file.facts.map((fact) => fact.text ?? ''),
       ...file.evidence.map((item) => item.content ?? ''),
     ].join('\n')
-    for (const marker of ['21:00', '22:10', '22:35', '22:47', '03:40']) {
+    for (const marker of ['21:00', '22:10', '22:35', '22:47', '22:50', '03:40']) {
       expect(text, marker).toContain(marker)
     }
+    const hypothesisA = file.hypotheses.find((item) => item.id === 'hypothesis_a')
+    expect(hypothesisA?.label).toContain('22:10')
+    expect(hypothesisA?.label).toContain('03:40')
     expect(file.temporal_context.conduct_events[0].date_interval.start_date).toBe('2024-05-31')
-    expect(file.temporal_context.conduct_events[0].date_interval.end_date).toBe('2024-05-31')
+    expect(file.temporal_context.conduct_events[0].date_interval.end_date).toBe('2024-06-01')
+    expect(file.temporal_context.conduct_events[0].date_interval.precision).toBe('range')
   })
 
   it('C-11: fact, defect và limitation tham chiếu đúng chứng cứ', () => {
@@ -237,6 +244,15 @@ describe('content invariants C-01 → C-16', () => {
       if (hint.rubric_id) expect(criterionIds.has(hint.rubric_id), hint.id).toBe(true)
     }
     expect((file.hints ?? []).filter((hint) => hint.issue_id === 'issue_03')).toEqual([])
+
+    const orderedHints = [...(file.hints ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    for (let index = 1; index < orderedHints.length; index += 1) {
+      const previous = orderedHints[index - 1]
+      const current = orderedHints[index]
+      if (previous.issue_id === current.issue_id) {
+        expect(current.level, `${previous.id}→${current.id}`).toBeGreaterThanOrEqual(previous.level)
+      }
+    }
 
     const usedExplanations = new Set(file.expected_responses.map((item) => item.explanation_id))
     for (const comparison of file.charge_comparisons) {

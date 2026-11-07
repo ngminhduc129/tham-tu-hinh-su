@@ -26,7 +26,7 @@ Mở địa chỉ Vite in ra trong terminal. Ứng dụng không có backend, kh
 | Lệnh | Mục đích |
 | --- | --- |
 | `npm run dev` | Chạy dev server |
-| `npm test` | Chạy toàn bộ Vitest (128 test) |
+| `npm test` | Chạy toàn bộ Vitest (160 test) |
 | `npm run test:watch` | Chạy test ở chế độ theo dõi |
 | `npm run test:corpus` | Chạy riêng corpus schema 2.1.0, semantic validator và bất biến nội dung |
 | `npm run lint:content` | Lint nội dung ở chế độ draft |
@@ -125,6 +125,8 @@ Không lưu đáp án theo nhãn hiển thị, không lưu text tự do để ch
   - `priority`: chọn path đầu tiên khớp theo `order`;
   - `exclusive`: các path không được chồng lấn; Semantic Validator báo lỗi nếu chúng có thể cùng khớp.
 - Nếu không khai báo `path_selection`, hành vi cũ được giữ nguyên: path khớp đầu tiên theo thứ tự khai báo.
+
+Với `case_001`, “chưa đủ căn cứ” là trục chính. Có 4 biến thể `path_insufficient*` cho các tổ hợp `unresolved`/`not_supported` của hai dấu hiệu, cộng `path_a` và `path_b` cho hai định danh có điều kiện. Path A/B chỉ chấm dấu hiệu và định danh tương ứng, không đòi dấu hiệu của định danh còn lại. Kết luận `conclusion_a`/`conclusion_b` bị chặn nếu không chọn đúng `charge_a`/`charge_b`.
 
 ### 4. Quy tắc nhất quán chạy trước khi chấm
 
@@ -281,9 +283,9 @@ Manifest đặt `publishable: false`. CLI cũng chặn trường hợp manifest 
 
 ## Test
 
-12 file, 128 test:
+21 file, 160 test:
 
-- `scoring.test.ts`: path A/B/insufficient đạt 100, partial credit, làm tròn một lần, multi-select đúng tập, blocking, unmatched diagnostics
+- `scoring.test.ts`: path A/B và 4 biến thể chưa đủ căn cứ đạt 100, path A/B không đòi dấu hiệu của định danh còn lại, partial credit, làm tròn một lần, multi-select đúng tập, blocking, unmatched diagnostics
 - `matching.test.ts`: DSL, path matching, `path_selection` priority, consistency rule
 - `linter.test.ts`: draft/publish gate, các mutation lỗi tham chiếu, law multi-segment
 - `semantic.test.ts`: Layer 2 — scoring invariant, path policy, orphan content, discovery cycle
@@ -295,15 +297,17 @@ Manifest đặt `publishable: false`. CLI cũng chặn trường hợp manifest 
 - `persistence.test.ts`: round-trip, backup, schema/case version, import/export, clear
 - `reducer.test.ts`: câu trả lời, ghi chú, hint, submit/reopen/reset/import
 - `content.test.ts`: bộ bất biến nội dung C-01 → C-16 cho `case_001`
+- `src/ui/**/*.test.tsx`: render và tương tác các màn hình chính bằng Testing Library + happy-dom
+- `src/test/e2e-playthrough.test.ts`: hành trình reducer từ xem chứng cứ đến nộp bài, chưa phải browser e2e
 
 ## Giới hạn đã biết
 
 - Case mẫu là nội dung nháp, chưa được thẩm định pháp lý; không thể publish cho tới khi có người rà soát đủ năng lực.
 - Các khoảng trống nội dung đã biết của `case_001`: thiếu proof row cho `element_b_01`, `issue_03` chưa có hint, `explanation_01` chưa được dùng, age rule chưa có conditions, law resolution còn unresolved, còn placeholder.
-- Chưa có rule blocking nối trực tiếp `conclusion_a/b` với `selected_charge`; hiện dựa vào consistency rule và path matching.
+- Tổ hợp `conclusion_insufficient` nhưng tự đánh giá ít nhất một dấu hiệu là `supported` không khớp path nào; người chơi nhận chẩn đoán "không khớp đường đáp án" thay vì bị chặn bởi consistency rule.
 - `path_selection` chống chồng lấn bằng phân tích tĩnh xấp xỉ; nhánh có `any` được bỏ qua thay vì khẳng định.
 - Không có backend, tài khoản, đồng bộ đa thiết bị hoặc telemetry.
 - Không có chấm điểm văn bản tự do bằng AI.
-- Chưa có Playwright/e2e cho gameplay UI; test nội dung C-13 chỉ kiểm tra tĩnh nhãn và metadata.
-- Bundle JS production hiện khoảng 543 kB (Vite cảnh báo chunk > 500 kB). Cảnh báo không chặn build.
+- Chưa có browser e2e (Playwright); các test UI hiện chạy bằng Testing Library + happy-dom, chưa kiểm tra layout thật ở 360 px.
+- Bundle JS production hiện khoảng 552 kB (Vite cảnh báo chunk > 500 kB). Cảnh báo không chặn build.
 - Ứng dụng là mô phỏng học tập rút gọn, không phải quy trình tố tụng đầy đủ.

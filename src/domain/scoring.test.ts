@@ -35,23 +35,94 @@ describe('chấm điểm theo đường đáp án', () => {
     expect(score.diagnostics.length).toBeGreaterThan(0)
   })
 
-  it('giữ điểm phần lập luận khi kết luận sai nhãn nhưng không tạo điểm cuối', () => {
+  it('đạt 100 cho cả bốn đường chưa đủ căn cứ, gồm biến thể b = not_supported', () => {
     const caseFile = fixtureCase()
-    let answers = answersForPath(caseFile, 'path_a')
-    answers = setValue(
-      answers,
-      'conclusion',
-      'person_a:conduct_01',
-      'conclusion_b',
+    const pathIds = [
+      'path_insufficient',
+      'path_insufficient_a_unresolved_b_not_supported',
+      'path_insufficient_a_not_supported_b_unresolved',
+      'path_insufficient_both_not_supported',
+    ]
+
+    for (const pathId of pathIds) {
+      const score = scoreSubmission(caseFile, answersForPath(caseFile, pathId), NOW)
+      expect(score.blocking, pathId).toBe(false)
+      expect(score.unmatched, pathId).toBe(false)
+      expect(score.pathId, pathId).toBe(pathId)
+      expect(score.total, pathId).toBe(100)
+    }
+  })
+
+  it('path A không đòi dấu hiệu mục đích của B cũng được hỗ trợ', () => {
+    const caseFile = fixtureCase()
+    const answers = setValue(
+      answersForPath(caseFile, 'path_a'),
+      'element_status',
+      'element_b_01',
+      'supported',
     )
 
     const score = scoreSubmission(caseFile, answers, NOW)
+    expect(score.blocking).toBe(false)
+    expect(score.pathId).toBe('path_a')
+    expect(score.total).toBe(100)
+  })
 
+  it('path B không đòi dấu hiệu hành vi của A cũng được hỗ trợ', () => {
+    const caseFile = fixtureCase()
+    const answers = setValue(
+      answersForPath(caseFile, 'path_b'),
+      'element_status',
+      'element_a_01',
+      'supported',
+    )
+
+    const score = scoreSubmission(caseFile, answers, NOW)
+    expect(score.blocking).toBe(false)
+    expect(score.pathId).toBe('path_b')
+    expect(score.total).toBe(100)
+  })
+
+  it('không gán điểm khi kết luận chưa đủ căn cứ nhưng tự đánh giá một dấu hiệu là supported', () => {
+    const caseFile = fixtureCase()
+    const answers = setValue(
+      answersForPath(caseFile, 'path_insufficient'),
+      'element_status',
+      'element_a_01',
+      'supported',
+    )
+
+    const score = scoreSubmission(caseFile, answers, NOW)
+    expect(score.blocking).toBe(false)
     expect(score.unmatched).toBe(true)
     expect(score.total).toBeNull()
-    expect(score.diagnostics.some((item) => item.metWeight > 0)).toBe(true)
-    const evidence = score.diagnostics.find((item) => item.criterionId === 'criterion_evidence')
-    expect(evidence?.metWeight).toBe(evidence?.totalWeight)
+    expect(score.pathId).toBeNull()
+    expect(score.diagnostics.length).toBeGreaterThan(0)
+  })
+
+  it('chặn khi kết luận A/B không đi kèm đúng định danh tương ứng', () => {
+    const caseFile = fixtureCase()
+
+    let answers = answersForPath(caseFile, 'path_a')
+    answers = setValue(answers, 'element_status', 'element_b_01', 'supported')
+    answers = setValue(answers, 'selected_charge', 'person_a:conduct_01', 'charge_b')
+    const wrongCharge = scoreSubmission(caseFile, answers, NOW)
+    expect(wrongCharge.blocking).toBe(true)
+    expect(
+      wrongCharge.consistency.find(
+        (item) => item.ruleId === 'rule_conclusion_a_requires_charge_a',
+      )?.status,
+    ).toBe('fail')
+
+    let emptyCharge = answersForPath(caseFile, 'path_b')
+    emptyCharge = setValue(emptyCharge, 'selected_charge', 'person_a:conduct_01', null)
+    const noCharge = scoreSubmission(caseFile, emptyCharge, NOW)
+    expect(noCharge.blocking).toBe(true)
+    expect(
+      noCharge.consistency.find(
+        (item) => item.ruleId === 'rule_conclusion_b_requires_charge_b',
+      )?.status,
+    ).toBe('fail')
   })
 
   it('chỉ đạt điểm kết quả cấu hình khi chọn đúng nhưng không viện dẫn dữ kiện', () => {
@@ -171,7 +242,7 @@ describe('quy tắc nhất quán và đường đáp án không khớp', () => {
 
   it('không gán điểm khi tổ hợp gần path nhưng không khớp path nào', () => {
     const caseFile = fixtureCase()
-    let answers = answersForPath(caseFile, 'path_a')
+    let answers = answersForPath(caseFile, 'path_insufficient')
     answers = setValue(answers, 'element_status', 'element_b_01', 'supported')
 
     const score = scoreSubmission(caseFile, answers, NOW)

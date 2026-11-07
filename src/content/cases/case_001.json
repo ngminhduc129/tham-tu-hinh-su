@@ -31,8 +31,8 @@
         "id": "conduct_01",
         "date_interval": {
           "start_date": "2024-05-31",
-          "end_date": "2024-05-31",
-          "precision": "day",
+          "end_date": "2024-06-01",
+          "precision": "range",
           "source_ids": ["ev_record_01"]
         },
         "law_resolution": {
@@ -266,8 +266,8 @@
   "hypotheses": [
     {
       "id": "hypothesis_a",
-      "label": "H1 — Thùng hàng bị dịch chuyển trong khoảng 22:10–22:47",
-      "description": "Thùng LX-24 bị đưa ra khỏi kho trong khoảng thời gian A có mặt và camera không ghi liên tục.",
+      "label": "H1 — Thùng hàng bị dịch chuyển trong khoảng 22:10 ngày 31/05 – 03:40 ngày 01/06",
+      "description": "Thùng LX-24 bị đưa ra khỏi kho trong khoảng từ lượt quẹt thẻ cuối của A đến khi bảo vệ phát hiện cửa kho mở; camera không ghi liên tục trong một phần khoảng này.",
       "missing_information": [
         "Lịch phân công ca làm việc đêm 31/05/2024.",
         "Dữ liệu camera gốc từ 22:35 đến 22:47.",
@@ -288,7 +288,7 @@
   "proof_matrix": [
     {
       "id": "proof_row_01",
-      "proposition": "Có dữ kiện định hướng việc thùng LX-24 bị dịch chuyển trong khoảng 22:10–22:47 ngày 31/05/2024.",
+      "proposition": "Có dữ kiện định hướng việc thùng LX-24 bị dịch chuyển trong khoảng 22:10 ngày 31/05 – 03:40 ngày 01/06/2024.",
       "charge_element_ids": ["element_a_01"],
       "evidence_links": [
         { "evidence_id": "ev_record_01", "relation": "supports", "limitation_ids": ["limit_01"] },
@@ -324,7 +324,7 @@
       "label": "Hành vi dịch chuyển tài sản ra khỏi khu vực quản lý",
       "legal_test": "[Reviewer điền sau khi xác minh] Mô tả dấu hiệu hành vi theo văn bản được chọn.",
       "required": true,
-      "fact_ids": ["fact_01", "fact_03"],
+      "fact_ids": ["fact_01", "fact_02", "fact_03"],
       "evidence_ids": ["ev_record_01", "ev_camera_02", "ev_statement_01"],
       "legal_basis_ids": ["provision_placeholder_01"]
     },
@@ -529,7 +529,7 @@
   "expected_responses": [
     {
       "id": "expect_source_record",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "source_assessment",
       "target_id": "ev_record_01",
       "accepted_values": ["source_supported"],
@@ -540,7 +540,7 @@
     },
     {
       "id": "expect_source_statement",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "source_assessment",
       "target_id": "ev_statement_01",
       "accepted_values": ["source_supported"],
@@ -551,7 +551,7 @@
     },
     {
       "id": "expect_procedure",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "procedure_assessment",
       "target_id": "ev_record_01",
       "accepted_values": ["defect_identified"],
@@ -562,7 +562,7 @@
     },
     {
       "id": "expect_reliability_record",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "reliability_assessment",
       "target_id": "ev_record_01",
       "accepted_values": ["limited"],
@@ -573,7 +573,7 @@
     },
     {
       "id": "expect_reliability_statement",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "reliability_assessment",
       "target_id": "ev_statement_01",
       "accepted_values": ["reliable"],
@@ -584,7 +584,7 @@
     },
     {
       "id": "expect_relevance_record",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "relevance_assessment",
       "target_id": "ev_record_01",
       "accepted_values": ["supports"],
@@ -595,7 +595,7 @@
     },
     {
       "id": "expect_relevance_statement",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "relevance_assessment",
       "target_id": "ev_statement_01",
       "accepted_values": ["challenges"],
@@ -606,7 +606,7 @@
     },
     {
       "id": "expect_hyp_a_support",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "hypothesis_support",
       "target_id": "hypothesis_a",
       "accepted_values": ["ev_record_01"],
@@ -617,7 +617,7 @@
     },
     {
       "id": "expect_hyp_a_challenge",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "hypothesis_challenge",
       "target_id": "hypothesis_a",
       "accepted_values": ["ev_statement_01"],
@@ -628,7 +628,7 @@
     },
     {
       "id": "expect_hyp_b_support",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "hypothesis_support",
       "target_id": "hypothesis_b",
       "accepted_values": ["ev_statement_01"],
@@ -639,7 +639,7 @@
     },
     {
       "id": "expect_hyp_b_challenge",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "hypothesis_challenge",
       "target_id": "hypothesis_b",
       "accepted_values": ["ev_record_01"],
@@ -649,8 +649,8 @@
       "explanation_id": "explanation_hypothesis"
     },
     {
-      "id": "expect_proof",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "id": "expect_proof_a",
+      "path_ids": ["path_a"],
       "field_id": "proof_assessment",
       "target_id": "proof_row_01",
       "accepted_values": ["supports"],
@@ -660,8 +660,30 @@
       "explanation_id": "explanation_proof"
     },
     {
+      "id": "expect_proof_b",
+      "path_ids": ["path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "explanation_proof"
+    },
+    {
+      "id": "expect_proof_insufficient",
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "explanation_proof"
+    },
+    {
       "id": "expect_circumstance",
-      "path_ids": ["path_insufficient", "path_a", "path_b"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported", "path_a", "path_b"],
       "field_id": "circumstance_status",
       "target_id": "circumstance_01",
       "accepted_values": ["unresolved"],
@@ -693,8 +715,74 @@
       "explanation_id": "explanation_elements"
     },
     {
+      "id": "expect_path_insufficient_a_unresolved_b_not_supported_element_a_01",
+      "path_ids": ["path_insufficient_a_unresolved_b_not_supported"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_a_unresolved_b_not_supported_element_b_01",
+      "path_ids": ["path_insufficient_a_unresolved_b_not_supported"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["not_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_a_not_supported_b_unresolved_element_a_01",
+      "path_ids": ["path_insufficient_a_not_supported_b_unresolved"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["not_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_a_not_supported_b_unresolved_element_b_01",
+      "path_ids": ["path_insufficient_a_not_supported_b_unresolved"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_both_not_supported_element_a_01",
+      "path_ids": ["path_insufficient_both_not_supported"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["not_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
+      "id": "expect_path_insufficient_both_not_supported_element_b_01",
+      "path_ids": ["path_insufficient_both_not_supported"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["not_supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "explanation_elements"
+    },
+    {
       "id": "expect_path_insufficient_charge",
-      "path_ids": ["path_insufficient"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported"],
       "field_id": "selected_charge",
       "target_id": "person_a:conduct_01",
       "accepted_values": [],
@@ -705,7 +793,7 @@
     },
     {
       "id": "expect_path_insufficient_conclusion",
-      "path_ids": ["path_insufficient"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported"],
       "field_id": "conclusion",
       "target_id": "person_a:conduct_01",
       "accepted_values": ["conclusion_insufficient"],
@@ -716,7 +804,7 @@
     },
     {
       "id": "expect_path_insufficient_basis",
-      "path_ids": ["path_insufficient"],
+      "path_ids": ["path_insufficient", "path_insufficient_a_unresolved_b_not_supported", "path_insufficient_a_not_supported_b_unresolved", "path_insufficient_both_not_supported"],
       "field_id": "legal_basis",
       "target_id": "conclusion_insufficient",
       "accepted_values": [],
@@ -731,17 +819,6 @@
       "field_id": "element_status",
       "target_id": "element_a_01",
       "accepted_values": ["supported"],
-      "weight": 1,
-      "criterion_id": "criterion_elements",
-      "learning_outcome_ids": ["lo_elements_01"],
-      "explanation_id": "explanation_elements"
-    },
-    {
-      "id": "expect_path_a_element_b_01",
-      "path_ids": ["path_a"],
-      "field_id": "element_status",
-      "target_id": "element_b_01",
-      "accepted_values": ["not_supported"],
       "weight": 1,
       "criterion_id": "criterion_elements",
       "learning_outcome_ids": ["lo_elements_01"],
@@ -779,17 +856,6 @@
       "criterion_id": "criterion_law",
       "learning_outcome_ids": ["lo_law_01"],
       "explanation_id": "explanation_law"
-    },
-    {
-      "id": "expect_path_b_element_a_01",
-      "path_ids": ["path_b"],
-      "field_id": "element_status",
-      "target_id": "element_a_01",
-      "accepted_values": ["not_supported"],
-      "weight": 1,
-      "criterion_id": "criterion_elements",
-      "learning_outcome_ids": ["lo_elements_01"],
-      "explanation_id": "explanation_elements"
     },
     {
       "id": "expect_path_b_element_b_01",
@@ -839,8 +905,8 @@
   "answer_paths": [
     {
       "id": "path_insufficient",
-      "label": "Chưa đủ dữ kiện để kết luận",
-      "description": "Hai dấu hiệu bắt buộc đều chưa được phân định, không chọn định danh và kết luận chưa đủ căn cứ.",
+      "label": "Chưa đủ dữ kiện — cả hai dấu hiệu chưa phân định",
+      "description": "Dấu hiệu hành vi và dấu hiệu mục đích đều chưa được phân định; không chọn định danh và kết luận chưa đủ căn cứ.",
       "match": {
         "op": "all",
         "args": [
@@ -854,14 +920,61 @@
       "charge_ids": []
     },
     {
+      "id": "path_insufficient_a_unresolved_b_not_supported",
+      "label": "Chưa đủ dữ kiện — mục đích chưa được hỗ trợ",
+      "description": "Dấu hiệu hành vi chưa phân định, dấu hiệu mục đích chưa được hỗ trợ; không chọn định danh và kết luận chưa đủ căn cứ.",
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "unresolved" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "not_supported" },
+          { "op": "is_empty", "field_id": "selected_charge", "target_id": "person_a:conduct_01" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_insufficient" }
+        ]
+      },
+      "conclusion_ids": ["conclusion_insufficient"],
+      "charge_ids": []
+    },
+    {
+      "id": "path_insufficient_a_not_supported_b_unresolved",
+      "label": "Chưa đủ dữ kiện — hành vi chưa được hỗ trợ",
+      "description": "Dấu hiệu hành vi chưa được hỗ trợ, dấu hiệu mục đích chưa phân định; không chọn định danh và kết luận chưa đủ căn cứ.",
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "not_supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "unresolved" },
+          { "op": "is_empty", "field_id": "selected_charge", "target_id": "person_a:conduct_01" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_insufficient" }
+        ]
+      },
+      "conclusion_ids": ["conclusion_insufficient"],
+      "charge_ids": []
+    },
+    {
+      "id": "path_insufficient_both_not_supported",
+      "label": "Chưa đủ dữ kiện — cả hai dấu hiệu chưa được hỗ trợ",
+      "description": "Cả dấu hiệu hành vi và dấu hiệu mục đích đều chưa được hỗ trợ; không chọn định danh và kết luận chưa đủ căn cứ.",
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "not_supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "not_supported" },
+          { "op": "is_empty", "field_id": "selected_charge", "target_id": "person_a:conduct_01" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_insufficient" }
+        ]
+      },
+      "conclusion_ids": ["conclusion_insufficient"],
+      "charge_ids": []
+    },
+    {
       "id": "path_a",
       "label": "Hỗ trợ định danh A",
-      "description": "Dấu hiệu hành vi được hỗ trợ, dấu hiệu mục đích chưa được hỗ trợ, chọn định danh A và kết luận A.",
+      "description": "Dấu hiệu hành vi được hỗ trợ; chỉ chấm dấu hiệu và định danh A, không đòi dấu hiệu mục đích của định danh B.",
       "match": {
         "op": "all",
         "args": [
           { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "supported" },
-          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "not_supported" },
           { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_a" },
           { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_a" }
         ]
@@ -872,12 +985,11 @@
     {
       "id": "path_b",
       "label": "Hỗ trợ định danh B",
-      "description": "Dấu hiệu mục đích được hỗ trợ, dấu hiệu hành vi chưa được hỗ trợ, chọn định danh B và kết luận B.",
+      "description": "Dấu hiệu mục đích được hỗ trợ; chỉ chấm dấu hiệu và định danh B, không đòi dấu hiệu hành vi của định danh A.",
       "match": {
         "op": "all",
         "args": [
           { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
-          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "not_supported" },
           { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_b" },
           { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_b" }
         ]
@@ -910,6 +1022,22 @@
       "assert": { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
       "severity": "blocking",
       "message": "Định danh B cần dấu hiệu bắt buộc element_b_01 được đánh giá là có dữ kiện hỗ trợ."
+    },
+    {
+      "id": "rule_conclusion_a_requires_charge_a",
+      "scope": { "person_id": "person_a", "conduct_event_id": "conduct_01" },
+      "when": { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_a" },
+      "assert": { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_a" },
+      "severity": "blocking",
+      "message": "Kết luận hỗ trợ định danh A phải đi kèm việc chọn định danh A."
+    },
+    {
+      "id": "rule_conclusion_b_requires_charge_b",
+      "scope": { "person_id": "person_a", "conduct_event_id": "conduct_01" },
+      "when": { "op": "equals", "field_id": "conclusion", "target_id": "person_a:conduct_01", "value": "conclusion_b" },
+      "assert": { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_b" },
+      "severity": "blocking",
+      "message": "Kết luận hỗ trợ định danh B phải đi kèm việc chọn định danh B."
     }
   ],
   "criteria": [
@@ -960,6 +1088,42 @@
     "path_weights": [
       {
         "path_id": "path_insufficient",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 20,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 15,
+          "criterion_circumstance": 5,
+          "criterion_law": 5
+        }
+      },
+      {
+        "path_id": "path_insufficient_a_unresolved_b_not_supported",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 20,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 15,
+          "criterion_circumstance": 5,
+          "criterion_law": 5
+        }
+      },
+      {
+        "path_id": "path_insufficient_a_not_supported_b_unresolved",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 20,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 15,
+          "criterion_circumstance": 5,
+          "criterion_law": 5
+        }
+      },
+      {
+        "path_id": "path_insufficient_both_not_supported",
         "criterion_points": {
           "criterion_evidence": 20,
           "criterion_hypothesis": 20,
@@ -1044,7 +1208,7 @@
     {
       "id": "explanation_proof",
       "title": "Mệnh đề trọng tâm chỉ được hỗ trợ trong giới hạn",
-      "body": "Mệnh đề về việc thùng hàng bị dịch chuyển có dữ kiện định hướng (sự có mặt của A, khoảng trống camera) nhưng chưa được chứng minh trọn vẹn. Cần phân biệt 'có dữ kiện hỗ trợ' với 'đã chứng minh'.",
+      "body": "Mệnh đề về việc thùng hàng bị dịch chuyển có dữ kiện định hướng (sự có mặt của A, khoảng trống camera) nhưng đồng thời bị lời trình bày của B phản bác. Vì vậy ma trận chỉ được coi là 'đủ sức hỗ trợ' khi người chơi thực sự kết luận dấu hiệu hành vi được hỗ trợ; ở nhánh chưa đủ căn cứ hoặc định danh B, ma trận còn hỗn hợp nên phải để 'chưa phân định'. Cần phân biệt 'có dữ kiện hỗ trợ' với 'đã chứng minh'.",
       "legal_basis_ids": []
     },
     {
@@ -1134,7 +1298,7 @@
     {
       "id": "hint_03",
       "level": 3,
-      "order": 3,
+      "order": 4,
       "issue_id": "issue_02",
       "text": "Hai định danh trong hồ sơ khác nhau ở đúng một dấu hiệu phân biệt. Chỉ một trong hai dấu hiệu có dữ kiện trực tiếp trong các nguồn đã đọc; dấu hiệu còn lại cần dữ kiện riêng.",
       "rubric_id": null
@@ -1142,7 +1306,7 @@
     {
       "id": "hint_04",
       "level": 1,
-      "order": 4,
+      "order": 3,
       "issue_id": "issue_02",
       "text": "Lời trình bày của B vừa phản bác mệnh đề trọng tâm vừa cung cấp dữ kiện về một câu nói của A. Đọc lại cả hai phần trước khi gắn chứng cứ vào giả thuyết.",
       "rubric_id": null
