@@ -15,6 +15,7 @@ import {
   formatCitation,
   formatLegalTest,
   formatSourceRef,
+  formatBundleVersion,
   provisionLabel,
   conductEventLabel,
 } from '../labels'
@@ -78,7 +79,7 @@ export function AnalysisScreen() {
                       {check.segments.map((segment, index) => (
                         <li key={`${segment.bundle_id}-${index}`}>
                           {formatDateInterval(segment.start_date, segment.end_date)} ·{' '}
-                          {lookups.bundles.get(segment.bundle_id)?.version ?? segment.bundle_id}
+                          {formatBundleVersion(lookups.bundles.get(segment.bundle_id)?.version)}
                         </li>
                       ))}
                     </ul>
@@ -118,7 +119,7 @@ export function AnalysisScreen() {
                 <p className="muted small">
                   Người: {lookups.characters.get(charge.person_id) ?? charge.person_id} · hành vi:{' '}
                   {charge.conduct_event_ids
-                    .map((id) => (id === 'conduct_01' ? 'Khoảng 22:10 - 22:35 ngày 31/05/2024' : id))
+                    .map((id) => conductEventLabel(id))
                     .join(', ')}
                 </p>
                 <p className="small">

@@ -165,22 +165,39 @@ export const PROVISION_LABELS: Record<string, string> = {
   provision_placeholder_01: 'Điều 173 BLHS 2015 (Trộm cắp tài sản) & Điều 87 BLTTHS 2015 (Nguồn chứng cứ)',
 }
 
+export const BUNDLE_LABELS: Record<string, string> = {
+  law_bundle_v1: 'Bộ quy định pháp luật (BLHS & BLTTHS 2015)',
+  law_bundle_blhs: 'Bộ luật Hình sự 2015 (sửa đổi, bổ sung)',
+  law_bundle_bltths: 'Bộ luật Tố tụng hình sự 2015 (sửa đổi, bổ sung)',
+}
+
+export function bundleLabel(bundleId?: string | null): string {
+  if (!bundleId) return 'Chưa xác định bộ văn bản luật'
+  return BUNDLE_LABELS[bundleId] ?? 'Bộ văn bản luật chưa đặt tên'
+}
+
+export function formatBundleVersion(version?: string | null): string {
+  if (!version || version.startsWith('placeholder')) return 'Bản chưa xác minh'
+  return version
+}
+
 export function provisionLabel(provisionId: string): string {
-  return PROVISION_LABELS[provisionId] ?? provisionId
+  return PROVISION_LABELS[provisionId] ?? 'Điều khoản chưa đặt tên'
 }
 
 export function formatCitation(citation?: string | null, id?: string): string {
   if (id && PROVISION_LABELS[id]) return PROVISION_LABELS[id]
-  if (!citation) return id ?? ''
-  if (citation.startsWith('[Chưa xác minh]')) {
-    return 'Điều 173 BLHS 2015 (Tội trộm cắp tài sản) & Điều 87 BLTTHS 2015 (Nguồn chứng cứ)'
-  }
-  return citation
+  if (!citation) return 'Điều khoản chưa xác định'
+  return citation.replace(/^\[Chưa xác minh\]\s*/, 'Chưa xác minh — ')
 }
 
 export function formatSourceRef(sourceRef?: string | null): string {
-  if (!sourceRef || sourceRef.startsWith('[Người rà soát')) {
-    return 'Bộ luật Hình sự 2015 (sửa đổi, bổ sung 2017) & Bộ luật Tố tụng hình sự 2015'
+  if (!sourceRef) return 'Chưa ghi nguồn đối chiếu'
+  if (sourceRef.startsWith('[Reviewer')) {
+    return sourceRef.slice(1, -1).replace(/^Reviewer/, 'Người rà soát')
+  }
+  if (sourceRef.startsWith('[') && sourceRef.endsWith(']')) {
+    return sourceRef.slice(1, -1)
   }
   return sourceRef
 }
@@ -198,16 +215,15 @@ export function formatChargeLabel(charge: { id: string; display_label?: string }
   return charge.display_label ?? charge.id
 }
 
-export function formatLegalTest(elementId: string, test?: string): string {
-  if (!test || test.startsWith('[Người rà soát')) {
-    if (elementId === 'element_a_01') {
-      return 'Hành vi lén lút, bí mật chuyển dịch tài sản đang do người khác quản lý ra khỏi khu vực kiểm soát.'
-    }
-    if (elementId === 'element_b_01') {
-      return 'Mục đích chiếm đoạt tài sản xuất hiện trước hoặc ngay tại thời điểm thực hiện hành vi chuyển dịch.'
-    }
+export function formatLegalTest(_elementId: string, test?: string): string {
+  if (!test) return ''
+  if (test.includes('Mô tả dấu hiệu hành vi theo văn bản được chọn')) {
+    return 'Hành vi lén lút, bí mật chuyển dịch tài sản đang do người khác quản lý ra khỏi khu vực kiểm soát.'
   }
-  return test ?? ''
+  if (test.includes('Mô tả dấu hiệu mục đích theo văn bản được chọn')) {
+    return 'Mục đích chiếm đoạt tài sản xuất hiện trước hoặc ngay tại thời điểm thực hiện hành vi chuyển dịch.'
+  }
+  return test
 }
 
 export function formatExplanationBody(body?: string, id?: string): string {
@@ -223,13 +239,14 @@ export function formatExplanationBody(body?: string, id?: string): string {
 
 export function pathBadgeLabel(pathId: string): string {
   if (pathId.startsWith('path_insufficient')) return 'Chưa đủ căn cứ'
-  if (pathId === 'path_a') return 'Định danh A'
-  if (pathId === 'path_b') return 'Định danh B'
-  return 'Đáp án thay thế'
+  if (pathId === 'path_a') return 'Đường đáp án A'
+  if (pathId === 'path_b') return 'Đường đáp án B'
+  return 'Đường đáp án thay thế'
 }
 
 export function pathCategoryLabel(pathId: string, pathLabel?: string | null): string {
   if (pathId.startsWith('path_insufficient')) {
+    if (pathLabel) return `Nhánh: ${pathLabel}`
     if (pathId === 'path_insufficient_a_unresolved_b_not_supported') {
       return 'Nhánh: Chưa đủ căn cứ — Mục đích chưa được hỗ trợ'
     }
@@ -242,14 +259,14 @@ export function pathCategoryLabel(pathId: string, pathLabel?: string | null): st
     return 'Nhánh: Chưa đủ căn cứ'
   }
   if (pathId === 'path_a') {
-    return pathLabel === 'Hỗ trợ định danh A' || !pathLabel
-      ? 'Nhánh: Định danh A (Trộm cắp tài sản)'
-      : `Nhánh: ${pathLabel}`
+    return pathLabel && pathLabel !== 'Hỗ trợ định danh A'
+      ? `Nhánh: ${pathLabel}`
+      : 'Nhánh: Định danh A (Trộm cắp tài sản)'
   }
   if (pathId === 'path_b') {
-    return pathLabel === 'Hỗ trợ định danh B' || !pathLabel
-      ? 'Nhánh: Định danh B (Lạm dụng tín nhiệm)'
-      : `Nhánh: ${pathLabel}`
+    return pathLabel && pathLabel !== 'Hỗ trợ định danh B'
+      ? `Nhánh: ${pathLabel}`
+      : 'Nhánh: Định danh B (Lạm dụng tín nhiệm)'
   }
   if (pathLabel) return `Nhánh: ${pathLabel}`
   return 'Nhánh: Đáp án hợp lệ'
@@ -264,5 +281,11 @@ export function conductEventLabel(eventId: string): string {
   if (eventId === 'conduct_02') return 'Hành vi ngày 01/06/2024 (03:40)'
   if (eventId === 'conduct_nhan_xe') return 'Nhận xe ngày 02/03/2024 (khoảng 17:30)'
   if (eventId === 'conduct_ban_xe') return 'Bán xe ngày 04/03/2024'
-  return eventId
+  return 'Hành vi chưa đặt tên'
+}
+
+export function conductEventTitle(eventId: string): string {
+  if (eventId === 'conduct_01') return 'Hành vi nghi vấn dịch chuyển tài sản trong ca đêm'
+  if (eventId === 'conduct_02') return 'Hành vi nghi vấn trong đêm 01/06/2024'
+  return conductEventLabel(eventId)
 }

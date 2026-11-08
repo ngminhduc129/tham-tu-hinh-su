@@ -17,7 +17,7 @@
       "lo_law_01"
     ],
     "legal_time_anchor": "conduct_date",
-    "legal_time_anchor_reason": "Hành vi bán xe ngày 04/03/2024, trước 01/7/2025; reviewer xác định phiên bản luật áp dụng và quy định chuyển tiếp của Luật 86/2025/QH15 nếu vụ việc được xử lý sau ngày đó."
+    "legal_time_anchor_reason": "Hành vi bán xe ngày 04/03/2024, trước 01/7/2025; người rà soát xác định phiên bản luật áp dụng và quy định chuyển tiếp của Luật 86/2025/QH15 nếu vụ việc được xử lý sau ngày đó."
   },
   "brief": {
     "player_role": "learner_case_analyst",
@@ -265,7 +265,7 @@
     {
       "id": "ev_tin_dang_ban",
       "type": "electronic_data",
-      "title": "Biên bản trích xuất bài đăng Facebook Marketplace của ông Hải",
+      "title": "Biên bản trích xuất bài đăng bán xe trên Facebook của ông Hải",
       "document_date": "2024-03-13",
       "content": "Từ điện thoại ông Hải giao nộp khi bị hỏi cung ngày 12/03. Bài đăng 'Cần bán SH 2019 chính chủ, giấy tờ đầy đủ, 28tr, xem xe tại Hà Đông, liên hệ trong ngày' được tạo lúc 10:21 ngày 04/03/2024. Ba ảnh trong bài có siêu dữ liệu chụp lúc 18:47 ngày 03/03/2024. Trong điện thoại có hai tin nhắn hỏi mua xe từ tài khoản lạ ngày 04/03, ông Hải chỉ trả lời một người (bà C).",
       "source": {
@@ -523,7 +523,7 @@
       "charge_id": "charge_a",
       "element_type": "conduct",
       "label": "Nhận tài sản hợp pháp theo thỏa thuận mượn",
-      "legal_test": "[Reviewer xác nhận dấu hiệu 'vay, mượn, thuê hoặc nhận tài sản bằng hình thức hợp đồng' theo điều luật đã duyệt.]",
+      "legal_test": "[Người rà soát xác nhận dấu hiệu 'vay, mượn, thuê hoặc nhận tài sản bằng hình thức hợp đồng' theo điều luật đã duyệt.]",
       "required": true,
       "fact_ids": ["fact_01"],
       "evidence_ids": ["ev_don_trinh_bao", "ev_zalo_ab", "ev_hoi_cung_a"],
@@ -534,7 +534,7 @@
       "charge_id": "charge_a",
       "element_type": "conduct",
       "label": "Hành vi chiếm đoạt sau khi nhận: bán xe, nói dối người mua, tắt máy, không hoàn trả",
-      "legal_test": "[Reviewer xác định điểm/khoản nào của điều luật áp dụng cho hành vi bán xe và tắt máy.]",
+      "legal_test": "[Người rà soát xác định điểm/khoản nào của điều luật áp dụng cho hành vi bán xe và tắt máy.]",
       "required": true,
       "fact_ids": ["fact_06", "fact_07"],
       "evidence_ids": ["ev_giay_mua_ban", "ev_sao_ke", "ev_zalo_ab"],
@@ -545,7 +545,7 @@
       "charge_id": "charge_a",
       "element_type": "mental_state",
       "label": "Ý định chiếm đoạt phát sinh sau khi đã nhận tài sản",
-      "legal_test": "[Reviewer xác nhận tiêu chí phân biệt thời điểm phát sinh ý định chiếm đoạt giữa hai tội danh.]",
+      "legal_test": "[Người rà soát xác nhận tiêu chí phân biệt thời điểm phát sinh ý định chiếm đoạt giữa hai tội danh.]",
       "required": true,
       "fact_ids": ["fact_02", "fact_03", "fact_05"],
       "evidence_ids": ["ev_camera_que", "ev_tin_dang_ban", "ev_giay_vay", "ev_hoi_cung_a"],
@@ -556,7 +556,7 @@
       "charge_id": "charge_b",
       "element_type": "conduct",
       "label": "Đưa thông tin hoặc cam kết gian dối để được giao xe",
-      "legal_test": "[Reviewer xác nhận dấu hiệu 'thủ đoạn gian dối' của tội lừa đảo và việc cam kết hoàn trả có thuộc dấu hiệu này hay không.]",
+      "legal_test": "[Người rà soát xác nhận dấu hiệu 'thủ đoạn gian dối' của tội lừa đảo và việc cam kết hoàn trả có thuộc dấu hiệu này hay không.]",
       "required": true,
       "fact_ids": ["fact_02", "fact_04"],
       "evidence_ids": ["ev_camera_que", "ev_zalo_ab", "ev_zalo_atu"],
@@ -567,7 +567,7 @@
       "charge_id": "charge_b",
       "element_type": "mental_state",
       "label": "Ý định chiếm đoạt có trước hoặc ngay khi nhận xe",
-      "legal_test": "[Reviewer xác nhận tiêu chí xác định ý định chiếm đoạt có trước.]",
+      "legal_test": "[Người rà soát xác nhận tiêu chí xác định ý định chiếm đoạt có trước.]",
       "required": true,
       "fact_ids": ["fact_03", "fact_04"],
       "evidence_ids": ["ev_zalo_atu", "ev_loi_khai_tu", "ev_giay_vay", "ev_camera_que", "ev_tin_dang_ban"],
@@ -765,12 +765,12 @@
       "target_ids": ["hyp_a", "hyp_b"],
       "value_type": "multi_select",
       "options": [
-        { "id": "ev_zalo_ab", "label": "ev_zalo_ab" },
-        { "id": "ev_zalo_atu", "label": "ev_zalo_atu" },
-        { "id": "ev_loi_khai_tu", "label": "ev_loi_khai_tu" },
-        { "id": "ev_giay_vay", "label": "ev_giay_vay" },
-        { "id": "ev_camera_que", "label": "ev_camera_que" },
-        { "id": "ev_tin_dang_ban", "label": "ev_tin_dang_ban" }
+        { "id": "ev_zalo_ab", "label": "Tin nhắn Zalo giữa ông B và ông A" },
+        { "id": "ev_zalo_atu", "label": "Tin nhắn Zalo giữa ông A và ông Tú" },
+        { "id": "ev_loi_khai_tu", "label": "Lời khai của ông Phạm Văn Tú" },
+        { "id": "ev_giay_vay", "label": "Giấy vay tiền và tin nhắn đòi nợ" },
+        { "id": "ev_camera_que", "label": "Camera ghi cảnh ông A chở con" },
+        { "id": "ev_tin_dang_ban", "label": "Bài đăng bán xe của ông Hải" }
       ]
     },
     {
@@ -779,12 +779,12 @@
       "target_ids": ["hyp_a", "hyp_b"],
       "value_type": "multi_select",
       "options": [
-        { "id": "ev_zalo_ab", "label": "ev_zalo_ab" },
-        { "id": "ev_zalo_atu", "label": "ev_zalo_atu" },
-        { "id": "ev_loi_khai_tu", "label": "ev_loi_khai_tu" },
-        { "id": "ev_giay_vay", "label": "ev_giay_vay" },
-        { "id": "ev_camera_que", "label": "ev_camera_que" },
-        { "id": "ev_tin_dang_ban", "label": "ev_tin_dang_ban" }
+        { "id": "ev_zalo_ab", "label": "Tin nhắn Zalo giữa ông B và ông A" },
+        { "id": "ev_zalo_atu", "label": "Tin nhắn Zalo giữa ông A và ông Tú" },
+        { "id": "ev_loi_khai_tu", "label": "Lời khai của ông Phạm Văn Tú" },
+        { "id": "ev_giay_vay", "label": "Giấy vay tiền và tin nhắn đòi nợ" },
+        { "id": "ev_camera_que", "label": "Camera ghi cảnh ông A chở con" },
+        { "id": "ev_tin_dang_ban", "label": "Bài đăng bán xe của ông Hải" }
       ]
     },
     {
@@ -1935,43 +1935,43 @@
     {
       "id": "expl_evidence_sources",
       "title": "Nguồn, thủ tục, độ tin cậy của từng chứng cứ",
-      "body": "Chứng cứ có giá trị khác nhau theo bốn lớp: nguồn và tính toàn vẹn, quy trình thu thập, độ tin cậy, và sức chứng minh cho từng mệnh đề. Tin nhắn Zalo do người bị hại tự chụp (ev_zalo_ab) và biên bản hỏi cung có sai lệch thời gian, thiếu chữ ký (ev_hoi_cung_a) có khiếm khuyết cần nhận diện; ảnh giấy vay chỉ là bản sao do chủ nợ cung cấp. Đánh giá khiếm khuyết không đồng nghĩa với việc tự động loại chứng cứ: hệ quả pháp lý do reviewer xác định. [Cần reviewer xác nhận.]",
+      "body": "Chứng cứ có giá trị khác nhau theo bốn lớp: nguồn và tính toàn vẹn, quy trình thu thập, độ tin cậy, và sức chứng minh cho từng mệnh đề. Tin nhắn Zalo do người bị hại tự chụp và biên bản hỏi cung có sai lệch thời gian, thiếu chữ ký đều có khiếm khuyết cần nhận diện; ảnh giấy vay chỉ là bản sao do chủ nợ cung cấp. Đánh giá khiếm khuyết không đồng nghĩa với việc tự động loại chứng cứ: hệ quả pháp lý do người rà soát xác định. [Cần người rà soát xác nhận.]",
       "legal_basis_ids": ["prov_bltths_chung_cu", "prov_bltths_hoi_cung"]
     },
     {
       "id": "expl_proof_basic",
       "title": "Hai sự kiện không tranh chấp",
-      "body": "Việc ông A nhận xe theo thỏa thuận mượn và việc ông A bán xe được chứng minh bằng nhiều nguồn độc lập (đơn trình báo, tin nhắn, giấy mua bán, sao kê, lời khai bà Mai). Điểm tranh luận của case không nằm ở việc có bán xe hay không, mà ở thời điểm hình thành ý định chiếm đoạt.",
+      "body": "Việc ông A nhận xe theo thỏa thuận mượn và việc ông A bán xe được chứng minh bằng nhiều nguồn độc lập (đơn trình báo, tin nhắn, giấy mua bán, sao kê, lời khai bà Mai). Điểm tranh luận của hồ sơ không nằm ở việc có bán xe hay không, mà ở thời điểm hình thành ý định chiếm đoạt.",
       "legal_basis_ids": []
     },
     {
       "id": "expl_intent_timing",
       "title": "Thời điểm hình thành ý định chiếm đoạt",
-      "body": "Cách phân biệt thường dùng trong tài liệu học thuật: nếu ý định chiếm đoạt có trước hoặc ngay khi nhận tài sản và người đó dùng thủ đoạn gian dối để được giao, nghiêng về lừa đảo; nếu nhận tài sản hợp pháp rồi mới nảy sinh ý định chiếm đoạt, nghiêng về lạm dụng tín nhiệm. Trong case: các chứng cứ ủng hộ ý định phát sinh sau (camera ngày 03/03 cho thấy xe được dùng đúng mục đích mượn; ảnh chụp xe 18:47 ngày 03/03 và bài rao bán ngày 04/03; nhắc nợ 09:40 ngày 03/03) mạnh hơn chứng cứ ủng hộ ý định có trước (tin nhắn hỏi giá ngày 29/02, vốn mơ hồ và bị giải thích là 'hỏi chơi'). Khoản nợ chứng minh động cơ tồn tại từ trước, không chứng minh thời điểm ý định. Lời giải chủ đạo là path_a; path_b được chấp nhận khi người chơi suy ra ý định có trước từ tin nhắn 29/02 và coi cam kết hoàn trả là không thật, nhưng lập luận này mỏng hơn. [Cần reviewer xác nhận lời giải chủ đạo và điều kiện chấp nhận path_b.]",
+      "body": "Cách phân biệt thường dùng trong tài liệu học thuật: nếu ý định chiếm đoạt có trước hoặc ngay khi nhận tài sản và người đó dùng thủ đoạn gian dối để được giao, nghiêng về lừa đảo; nếu nhận tài sản hợp pháp rồi mới nảy sinh ý định chiếm đoạt, nghiêng về lạm dụng tín nhiệm. Trong hồ sơ: các chứng cứ ủng hộ ý định phát sinh sau (camera ngày 03/03 cho thấy xe được dùng đúng mục đích mượn; ảnh chụp xe 18:47 ngày 03/03 và bài rao bán ngày 04/03; nhắc nợ 09:40 ngày 03/03) mạnh hơn chứng cứ ủng hộ ý định có trước (tin nhắn hỏi giá ngày 29/02, vốn mơ hồ và bị giải thích là 'hỏi chơi'). Khoản nợ chứng minh động cơ tồn tại từ trước, không chứng minh thời điểm ý định. Lời giải chủ đạo là giả thuyết A; giả thuyết B được chấp nhận khi người chơi suy ra ý định có trước từ tin nhắn 29/02 và coi cam kết hoàn trả là không thật, nhưng lập luận này mỏng hơn. [Cần người rà soát xác nhận lời giải chủ đạo và điều kiện chấp nhận giả thuyết B.]",
       "legal_basis_ids": ["prov_blhs_174", "prov_blhs_175"]
     },
     {
       "id": "expl_charge_a",
       "title": "Lập luận định danh lạm dụng tín nhiệm (lời giải chủ đạo)",
-      "body": "Ông A nhận xe hợp pháp theo thỏa thuận mượn (element_a_01), sau đó bán xe, nói dối bà Mai về nguồn gốc xe, tắt máy và không hoàn trả (element_a_02); ý định chiếm đoạt phát sinh sau khi nhận xe, muộn nhất sáng 04/03/2024 (element_a_03). Các dấu hiệu của lừa đảo, nhất là gian dối để được giao xe và ý định có trước, chưa được chứng minh. [Cần reviewer xác nhận điểm/khoản của điều luật áp dụng.]",
+      "body": "Ông A nhận xe hợp pháp theo thỏa thuận mượn, sau đó bán xe, nói dối bà Mai về nguồn gốc xe, tắt máy và không hoàn trả; ý định chiếm đoạt phát sinh sau khi nhận xe, muộn nhất vào sáng 04/03/2024. Các dấu hiệu của lừa đảo, nhất là gian dối để được giao xe và ý định có trước, chưa được chứng minh. [Cần người rà soát xác nhận điểm/khoản của điều luật áp dụng.]",
       "legal_basis_ids": ["prov_blhs_175"]
     },
     {
       "id": "expl_charge_b",
       "title": "Lập luận định danh lừa đảo (lời giải thay thế)",
-      "body": "Nếu coi tin nhắn ngày 29/02 là bước chuẩn bị nhắm vào chiếc SH đời 2019 và cam kết 'mai trả' là không thật ngay từ 02/03, thì ý định chiếm đoạt có trước và cam kết là thủ đoạn gian dối để được giao xe. Lập luận này phải giải thích camera ngày 03/03 (xe dùng đúng mục đích mượn) và chấp nhận rủi ro suy diễn từ một tin nhắn có thể hiểu khác. [Cần reviewer xác nhận điều kiện chấp nhận.]",
+      "body": "Nếu coi tin nhắn ngày 29/02 là bước chuẩn bị nhắm vào chiếc SH đời 2019 và cam kết 'mai trả' là không thật ngay từ 02/03, thì ý định chiếm đoạt có trước và cam kết là thủ đoạn gian dối để được giao xe. Lập luận này phải giải thích camera ngày 03/03 (xe dùng đúng mục đích mượn) và chấp nhận rủi ro suy diễn từ một tin nhắn có thể hiểu khác. [Cần người rà soát xác nhận điều kiện chấp nhận.]",
       "legal_basis_ids": ["prov_blhs_174"]
     },
     {
       "id": "expl_circumstances",
       "title": "Giá trị tài sản và tình tiết",
-      "body": "Giá trị tài sản (định giá 41 triệu đồng, giá bán thực tế 28 triệu đồng) được đối chiếu với mức định khung của căn cứ đã duyệt. Việc gia đình hoàn trả 28 triệu đồng cho bà Mai là dữ kiện về khắc phục hậu quả. Thành khẩn khai báo chưa thể kết luận vì lời khai có khiếm khuyết biên bản và bị can chỉ thừa nhận một phần. [Cần reviewer xác nhận cách áp dụng, không có mức hình phạt trong case.]",
+      "body": "Giá trị tài sản (định giá 41 triệu đồng, giá bán thực tế 28 triệu đồng) được đối chiếu với mức định khung của căn cứ đã duyệt. Việc gia đình hoàn trả 28 triệu đồng cho bà Mai là dữ kiện về khắc phục hậu quả. Thành khẩn khai báo chưa thể kết luận vì lời khai có khiếm khuyết biên bản và bị can chỉ thừa nhận một phần. [Cần người rà soát xác nhận cách áp dụng, hồ sơ không nêu mức hình phạt.]",
       "legal_basis_ids": ["prov_blhs_51", "prov_blhs_175"]
     },
     {
       "id": "expl_law",
       "title": "Căn cứ pháp lý và phiên bản luật",
-      "body": "Căn cứ chọn theo lời giải: Điều 175 BLHS cho path_a, Điều 174 BLHS cho path_b (số điều dự kiến, cần xác minh). Hành vi xảy ra ngày 04/03/2024, trước thời điểm Luật 86/2025/QH15 có hiệu lực; reviewer xác định phiên bản áp dụng và tác động của quy định chuyển tiếp.",
+      "body": "Căn cứ chọn theo lời giải: Điều 175 BLHS cho giả thuyết A, Điều 174 BLHS cho giả thuyết B (số điều dự kiến, cần xác minh). Hành vi xảy ra ngày 04/03/2024, trước thời điểm Luật 86/2025/QH15 có hiệu lực; người rà soát xác định phiên bản áp dụng và tác động của quy định chuyển tiếp.",
       "legal_basis_ids": ["prov_blhs_174", "prov_blhs_175"]
     }
   ],
@@ -2070,7 +2070,7 @@
     {
       "id": "gl_giam_nhe",
       "term": "Tình tiết giảm nhẹ",
-      "definition": "Tình tiết có thể làm giảm trách nhiệm hình sự theo căn cứ đã duyệt; case không yêu cầu mức hình phạt.",
+      "definition": "Tình tiết có thể làm giảm trách nhiệm hình sự theo căn cứ đã duyệt; hồ sơ không yêu cầu mức hình phạt.",
       "legal_basis_ids": ["prov_blhs_51"]
     }
   ],

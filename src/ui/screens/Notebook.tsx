@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { outcomeCatalog } from '../../domain/load'
 import { formatDateInterval } from '../../domain/legalVersion'
-import { REVIEW_STATUS_LABELS, formatCitation, formatSourceRef } from '../labels'
+import { REVIEW_STATUS_LABELS, formatCitation, formatSourceRef, bundleLabel, formatBundleVersion } from '../labels'
 import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 
@@ -100,7 +100,7 @@ export function NotebookScreen() {
                     <Badge tone="warn">
                       {REVIEW_STATUS_LABELS[provision.review_status] ?? provision.review_status}
                     </Badge>
-                    <Badge tone="neutral">{bundle.version === 'placeholder-0.1.0' ? 'Bản chưa xác minh' : bundle.version}</Badge>
+                    <Badge tone="neutral">{formatBundleVersion(bundle.version)}</Badge>
                     {referencedProvisions.has(provision.id) && (
                       <Badge tone="accent">Hồ sơ tham chiếu</Badge>
                     )}
@@ -120,7 +120,7 @@ export function NotebookScreen() {
                     <div>
                       <dt>Bộ quy định</dt>
                       <dd>
-                        {bundle.id === 'law_bundle_v1' ? 'Bộ quy định pháp luật (BLHS & BLTTHS 2015)' : bundle.id} · {bundle.jurisdiction === 'VN' ? 'Việt Nam' : bundle.jurisdiction}
+                        {bundleLabel(bundle.id)} · {bundle.jurisdiction === 'VN' ? 'Việt Nam' : bundle.jurisdiction}
                       </dd>
                     </div>
                   </dl>
@@ -148,7 +148,6 @@ export function NotebookScreen() {
                 <li key={outcome.id}>
                   <strong>{outcome.label}</strong>
                   <p className="small muted">{outcome.description}</p>
-                  <span className="mono small muted">{outcome.id}</span>
                 </li>
               ))}
               {outcomes.length === 0 && (

@@ -2,7 +2,7 @@ import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { computeAgeRange, formatAgeRange } from '../../domain/age'
 import { checkLawResolution, formatDateInterval } from '../../domain/legalVersion'
-import { ROLE_LABELS, PRECISION_LABELS, EVIDENCE_TYPE_LABELS } from '../labels'
+import { ROLE_LABELS, PRECISION_LABELS, EVIDENCE_TYPE_LABELS, conductEventTitle } from '../labels'
 
 export function CaseFileScreen() {
   const { caseFile, lookups, navigate } = useGame()
@@ -116,7 +116,7 @@ export function CaseFileScreen() {
                     <p className="timeline__date">
                       {formatDateInterval(event.date_interval.start_date, event.date_interval.end_date)}
                     </p>
-                    <p className="font-medium">{event.id === 'conduct_01' ? 'Hành vi nghi vấn dịch chuyển tài sản trong ca đêm' : event.id}</p>
+                    <p className="font-medium">{conductEventTitle(event.id)}</p>
                     <Badge tone={check?.status === 'ok' ? 'success' : 'warn'}>
                       {check?.status === 'ok' ? 'Luật đã đối chiếu' : 'Luật chưa phân giải'}
                     </Badge>

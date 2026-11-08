@@ -17,6 +17,7 @@ import {
   formatCitation,
   formatExplanationBody,
   formatSourceRef,
+  conductEventLabel,
   pathBadgeLabel,
   pathCategoryLabel,
 } from '../labels'
@@ -37,7 +38,7 @@ function targetLabel(
   if (fieldScope === 'person_conduct') {
     const [personId, conductId] = targetId.split(':')
     const characterName = lookups.characters.get(personId) ?? personId
-    const eventName = conductId === 'conduct_01' ? 'hành vi ngày 31/05/2024' : conductId
+    const eventName = conductEventLabel(conductId)
     return `${characterName} · ${eventName}`
   }
   if (fieldId === 'legal_basis') return lookups.conclusions.get(targetId)?.label ?? targetId
