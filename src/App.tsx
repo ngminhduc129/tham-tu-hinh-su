@@ -254,11 +254,23 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
               <button
                 type="button"
                 className="header-link"
+                aria-current={
+                  route.kind === 'case' &&
+                  route.caseId === caseFile.metadata.id &&
+                  route.screen === 'notebook'
+                    ? 'page'
+                    : undefined
+                }
                 onClick={() => navigate(`case/${caseFile.metadata.id}/notebook`)}
               >
                 Sổ tay
               </button>
-              <button type="button" className="header-link" onClick={() => navigate('settings')}>
+              <button
+                type="button"
+                className="header-link"
+                aria-current={route.kind === 'settings' ? 'page' : undefined}
+                onClick={() => navigate('settings')}
+              >
                 Cài đặt
               </button>
             </nav>
