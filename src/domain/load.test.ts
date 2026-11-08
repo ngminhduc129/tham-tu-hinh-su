@@ -25,7 +25,28 @@ describe('tải case và schema', () => {
     expect(entry?.status).toBe('draft')
     expect(entry?.publishable).toBe(false)
     expect(entry?.playable).toBe(true)
-    expect(manifest.cases).toHaveLength(1)
+    expect(manifest.cases).toHaveLength(2)
+    expect(manifest.cases.map((item) => item.id)).toEqual(['case_001', 'case_002'])
+  })
+
+  it('nạp case_002 và ghép hai bộ văn bản luật tách rời', () => {
+    const loaded = loadCase('case_002')
+    expect(loaded.ok).toBe(true)
+    if (!loaded.ok) return
+
+    expect(loaded.caseFile.metadata.id).toBe('case_002')
+    expect(loaded.caseFile.schema_version).toBe('2.1.0')
+    expect(loaded.caseFile.law_bundles.map((bundle) => bundle.id)).toEqual([
+      'law_bundle_blhs',
+      'law_bundle_bltths',
+    ])
+    expect(loaded.caseFile.law_bundles.flatMap((bundle) => bundle.provisions)).toHaveLength(6)
+    expect(validateCaseSchema(loaded.caseFile).ok).toBe(true)
+
+    const entry = getCaseEntry('case_002')
+    expect(entry?.version).toBe(loaded.caseFile.metadata.version)
+    expect(entry?.publishable).toBe(false)
+    expect(entry?.playable).toBe(true)
   })
 
   it('validate schema chấp nhận case đã ghép và từ chối dữ liệu thiếu trường', () => {

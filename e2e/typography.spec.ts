@@ -158,3 +158,43 @@ test('font tiếng Việt thực sự được nạp, không rơi về fallback'
   expect(result.bodyFamily).toContain('IBM Plex Sans Variable')
   expect(result.monoFamily).toContain('IBM Plex Mono')
 })
+
+test('hồ sơ 002 mở được từ thư viện và hiển thị đủ 12 chứng cứ', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/#/')
+  await settle(page)
+
+  await expect(page.locator('.case-card')).toHaveCount(2)
+  await expect(
+    page.getByRole('heading', { name: 'Chiếc xe tay ga cho mượn' }),
+  ).toBeVisible()
+
+  await page
+    .locator('.case-card')
+    .nth(1)
+    .getByRole('button', { name: 'Bắt đầu hồ sơ' })
+    .click()
+  await settle(page)
+  await expect(page).toHaveURL(/#\/case\/case_002\/brief$/)
+  await expect(page.locator('.case-chip')).toContainText('Vụ án 002')
+
+  for (const width of [360, 768, 1440]) {
+    await page.setViewportSize({ width, height: 950 })
+    await page.goto('/#/case/case_002/evidence')
+    await settle(page)
+
+    await expect(page.locator('.evidence-card')).toHaveCount(12)
+    await expect(page.getByText('Đơn trình báo', { exact: true }).first()).toBeVisible()
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    )
+    expect(overflow, `tràn ngang ở ${width}px · case_002/evidence`).toBeLessThanOrEqual(1)
+
+    await page.screenshot({
+      path: test.info().outputPath(`case_002-${width}-evidence.png`),
+      fullPage: true,
+    })
+  }
+})

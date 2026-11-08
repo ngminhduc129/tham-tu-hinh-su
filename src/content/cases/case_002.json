@@ -1,0 +1,2087 @@
+{
+  "schema_version": "2.1.0",
+  "metadata": {
+    "id": "case_002",
+    "version": "0.1.0",
+    "title": "Chiếc xe tay ga cho mượn",
+    "status": "draft",
+    "jurisdiction": "VN",
+    "law_bundle_ids": ["law_bundle_blhs", "law_bundle_bltths"],
+    "learning_outcome_ids": [
+      "lo_source_fact_01",
+      "lo_evidence_01",
+      "lo_reasoning_01",
+      "lo_proof_01",
+      "lo_elements_01",
+      "lo_charge_01",
+      "lo_law_01"
+    ],
+    "legal_time_anchor": "conduct_date",
+    "legal_time_anchor_reason": "Hành vi bán xe ngày 04/03/2024, trước 01/7/2025; reviewer xác định phiên bản luật áp dụng và quy định chuyển tiếp của Luật 86/2025/QH15 nếu vụ việc được xử lý sau ngày đó."
+  },
+  "brief": {
+    "player_role": "learner_case_analyst",
+    "narrative": "Hồ sơ hư cấu mô phỏng một tình huống thường gặp, không dựa trên vụ án có thật. Chiều 02/03/2024, ông Ngô Văn Hải (A) mượn xe SH đời 2019 của ông Trần Quốc Bảo (B) với lý do về quê đón con. Ngày 03/03 ông A đón con đúng như nói nhưng xin gia hạn trả xe và bị chủ nợ nhắc nợ. Ngày 04/03 ông A rao bán xe, bán cho bà Lê Thị Mai với giá 28 triệu đồng, dùng 25 triệu trả nợ rồi tắt máy. Ông B trình báo ngày 09/03. Mốc thời gian chính: 20/01 vay nợ (hạn 05/03); 29/02 21:05 nhắn hỏi giá SH 2019; 02/03 17:30 nhận xe; 03/03 08:12 camera ghi cảnh chở con, 09:40 bị nhắc nợ, 18:47 chụp ảnh xe, 20:15 xin gia hạn; 04/03 09:10 nhắn 'sẽ mang sang', 10:21 đăng bán, 14:05 nhận tiền, 15:30 trả nợ; 09/03 trình báo; 12/03 hỏi cung; 13/03 thu hồi xe; 20/03 trao trả; 01/04 hoàn trả tiền cho người mua.",
+    "task_prompt": "Đánh giá 12 chứng cứ, kiểm tra hai giả thuyết về thời điểm hình thành ý định chiếm đoạt, rồi chọn định danh phù hợp (hoặc kết luận chưa đủ căn cứ) và đánh giá các tình tiết được hỏi."
+  },
+  "temporal_context": {
+    "conduct_events": [
+      {
+        "id": "conduct_nhan_xe",
+        "date_interval": {
+          "start_date": "2024-03-02",
+          "end_date": "2024-03-02",
+          "precision": "day",
+          "source_ids": ["ev_don_trinh_bao"]
+        },
+        "law_resolution": {
+          "status": "unresolved",
+          "bundle_id": null,
+          "review_id": null
+        }
+      },
+      {
+        "id": "conduct_ban_xe",
+        "date_interval": {
+          "start_date": "2024-03-04",
+          "end_date": "2024-03-04",
+          "precision": "day",
+          "source_ids": ["ev_don_trinh_bao"]
+        },
+        "law_resolution": {
+          "status": "unresolved",
+          "bundle_id": null,
+          "review_id": null
+        }
+      }
+    ]
+  },
+  "characters": [
+    {
+      "id": "person_hai",
+      "display_name": "Ngô Văn Hải (A)",
+      "roles": ["person_of_interest"],
+      "birth_date_interval": {
+        "start_date": "1996-05-14",
+        "end_date": "1996-05-14",
+        "precision": "day",
+        "source_ids": ["ev_hoi_cung_a"]
+      },
+      "notes": "Thợ sửa điện lạnh; nhân vật hư cấu."
+    },
+    {
+      "id": "person_bao",
+      "display_name": "Trần Quốc Bảo (B)",
+      "roles": ["victim", "vehicle_owner"],
+      "birth_date_interval": {
+        "start_date": null,
+        "end_date": null,
+        "precision": "unknown",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "person_mai",
+      "display_name": "Lê Thị Mai (C)",
+      "roles": ["buyer", "witness"],
+      "birth_date_interval": {
+        "start_date": null,
+        "end_date": null,
+        "precision": "unknown",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "person_khoa",
+      "display_name": "Đỗ Văn Khoa",
+      "roles": ["creditor", "witness"],
+      "birth_date_interval": {
+        "start_date": null,
+        "end_date": null,
+        "precision": "unknown",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "person_tu",
+      "display_name": "Phạm Văn Tú",
+      "roles": ["witness"],
+      "birth_date_interval": {
+        "start_date": null,
+        "end_date": null,
+        "precision": "unknown",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "person_lan",
+      "display_name": "Nguyễn Thị Lan",
+      "roles": ["family_member"],
+      "birth_date_interval": {
+        "start_date": null,
+        "end_date": null,
+        "precision": "unknown",
+        "source_ids": []
+      }
+    }
+  ],
+  "facts": [
+    {
+      "id": "fact_01",
+      "text": "Chiều 02/03/2024 (khoảng 17 giờ 30), ông B giao xe SH 2019 cho ông A theo thỏa thuận mượn, hẹn trả tối 03/03.",
+      "source_ids": ["ev_don_trinh_bao", "ev_zalo_ab", "ev_hoi_cung_a"]
+    },
+    {
+      "id": "fact_02",
+      "text": "Lý do mượn xe là về quê đón con; sáng 03/03/2024 ông A chở con bằng chính xe này.",
+      "source_ids": ["ev_camera_que", "ev_hoi_cung_a"]
+    },
+    {
+      "id": "fact_03",
+      "text": "Ông A nợ ông Khoa 25 triệu đồng từ 20/01/2024, đến hạn 05/03/2024; 09:40 ngày 03/03 bị nhắc nợ kèm lời đe dọa.",
+      "source_ids": ["ev_giay_vay"]
+    },
+    {
+      "id": "fact_04",
+      "text": "Tối 29/02/2024, ông A nhắn hỏi ông Tú giá xe SH đời 2019 và trả lời 'hỏi chơi' khi bị hỏi xe của ai; ông A không có xe SH.",
+      "source_ids": ["ev_zalo_atu", "ev_loi_khai_tu"]
+    },
+    {
+      "id": "fact_05",
+      "text": "Ảnh xe được chụp lúc 18:47 ngày 03/03; bài rao bán được tạo lúc 10:21 ngày 04/03; 09:10 ngày 04/03 ông A còn nhắn ông B 'em lo xong sẽ mang sang'.",
+      "source_ids": ["ev_tin_dang_ban", "ev_zalo_ab"]
+    },
+    {
+      "id": "fact_06",
+      "text": "Ngày 04/03/2024, ông A bán xe cho bà Mai với giá 28 triệu đồng, giao giấy đăng ký đứng tên ông B và nói dối 'xe mua lại chưa sang tên'; nhận tiền lúc 14:05.",
+      "source_ids": ["ev_giay_mua_ban", "ev_sao_ke"]
+    },
+    {
+      "id": "fact_07",
+      "text": "15:30 ngày 04/03/2024, ông A chuyển 25 triệu đồng trả nợ ông Khoa; từ 05/03 tắt máy, không liên lạc ông B.",
+      "source_ids": ["ev_sao_ke", "ev_giay_vay", "ev_don_trinh_bao"]
+    },
+    {
+      "id": "fact_08",
+      "text": "Giá trị xe tại thời điểm 04/03/2024 được định là 41 triệu đồng.",
+      "source_ids": ["ev_dinh_gia"]
+    },
+    {
+      "id": "fact_09",
+      "text": "Xe được thu hồi từ bà Mai ngày 13/03, trao trả ông B ngày 20/03; ngày 01/04/2024 vợ ông A hoàn trả bà Mai 28 triệu đồng.",
+      "source_ids": ["ev_giay_mua_ban", "ev_bien_lai"]
+    },
+    {
+      "id": "fact_10",
+      "text": "Ông A trình diện sau triệu tập ngày 12/03/2024 và thừa nhận việc bán xe nhưng nêu ý định phát sinh sau khi nhận xe.",
+      "source_ids": ["ev_hoi_cung_a"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_don_trinh_bao",
+      "type": "complaint",
+      "title": "Đơn trình báo của ông Trần Quốc Bảo",
+      "document_date": "2024-03-09",
+      "content": "Ông Trần Quốc Bảo (B), 45 tuổi, trình báo tại Công an phường Tân Hưng (tên giả định). Chiều thứ Bảy 02/03/2024, khoảng 17 giờ 30, ông Ngô Văn Hải (A), người quen cùng khu phố, đến nhà ông B xin mượn xe máy Honda SH đời 2019, biển số 29B1-***.** (đăng ký đứng tên ông B) 'để về quê đón con trai lên Hà Nội, tối mai trả'. Ông B đồng ý, giao xe và chìa khóa; giấy đăng ký xe bản chính để trong cốp xe. Tối 03/03, ông Hải nhắn xin gia hạn thêm hai ngày. Từ 05/03, ông B gọi nhiều lần nhưng máy ông Hải tắt; ông đến nhà thì vợ ông Hải nói không biết chồng ở đâu. Ông B ước giá trị xe khoảng 45 triệu đồng và đề nghị xử lý.",
+      "source": {
+        "origin": "Người bị hại tự viết và nộp trực tiếp tại trụ sở công an phường; cán bộ tiếp nhận ký xác nhận.",
+        "integrity_notes": ["Văn bản gốc có chữ ký người trình báo và xác nhận tiếp nhận."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_don_bao"]
+    },
+    {
+      "id": "ev_zalo_ab",
+      "type": "electronic_message",
+      "title": "Ảnh chụp màn hình tin nhắn Zalo giữa ông B và ông A",
+      "document_date": "2024-03-09",
+      "content": "Chín tin nhắn do ông B tự chụp màn hình điện thoại rồi gửi cho cán bộ tiếp nhận. 02/03 17:38 – A: 'Em cảm ơn anh. Mai tối em trả xe anh nhé.' 03/03 20:15 – A: 'Anh ơi em kẹt chút việc chưa về kịp, cho em xin thêm hai hôm.' 03/03 20:20 – B: 'Ừ, thứ Ba nhớ mang sang.' 04/03 09:10 – A: 'Dạ em lo xong sẽ mang sang anh.' 04/03 18:30 – B: 'Em đâu rồi?' (không có phản hồi). 05/03: B ghi nhận nhiều cuộc gọi nhỡ. Ảnh chụp chỉ hiển thị tên hiển thị 'Hải sửa lạnh', không hiện số điện thoại.",
+      "source": {
+        "origin": "Ảnh chụp do người bị hại tự thực hiện từ điện thoại của mình.",
+        "integrity_notes": [
+          "Không kèm biên bản trích xuất dữ liệu điện tử, không có dữ liệu gốc/giá trị băm.",
+          "Các đoạn hội thoại bị cắt rời, có thể thiếu tin nhắn ở giữa."
+        ]
+      },
+      "procedural_defect_ids": ["defect_zalo_ab"],
+      "limitation_ids": ["limit_zalo_ab"]
+    },
+    {
+      "id": "ev_zalo_atu",
+      "type": "electronic_message",
+      "title": "Biên bản trích xuất Zalo từ điện thoại ông Phạm Văn Tú",
+      "document_date": "2024-03-15",
+      "content": "Biên bản trích xuất dữ liệu từ điện thoại của ông Phạm Văn Tú (người làm trung gian mua bán xe cũ), lập ngày 15/03/2024, ông Tú tự nguyện giao thiết bị, có người chứng kiến và chữ ký các bên. Hội thoại ngày 29/02/2024: 21:05 – A: 'Anh Tú ơi, con SH đời 2019 bây giờ bán được tầm bao nhiêu?' 21:12 – Tú: 'Chính chủ giấy tờ đủ thì 40–42 triệu. Xe ai thế?' 21:15 – A: 'Hỏi chơi thôi anh.' Từ 29/02 đến hết 04/03 không có thêm tin nhắn nào giữa hai người.",
+      "source": {
+        "origin": "Trích xuất từ thiết bị của người thứ ba, có người chứng kiến, lập biên bản tại thời điểm giao nhận thiết bị.",
+        "integrity_notes": ["Biên bản ghi đầy đủ thông tin thiết bị, thời điểm và người tham gia."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_zalo_atu"]
+    },
+    {
+      "id": "ev_loi_khai_tu",
+      "type": "witness_statement",
+      "title": "Biên bản lấy lời khai ông Phạm Văn Tú",
+      "document_date": "2024-03-15",
+      "content": "Ông Tú khai biết ông Hải khoảng hai năm qua việc sửa chữa xe. Theo ông Tú, ông Hải đi xe Wave Alpha cũ và không sở hữu xe SH. Tối 29/02 ông Hải nhắn hỏi giá xe SH đời 2019; khi ông hỏi 'xe ai' thì ông Hải nói 'hỏi chơi'. Ông Tú không biết xe SH mà ông Hải hỏi là của ai, không nghe ông Hải nói về ý định bán xe nào khác và không liên quan đến việc mua bán ngày 04/03.",
+      "source": {
+        "origin": "Lời khai của người làm chứng, ký từng trang.",
+        "integrity_notes": ["Người làm chứng không có quan hệ lợi ích với các bên."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_tu"]
+    },
+    {
+      "id": "ev_giay_vay",
+      "type": "financial_document",
+      "title": "Ảnh giấy vay tiền và tin nhắn đòi nợ của ông Đỗ Văn Khoa",
+      "document_date": "2024-03-18",
+      "content": "Ảnh chụp giấy vay tiền viết tay ngày 20/01/2024: ông Hải vay ông Đỗ Văn Khoa 25.000.000 đồng, hẹn trả cả gốc ngày 05/03/2024, có chữ ký hai bên. Kèm ảnh ba tin nhắn của ông Khoa gửi ông Hải: 25/02 – 'Còn hơn tuần nữa nhớ nhé'; 03/03 09:40 – 'Mai kia đến hạn rồi, không có tiền thì tao không để yên đâu'; 04/03 16:00 – 'Nhận đủ 25 triệu rồi, cảm ơn.' Ông Khoa tự nguyện cung cấp ngày 18/03/2024 và cho biết bản gốc giấy vay đã trả lại ông Hải sau khi nhận tiền ngày 04/03.",
+      "source": {
+        "origin": "Người cho vay tự chụp và cung cấp; không có bản gốc.",
+        "integrity_notes": [
+          "Chỉ có ảnh chụp, bản gốc không còn.",
+          "Người cung cấp là chủ nợ, có lợi ích liên quan."
+        ]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_giay_vay"]
+    },
+    {
+      "id": "ev_camera_que",
+      "type": "video_record",
+      "title": "Biên bản trích xuất camera nhà bà Ngô Thị Sen (mẹ ông Hải) và lời khai",
+      "document_date": "2024-03-14",
+      "content": "Camera an ninh nhà bà Sen tại thôn Đông, xã Bình Lâm (tên giả định) ghi hình ngày 03/03/2024: 08:12 một nam giới chạy xe SH màu đen biển 29B1 vào sân; 08:35 người này chở một bé trai ngồi phía trước, đeo ba lô, rời đi. Bà Sen khai nam giới là con trai bà (ông Hải), cháu bé là con ông Hải sống cùng bà từ đầu năm; kế hoạch đón cháu lên Hà Nội đã được báo từ tuần trước. Biên bản trích xuất lập ngày 14/03/2024, có người chứng kiến, ghi giá trị băm của tệp, sao lưu ra đĩa.",
+      "source": {
+        "origin": "Trích xuất trực tiếp từ đầu ghi camera có biên bản và giá trị băm.",
+        "integrity_notes": ["Tệp gốc có băm SHA-256 ghi trong biên bản."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_camera"]
+    },
+    {
+      "id": "ev_tin_dang_ban",
+      "type": "electronic_data",
+      "title": "Biên bản trích xuất bài đăng Facebook Marketplace của ông Hải",
+      "document_date": "2024-03-13",
+      "content": "Từ điện thoại ông Hải giao nộp khi bị hỏi cung ngày 12/03. Bài đăng 'Cần bán SH 2019 chính chủ, giấy tờ đầy đủ, 28tr, xem xe tại Hà Đông, liên hệ trong ngày' được tạo lúc 10:21 ngày 04/03/2024. Ba ảnh trong bài có siêu dữ liệu chụp lúc 18:47 ngày 03/03/2024. Trong điện thoại có hai tin nhắn hỏi mua xe từ tài khoản lạ ngày 04/03, ông Hải chỉ trả lời một người (bà C).",
+      "source": {
+        "origin": "Trích xuất từ thiết bị do bị can giao nộp, lập biên bản có người chứng kiến.",
+        "integrity_notes": ["Biên bản có thông tin thiết bị và thời điểm trích xuất."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_listing"]
+    },
+    {
+      "id": "ev_giay_mua_ban",
+      "type": "contract_and_statement",
+      "title": "Giấy mua bán xe viết tay và lời khai bà Lê Thị Mai",
+      "document_date": "2024-03-13",
+      "content": "Giấy mua bán viết tay ngày 04/03/2024 giữa ông Hải (bán) và bà Lê Thị Mai (mua): xe SH 2019 biển 29B1-***.**, giá 28.000.000 đồng, ghi 'bên bán cam kết xe chính chủ, giấy đăng ký bản chính giao cho bên mua'; hai bên ký. Bà Mai khai: thấy tin đăng, hẹn xem xe 12:50 tại quán cà phê, ông Hải nói 'cần tiền gấp nên bán rẻ'. Khi bà thấy giấy đăng ký đứng tên người khác, ông Hải nói 'xe mua lại chưa sang tên'. Bà chuyển khoản lúc 14:05, không biết xe thuộc ông B. Ngày 13/03/2024, sau khi công an liên hệ, bà Mai tự nguyện giao nộp xe.",
+      "source": {
+        "origin": "Bản giấy mua bán do bên mua giao nộp; lời khai ký từng trang.",
+        "integrity_notes": ["Giấy tờ gốc do bà Mai giao nộp, đối chiếu chữ ký ông Hải tại buổi hỏi cung."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_mua_ban"]
+    },
+    {
+      "id": "ev_sao_ke",
+      "type": "bank_record",
+      "title": "Sao kê tài khoản ngân hàng của ông Hải",
+      "document_date": "2024-03-20",
+      "content": "Ngân hàng cung cấp theo văn bản yêu cầu của cơ quan điều tra. 04/03/2024 14:05 – ghi có 28.000.000 đồng, người chuyển Lê Thị Mai; 15:30 – ghi nợ 25.000.000 đồng, người nhận Đỗ Văn Khoa, nội dung 'tra no'; 17:10 – rút tiền mặt 2.500.000 đồng. Số dư cuối ngày 03/03/2024 là 1.186.000 đồng.",
+      "source": {
+        "origin": "Do ngân hàng cung cấp bằng văn bản có đóng dấu.",
+        "integrity_notes": ["Tài liệu chính thức từ tổ chức tín dụng, có xác nhận."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_sao_ke"]
+    },
+    {
+      "id": "ev_hoi_cung_a",
+      "type": "interrogation_record",
+      "title": "Biên bản hỏi cung bị can Ngô Văn Hải",
+      "document_date": "2024-03-12",
+      "content": "Ông Hải (sinh 14/05/1996, thợ sửa điện lạnh) trình diện sau khi nhận giấy triệu tập. Ông thừa nhận: mượn xe của ông B ngày 02/03; sáng 03/03 về quê đón con đúng như đã nói; 'khi mượn tôi chỉ định mượn thật'. Ông khai tối 03/03, bị chủ nợ nhắc nhiều lần, ông 'nghĩ bán tạm xe lấy tiền trả nợ rồi sau chuộc/mua xe khác trả anh B'; sáng 04/03 đăng bán, bán cho bà Mai 28 triệu, đưa 25 triệu trả nợ. Ông tắt máy từ 05/03 vì 'sợ anh B hỏi'. Về tin nhắn ngày 29/02, ông khai 'hỏi chơi vì nghe nói xe SH giá cao'.",
+      "source": {
+        "origin": "Biên bản của cơ quan điều tra, ghi lời khai bị can.",
+        "integrity_notes": [
+          "Đầu biên bản ghi hỏi từ 19:30 đến 21:00; nội dung cuối ghi kết thúc 23:50.",
+          "Trang 3 không có chữ ký bị can; không có mục ghi nhận việc giải thích quyền và nghĩa vụ."
+        ]
+      },
+      "procedural_defect_ids": ["defect_hoi_cung"],
+      "limitation_ids": ["limit_hoi_cung"]
+    },
+    {
+      "id": "ev_dinh_gia",
+      "type": "valuation",
+      "title": "Kết luận định giá tài sản",
+      "document_date": "2024-03-18",
+      "content": "Hội đồng định giá (cấp quận, tên giả định) kết luận ngày 18/03/2024: xe Honda SH đời 2019 trị giá 41.000.000 đồng tại thời điểm 04/03/2024. Căn cứ: kiểm tra xe thực tế sau khi thu hồi (có trầy xước nhẹ, đã tính khấu hao) và đối chiếu giá thị trường từ ba nguồn tham khảo.",
+      "source": {
+        "origin": "Kết luận bằng văn bản của hội đồng định giá.",
+        "integrity_notes": ["Văn bản có chữ ký các thành viên hội đồng."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_dinh_gia"]
+    },
+    {
+      "id": "ev_bien_lai",
+      "type": "remedy_record",
+      "title": "Hồ sơ khắc phục hậu quả và trao trả xe",
+      "document_date": "2024-04-01",
+      "content": "Biên bản trao trả xe cho ông B ngày 20/03/2024 (xe còn nguyên giấy đăng ký, trầy xước nhẹ). Giấy biên nhận ngày 01/04/2024: bà Mai nhận lại 28.000.000 đồng từ bà Nguyễn Thị Lan (vợ ông Hải), thay cho ông Hải, hoàn trả tiền mua xe; có chữ ký hai bên và xác nhận của tổ trưởng dân phố, kèm xác nhận chuyển khoản.",
+      "source": {
+        "origin": "Hai văn bản do cơ quan điều tra và các bên lập.",
+        "integrity_notes": ["Có chữ ký các bên và xác nhận của tổ trưởng dân phố."]
+      },
+      "procedural_defect_ids": [],
+      "limitation_ids": ["limit_bien_lai"]
+    }
+  ],
+  "procedural_defects": [
+    {
+      "id": "defect_zalo_ab",
+      "evidence_id": "ev_zalo_ab",
+      "step": "Thu thập và trích xuất dữ liệu điện tử",
+      "observed_issue": "Chứng cứ là ảnh chụp màn hình do người bị hại tự thực hiện, không có biên bản trích xuất, dữ liệu gốc hay giá trị băm; đoạn hội thoại bị cắt rời.",
+      "legal_basis_ids": ["prov_bltths_chung_cu"],
+      "review_status": "not_reviewed",
+      "possible_effect_codes": ["effect_to_be_reviewed"]
+    },
+    {
+      "id": "defect_hoi_cung",
+      "evidence_id": "ev_hoi_cung_a",
+      "step": "Lập biên bản hỏi cung",
+      "observed_issue": "Thời gian hỏi cung ghi không thống nhất giữa đầu và cuối biên bản; trang 3 thiếu chữ ký bị can; thiếu mục ghi nhận việc giải thích quyền và nghĩa vụ.",
+      "legal_basis_ids": ["prov_bltths_hoi_cung"],
+      "review_status": "not_reviewed",
+      "possible_effect_codes": ["effect_to_be_reviewed"]
+    }
+  ],
+  "evidence_limitations": [
+    {
+      "id": "limit_don_bao",
+      "evidence_id": "ev_don_trinh_bao",
+      "description": "Người bị hại là bên có lợi ích; đơn chứng minh việc giao xe và không hoàn trả, không chứng minh ý định của ông Hải."
+    },
+    {
+      "id": "limit_zalo_ab",
+      "evidence_id": "ev_zalo_ab",
+      "description": "Ảnh chụp chọn lọc, không có dữ liệu gốc; chỉ chứng minh nội dung trao đổi, không xác định ý định."
+    },
+    {
+      "id": "limit_zalo_atu",
+      "evidence_id": "ev_zalo_atu",
+      "description": "Tin nhắn không nêu xe của ai và ông Hải trả lời 'hỏi chơi'; ba ngày trước khi mượn, không đủ để kết luận có kế hoạch chiếm đoạt."
+    },
+    {
+      "id": "limit_tu",
+      "evidence_id": "ev_loi_khai_tu",
+      "description": "Người làm chứng không biết xe ai và không biết ý định của ông Hải; lời khai chỉ củng cố bối cảnh tin nhắn."
+    },
+    {
+      "id": "limit_giay_vay",
+      "evidence_id": "ev_giay_vay",
+      "description": "Chỉ có ảnh chụp; khoản nợ chứng minh động cơ tài chính tồn tại từ trước nhưng không chứng minh thời điểm hình thành ý định chiếm đoạt."
+    },
+    {
+      "id": "limit_camera",
+      "evidence_id": "ev_camera_que",
+      "description": "Nhận diện ông Hải dựa vào lời khai của mẹ ông (người thân); hình ảnh chứng minh xe được dùng đúng mục đích nêu, không loại trừ ý định phát sinh sau đó."
+    },
+    {
+      "id": "limit_listing",
+      "evidence_id": "ev_tin_dang_ban",
+      "description": "Thời điểm tạo bài đăng chứng minh hành vi rao bán, không phải thời điểm ý định hình thành; ảnh chụp 18:47 ngày 03/03 cho thấy đã chuẩn bị rao bán từ chiều 03/03."
+    },
+    {
+      "id": "limit_mua_ban",
+      "evidence_id": "ev_giay_mua_ban",
+      "description": "Chứng minh việc định đoạt xe và lời nói dối với bà Mai; không chứng minh ý định tại thời điểm mượn xe."
+    },
+    {
+      "id": "limit_sao_ke",
+      "evidence_id": "ev_sao_ke",
+      "description": "Chứng minh dòng tiền và việc trả nợ ngay sau khi bán xe; không chứng minh ý định trước đó."
+    },
+    {
+      "id": "limit_hoi_cung",
+      "evidence_id": "ev_hoi_cung_a",
+      "description": "Lời khai có lợi cho bị can về thời điểm hình thành ý định; biên bản có khiếm khuyết về thời gian và chữ ký."
+    },
+    {
+      "id": "limit_dinh_gia",
+      "evidence_id": "ev_dinh_gia",
+      "description": "Giá trị định tại thời điểm 04/03/2024; không đính kèm bảng so sánh ba nguồn; giá bán thực tế 28 triệu thấp hơn giá định."
+    },
+    {
+      "id": "limit_bien_lai",
+      "evidence_id": "ev_bien_lai",
+      "description": "Chỉ liên quan đến tình tiết khắc phục hậu quả, không liên quan thời điểm hình thành ý định."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hyp_a",
+      "label": "Giả thuyết A",
+      "description": "Ý định chiếm đoạt chỉ phát sinh sau khi ông A đã nhận xe hợp pháp theo thỏa thuận mượn (khoảng ngày 03/03/2024)."
+    },
+    {
+      "id": "hyp_b",
+      "label": "Giả thuyết B",
+      "description": "Ông A đã có ý định chiếm đoạt từ trước hoặc ngay khi mượn xe và dùng cam kết hoàn trả không thật để được giao xe."
+    }
+  ],
+  "law_bundles": [],
+  "proof_matrix": [
+    {
+      "id": "proof_row_01",
+      "proposition": "Ông A nhận xe từ ông B trên cơ sở thỏa thuận mượn có thời hạn.",
+      "charge_element_ids": ["element_a_01"],
+      "evidence_links": [
+        { "evidence_id": "ev_don_trinh_bao", "relation": "supports", "limitation_ids": ["limit_don_bao"] },
+        { "evidence_id": "ev_zalo_ab", "relation": "supports", "limitation_ids": ["limit_zalo_ab"] },
+        { "evidence_id": "ev_hoi_cung_a", "relation": "supports", "limitation_ids": ["limit_hoi_cung"] }
+      ]
+    },
+    {
+      "id": "proof_row_02",
+      "proposition": "Ông A bán xe cho bà Mai, nhận 28 triệu đồng và không hoàn trả xe cho ông B.",
+      "charge_element_ids": ["element_a_02"],
+      "evidence_links": [
+        { "evidence_id": "ev_giay_mua_ban", "relation": "supports", "limitation_ids": ["limit_mua_ban"] },
+        { "evidence_id": "ev_sao_ke", "relation": "supports", "limitation_ids": ["limit_sao_ke"] },
+        { "evidence_id": "ev_hoi_cung_a", "relation": "supports", "limitation_ids": ["limit_hoi_cung"] },
+        { "evidence_id": "ev_zalo_ab", "relation": "context", "limitation_ids": ["limit_zalo_ab"] }
+      ]
+    },
+    {
+      "id": "proof_row_03",
+      "proposition": "Ý định chiếm đoạt của ông A phát sinh SAU khi đã nhận xe.",
+      "charge_element_ids": ["element_a_03"],
+      "evidence_links": [
+        { "evidence_id": "ev_camera_que", "relation": "supports", "limitation_ids": ["limit_camera"] },
+        { "evidence_id": "ev_tin_dang_ban", "relation": "supports", "limitation_ids": ["limit_listing"] },
+        { "evidence_id": "ev_zalo_ab", "relation": "supports", "limitation_ids": ["limit_zalo_ab"] },
+        { "evidence_id": "ev_giay_vay", "relation": "context", "limitation_ids": ["limit_giay_vay"] },
+        { "evidence_id": "ev_hoi_cung_a", "relation": "supports", "limitation_ids": ["limit_hoi_cung"] },
+        { "evidence_id": "ev_zalo_atu", "relation": "challenges", "limitation_ids": ["limit_zalo_atu"] },
+        { "evidence_id": "ev_loi_khai_tu", "relation": "challenges", "limitation_ids": ["limit_tu"] }
+      ]
+    },
+    {
+      "id": "proof_row_04",
+      "proposition": "Ý định chiếm đoạt của ông A có TRƯỚC hoặc tại thời điểm nhận xe.",
+      "charge_element_ids": ["element_b_02"],
+      "evidence_links": [
+        { "evidence_id": "ev_zalo_atu", "relation": "supports", "limitation_ids": ["limit_zalo_atu"] },
+        { "evidence_id": "ev_loi_khai_tu", "relation": "supports", "limitation_ids": ["limit_tu"] },
+        { "evidence_id": "ev_giay_vay", "relation": "context", "limitation_ids": ["limit_giay_vay"] },
+        { "evidence_id": "ev_camera_que", "relation": "challenges", "limitation_ids": ["limit_camera"] },
+        { "evidence_id": "ev_tin_dang_ban", "relation": "challenges", "limitation_ids": ["limit_listing"] }
+      ]
+    },
+    {
+      "id": "proof_row_05",
+      "proposition": "Ông A đưa ra thông tin hoặc cam kết không đúng sự thật để ông B tin và giao xe.",
+      "charge_element_ids": ["element_b_01"],
+      "evidence_links": [
+        { "evidence_id": "ev_camera_que", "relation": "challenges", "limitation_ids": ["limit_camera"] },
+        { "evidence_id": "ev_zalo_ab", "relation": "context", "limitation_ids": ["limit_zalo_ab"] },
+        { "evidence_id": "ev_zalo_atu", "relation": "context", "limitation_ids": ["limit_zalo_atu"] },
+        { "evidence_id": "ev_don_trinh_bao", "relation": "context", "limitation_ids": ["limit_don_bao"] }
+      ]
+    }
+  ],
+  "candidate_charges": [
+    {
+      "id": "charge_a",
+      "display_label": "Lạm dụng tín nhiệm chiếm đoạt tài sản [Điều 175 – cần xác minh]",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_nhan_xe", "conduct_ban_xe"],
+      "legal_basis_ids": ["prov_blhs_175"],
+      "charge_element_ids": ["element_a_01", "element_a_02", "element_a_03"]
+    },
+    {
+      "id": "charge_b",
+      "display_label": "Lừa đảo chiếm đoạt tài sản [Điều 174 – cần xác minh]",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_nhan_xe", "conduct_ban_xe"],
+      "legal_basis_ids": ["prov_blhs_174"],
+      "charge_element_ids": ["element_b_01", "element_b_02"]
+    }
+  ],
+  "charge_elements": [
+    {
+      "id": "element_a_01",
+      "charge_id": "charge_a",
+      "element_type": "conduct",
+      "label": "Nhận tài sản hợp pháp theo thỏa thuận mượn",
+      "legal_test": "[Reviewer xác nhận dấu hiệu 'vay, mượn, thuê hoặc nhận tài sản bằng hình thức hợp đồng' theo điều luật đã duyệt.]",
+      "required": true,
+      "fact_ids": ["fact_01"],
+      "evidence_ids": ["ev_don_trinh_bao", "ev_zalo_ab", "ev_hoi_cung_a"],
+      "legal_basis_ids": ["prov_blhs_175"]
+    },
+    {
+      "id": "element_a_02",
+      "charge_id": "charge_a",
+      "element_type": "conduct",
+      "label": "Hành vi chiếm đoạt sau khi nhận: bán xe, nói dối người mua, tắt máy, không hoàn trả",
+      "legal_test": "[Reviewer xác định điểm/khoản nào của điều luật áp dụng cho hành vi bán xe và tắt máy.]",
+      "required": true,
+      "fact_ids": ["fact_06", "fact_07"],
+      "evidence_ids": ["ev_giay_mua_ban", "ev_sao_ke", "ev_zalo_ab"],
+      "legal_basis_ids": ["prov_blhs_175"]
+    },
+    {
+      "id": "element_a_03",
+      "charge_id": "charge_a",
+      "element_type": "mental_state",
+      "label": "Ý định chiếm đoạt phát sinh sau khi đã nhận tài sản",
+      "legal_test": "[Reviewer xác nhận tiêu chí phân biệt thời điểm phát sinh ý định chiếm đoạt giữa hai tội danh.]",
+      "required": true,
+      "fact_ids": ["fact_02", "fact_03", "fact_05"],
+      "evidence_ids": ["ev_camera_que", "ev_tin_dang_ban", "ev_giay_vay", "ev_hoi_cung_a"],
+      "legal_basis_ids": ["prov_blhs_175"]
+    },
+    {
+      "id": "element_b_01",
+      "charge_id": "charge_b",
+      "element_type": "conduct",
+      "label": "Đưa thông tin hoặc cam kết gian dối để được giao xe",
+      "legal_test": "[Reviewer xác nhận dấu hiệu 'thủ đoạn gian dối' của tội lừa đảo và việc cam kết hoàn trả có thuộc dấu hiệu này hay không.]",
+      "required": true,
+      "fact_ids": ["fact_02", "fact_04"],
+      "evidence_ids": ["ev_camera_que", "ev_zalo_ab", "ev_zalo_atu"],
+      "legal_basis_ids": ["prov_blhs_174"]
+    },
+    {
+      "id": "element_b_02",
+      "charge_id": "charge_b",
+      "element_type": "mental_state",
+      "label": "Ý định chiếm đoạt có trước hoặc ngay khi nhận xe",
+      "legal_test": "[Reviewer xác nhận tiêu chí xác định ý định chiếm đoạt có trước.]",
+      "required": true,
+      "fact_ids": ["fact_03", "fact_04"],
+      "evidence_ids": ["ev_zalo_atu", "ev_loi_khai_tu", "ev_giay_vay", "ev_camera_que", "ev_tin_dang_ban"],
+      "legal_basis_ids": ["prov_blhs_174"]
+    }
+  ],
+  "charge_comparisons": [
+    {
+      "id": "comparison_ab",
+      "candidate_charge_ids": ["charge_a", "charge_b"],
+      "distinguishing_element_ids": ["element_a_03", "element_b_01", "element_b_02"],
+      "explanation_id": "expl_intent_timing"
+    }
+  ],
+  "age_rules": [
+    {
+      "id": "age_rule_01",
+      "candidate_charge_ids": ["charge_a", "charge_b"],
+      "conduct_event_ids": ["conduct_nhan_xe", "conduct_ban_xe"],
+      "law_bundle_ids": ["law_bundle_blhs"],
+      "legal_basis_ids": ["prov_blhs_174", "prov_blhs_175"],
+      "conditions": [],
+      "review_status": "not_reviewed"
+    }
+  ],
+  "circumstances": [
+    {
+      "id": "circ_gia_tri",
+      "category": "other",
+      "label": "Giá trị tài sản bị chiếm đoạt thuộc mức định khung theo căn cứ đã duyệt",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_ban_xe"],
+      "legal_basis_ids": ["prov_blhs_175"],
+      "fact_ids": ["fact_06", "fact_08"],
+      "review_status": "not_reviewed"
+    },
+    {
+      "id": "circ_khac_phuc",
+      "category": "mitigating",
+      "label": "Người phạm tội và gia đình tự nguyện khắc phục hậu quả (hoàn trả tiền mua xe cho bà Mai)",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_ban_xe"],
+      "legal_basis_ids": ["prov_blhs_51"],
+      "fact_ids": ["fact_09"],
+      "review_status": "not_reviewed"
+    },
+    {
+      "id": "circ_thanh_khan",
+      "category": "mitigating",
+      "label": "Thành khẩn khai báo",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_ban_xe"],
+      "legal_basis_ids": ["prov_blhs_51"],
+      "fact_ids": ["fact_10"],
+      "review_status": "not_reviewed"
+    }
+  ],
+  "conclusions": [
+    {
+      "id": "conclusion_a",
+      "type": "charge_supported",
+      "charge_id": "charge_a",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_ban_xe"],
+      "label": "Hành vi của ông A phù hợp định danh lạm dụng tín nhiệm chiếm đoạt tài sản"
+    },
+    {
+      "id": "conclusion_b",
+      "type": "charge_supported",
+      "charge_id": "charge_b",
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_ban_xe"],
+      "label": "Hành vi của ông A phù hợp định danh lừa đảo chiếm đoạt tài sản"
+    },
+    {
+      "id": "conclusion_insufficient",
+      "type": "insufficient_information",
+      "charge_id": null,
+      "person_id": "person_hai",
+      "conduct_event_ids": ["conduct_ban_xe"],
+      "label": "Hồ sơ chưa đủ căn cứ để xác định định danh"
+    }
+  ],
+  "answer_fields": [
+    {
+      "id": "source_assessment",
+      "scope": "evidence",
+      "target_ids": [
+        "ev_don_trinh_bao",
+        "ev_zalo_ab",
+        "ev_zalo_atu",
+        "ev_loi_khai_tu",
+        "ev_giay_vay",
+        "ev_camera_que",
+        "ev_tin_dang_ban",
+        "ev_giay_mua_ban",
+        "ev_sao_ke",
+        "ev_hoi_cung_a",
+        "ev_dinh_gia",
+        "ev_bien_lai"
+      ],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "source_clear", "label": "Nguồn và tính toàn vẹn rõ" },
+        { "id": "source_partial", "label": "Rõ nguồn nhưng toàn vẹn chưa bảo đảm" },
+        { "id": "source_unclear", "label": "Nguồn chưa rõ" }
+      ]
+    },
+    {
+      "id": "procedure_assessment",
+      "scope": "evidence",
+      "target_ids": [
+        "ev_don_trinh_bao",
+        "ev_zalo_ab",
+        "ev_zalo_atu",
+        "ev_loi_khai_tu",
+        "ev_giay_vay",
+        "ev_camera_que",
+        "ev_tin_dang_ban",
+        "ev_giay_mua_ban",
+        "ev_sao_ke",
+        "ev_hoi_cung_a",
+        "ev_dinh_gia",
+        "ev_bien_lai"
+      ],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "defect_identified", "label": "Nhận diện khiếm khuyết thủ tục" },
+        { "id": "no_issue_identified", "label": "Chưa thấy khiếm khuyết thủ tục" },
+        { "id": "unresolved", "label": "Chưa đủ thông tin" }
+      ]
+    },
+    {
+      "id": "reliability_assessment",
+      "scope": "evidence",
+      "target_ids": [
+        "ev_don_trinh_bao",
+        "ev_zalo_ab",
+        "ev_zalo_atu",
+        "ev_loi_khai_tu",
+        "ev_giay_vay",
+        "ev_camera_que",
+        "ev_tin_dang_ban",
+        "ev_giay_mua_ban",
+        "ev_sao_ke",
+        "ev_hoi_cung_a",
+        "ev_dinh_gia",
+        "ev_bien_lai"
+      ],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "reliable", "label": "Đáng tin trong giới hạn" },
+        { "id": "limited", "label": "Có giới hạn đáng kể" },
+        { "id": "unresolved", "label": "Chưa rõ" }
+      ]
+    },
+    {
+      "id": "intent_timing_relevance",
+      "scope": "evidence",
+      "target_ids": [
+        "ev_don_trinh_bao",
+        "ev_zalo_ab",
+        "ev_zalo_atu",
+        "ev_loi_khai_tu",
+        "ev_giay_vay",
+        "ev_camera_que",
+        "ev_tin_dang_ban",
+        "ev_giay_mua_ban",
+        "ev_sao_ke",
+        "ev_hoi_cung_a",
+        "ev_dinh_gia",
+        "ev_bien_lai"
+      ],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "supports_prior_intent", "label": "Hỗ trợ ý định có trước/khi nhận xe" },
+        { "id": "supports_later_intent", "label": "Hỗ trợ ý định phát sinh sau khi nhận xe" },
+        { "id": "not_probative", "label": "Không nói được về thời điểm ý định" }
+      ]
+    },
+    {
+      "id": "proof_assessment",
+      "scope": "proof_row",
+      "target_ids": ["proof_row_01", "proof_row_02", "proof_row_03", "proof_row_04", "proof_row_05"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "supports", "label": "Đủ sức hỗ trợ trong giới hạn" },
+        { "id": "challenges", "label": "Chứng cứ thách thức mệnh đề" },
+        { "id": "unresolved", "label": "Chưa phân định được" }
+      ]
+    },
+    {
+      "id": "hypothesis_support",
+      "scope": "hypothesis",
+      "target_ids": ["hyp_a", "hyp_b"],
+      "value_type": "multi_select",
+      "options": [
+        { "id": "ev_zalo_ab", "label": "ev_zalo_ab" },
+        { "id": "ev_zalo_atu", "label": "ev_zalo_atu" },
+        { "id": "ev_loi_khai_tu", "label": "ev_loi_khai_tu" },
+        { "id": "ev_giay_vay", "label": "ev_giay_vay" },
+        { "id": "ev_camera_que", "label": "ev_camera_que" },
+        { "id": "ev_tin_dang_ban", "label": "ev_tin_dang_ban" }
+      ]
+    },
+    {
+      "id": "hypothesis_challenge",
+      "scope": "hypothesis",
+      "target_ids": ["hyp_a", "hyp_b"],
+      "value_type": "multi_select",
+      "options": [
+        { "id": "ev_zalo_ab", "label": "ev_zalo_ab" },
+        { "id": "ev_zalo_atu", "label": "ev_zalo_atu" },
+        { "id": "ev_loi_khai_tu", "label": "ev_loi_khai_tu" },
+        { "id": "ev_giay_vay", "label": "ev_giay_vay" },
+        { "id": "ev_camera_que", "label": "ev_camera_que" },
+        { "id": "ev_tin_dang_ban", "label": "ev_tin_dang_ban" }
+      ]
+    },
+    {
+      "id": "element_status",
+      "scope": "charge_element",
+      "target_ids": ["element_a_01", "element_a_02", "element_a_03", "element_b_01", "element_b_02"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "supported", "label": "Có dữ kiện hỗ trợ" },
+        { "id": "not_supported", "label": "Chưa được hỗ trợ" },
+        { "id": "unresolved", "label": "Chưa đủ thông tin" }
+      ]
+    },
+    {
+      "id": "selected_charge",
+      "scope": "person_conduct",
+      "target_ids": ["person_hai:conduct_ban_xe"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "none_selected", "label": "Không chọn định danh nào" },
+        { "id": "charge_a", "label": "Lạm dụng tín nhiệm chiếm đoạt tài sản" },
+        { "id": "charge_b", "label": "Lừa đảo chiếm đoạt tài sản" }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "scope": "person_conduct",
+      "target_ids": ["person_hai:conduct_ban_xe"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "conclusion_a", "label": "Kết luận A" },
+        { "id": "conclusion_b", "label": "Kết luận B" },
+        { "id": "conclusion_insufficient", "label": "Chưa đủ căn cứ" }
+      ]
+    },
+    {
+      "id": "circumstance_status",
+      "scope": "circumstance",
+      "target_ids": ["circ_gia_tri", "circ_khac_phuc", "circ_thanh_khan"],
+      "value_type": "single_choice",
+      "options": [
+        { "id": "established", "label": "Có dữ kiện hỗ trợ" },
+        { "id": "not_established", "label": "Không được hỗ trợ" },
+        { "id": "unresolved", "label": "Chưa đủ thông tin" }
+      ]
+    },
+    {
+      "id": "legal_basis",
+      "scope": "conclusion",
+      "target_ids": ["conclusion_a", "conclusion_b", "conclusion_insufficient"],
+      "value_type": "multi_select",
+      "options": [
+        { "id": "no_basis_cited", "label": "Không viện dẫn căn cứ" },
+        { "id": "prov_blhs_174", "label": "Điều 174 BLHS (cần xác minh)" },
+        { "id": "prov_blhs_175", "label": "Điều 175 BLHS (cần xác minh)" }
+      ]
+    }
+  ],
+  "expected_responses": [
+    {
+      "id": "exp_src_ev_don_trinh_bao",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_don_trinh_bao",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_don_trinh_bao",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_don_trinh_bao",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_don_trinh_bao",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_don_trinh_bao",
+      "accepted_values": ["limited"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_don_trinh_bao",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_don_trinh_bao",
+      "accepted_values": ["not_probative"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_zalo_ab",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_zalo_ab",
+      "accepted_values": ["source_partial"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_zalo_ab",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_zalo_ab",
+      "accepted_values": ["defect_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_zalo_ab",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_zalo_ab",
+      "accepted_values": ["limited"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_zalo_ab",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_zalo_ab",
+      "accepted_values": ["supports_later_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_zalo_atu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_zalo_atu",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_zalo_atu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_zalo_atu",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_zalo_atu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_zalo_atu",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_zalo_atu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_zalo_atu",
+      "accepted_values": ["supports_prior_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_loi_khai_tu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_loi_khai_tu",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_loi_khai_tu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_loi_khai_tu",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_loi_khai_tu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_loi_khai_tu",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_loi_khai_tu",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_loi_khai_tu",
+      "accepted_values": ["supports_prior_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_giay_vay",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_giay_vay",
+      "accepted_values": ["source_partial"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_giay_vay",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_giay_vay",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_giay_vay",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_giay_vay",
+      "accepted_values": ["limited"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_giay_vay",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_giay_vay",
+      "accepted_values": ["supports_prior_intent", "supports_later_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_camera_que",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_camera_que",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_camera_que",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_camera_que",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_camera_que",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_camera_que",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_camera_que",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_camera_que",
+      "accepted_values": ["supports_later_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_tin_dang_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_tin_dang_ban",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_tin_dang_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_tin_dang_ban",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_tin_dang_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_tin_dang_ban",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_tin_dang_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_tin_dang_ban",
+      "accepted_values": ["supports_later_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_giay_mua_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_giay_mua_ban",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_giay_mua_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_giay_mua_ban",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_giay_mua_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_giay_mua_ban",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_giay_mua_ban",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_giay_mua_ban",
+      "accepted_values": ["not_probative"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_sao_ke",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_sao_ke",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_sao_ke",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_sao_ke",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_sao_ke",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_sao_ke",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_sao_ke",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_sao_ke",
+      "accepted_values": ["not_probative"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_hoi_cung_a",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_hoi_cung_a",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_hoi_cung_a",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_hoi_cung_a",
+      "accepted_values": ["defect_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_hoi_cung_a",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_hoi_cung_a",
+      "accepted_values": ["limited"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_hoi_cung_a",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_hoi_cung_a",
+      "accepted_values": ["supports_later_intent"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_dinh_gia",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_dinh_gia",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_dinh_gia",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_dinh_gia",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_dinh_gia",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_dinh_gia",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_dinh_gia",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_dinh_gia",
+      "accepted_values": ["not_probative"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_src_ev_bien_lai",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "source_assessment",
+      "target_id": "ev_bien_lai",
+      "accepted_values": ["source_clear"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_source_fact_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_proc_ev_bien_lai",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "procedure_assessment",
+      "target_id": "ev_bien_lai",
+      "accepted_values": ["no_issue_identified"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_rel_ev_bien_lai",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "reliability_assessment",
+      "target_id": "ev_bien_lai",
+      "accepted_values": ["reliable"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_evidence_sources"
+    },
+    {
+      "id": "exp_tim_ev_bien_lai",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "intent_timing_relevance",
+      "target_id": "ev_bien_lai",
+      "accepted_values": ["not_probative"],
+      "weight": 1,
+      "criterion_id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_hyp_a_sup",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "hypothesis_support",
+      "target_id": "hyp_a",
+      "accepted_values": ["ev_camera_que", "ev_tin_dang_ban", "ev_zalo_ab"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_hyp_a_chal",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "hypothesis_challenge",
+      "target_id": "hyp_a",
+      "accepted_values": ["ev_zalo_atu", "ev_loi_khai_tu"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_hyp_b_sup",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "hypothesis_support",
+      "target_id": "hyp_b",
+      "accepted_values": ["ev_zalo_atu", "ev_loi_khai_tu"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_hyp_b_chal",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "hypothesis_challenge",
+      "target_id": "hyp_b",
+      "accepted_values": ["ev_camera_que", "ev_tin_dang_ban"],
+      "weight": 1,
+      "criterion_id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_proof_01",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_01",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_proof_basic"
+    },
+    {
+      "id": "exp_proof_02",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_02",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_proof_basic"
+    },
+    {
+      "id": "exp_proof_03_a",
+      "path_ids": ["path_a"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_03",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_proof_03_b",
+      "path_ids": ["path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_03",
+      "accepted_values": ["challenges", "unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_proof_04_a",
+      "path_ids": ["path_a"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_04",
+      "accepted_values": ["challenges", "unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_proof_04_b",
+      "path_ids": ["path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_04",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_proof_05_a",
+      "path_ids": ["path_a"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_05",
+      "accepted_values": ["challenges", "unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_proof_05_b",
+      "path_ids": ["path_b"],
+      "field_id": "proof_assessment",
+      "target_id": "proof_row_05",
+      "accepted_values": ["supports"],
+      "weight": 1,
+      "criterion_id": "criterion_proof",
+      "learning_outcome_ids": ["lo_proof_01"],
+      "explanation_id": "expl_intent_timing"
+    },
+    {
+      "id": "exp_path_a_element_a_01",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_a_element_a_02",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_a_02",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_a_element_a_03",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_a_03",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_a_element_b_01",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["not_supported", "unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_a_element_b_02",
+      "path_ids": ["path_a"],
+      "field_id": "element_status",
+      "target_id": "element_b_02",
+      "accepted_values": ["not_supported", "unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_b_element_a_01",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_a_01",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_path_b_element_a_02",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_a_02",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_path_b_element_a_03",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_a_03",
+      "accepted_values": ["not_supported", "unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_path_b_element_b_01",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_b_01",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_path_b_element_b_02",
+      "path_ids": ["path_b"],
+      "field_id": "element_status",
+      "target_id": "element_b_02",
+      "accepted_values": ["supported"],
+      "weight": 1,
+      "criterion_id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_path_a_charge",
+      "path_ids": ["path_a"],
+      "field_id": "selected_charge",
+      "target_id": "person_hai:conduct_ban_xe",
+      "accepted_values": ["charge_a"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_a_concl",
+      "path_ids": ["path_a"],
+      "field_id": "conclusion",
+      "target_id": "person_hai:conduct_ban_xe",
+      "accepted_values": ["conclusion_a"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "expl_charge_a"
+    },
+    {
+      "id": "exp_path_b_charge",
+      "path_ids": ["path_b"],
+      "field_id": "selected_charge",
+      "target_id": "person_hai:conduct_ban_xe",
+      "accepted_values": ["charge_b"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_path_b_concl",
+      "path_ids": ["path_b"],
+      "field_id": "conclusion",
+      "target_id": "person_hai:conduct_ban_xe",
+      "accepted_values": ["conclusion_b"],
+      "weight": 1,
+      "criterion_id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "explanation_id": "expl_charge_b"
+    },
+    {
+      "id": "exp_circ_gia_tri",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "circumstance_status",
+      "target_id": "circ_gia_tri",
+      "accepted_values": ["established"],
+      "weight": 1,
+      "criterion_id": "criterion_circumstance",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_circumstances"
+    },
+    {
+      "id": "exp_circ_khac_phuc",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "circumstance_status",
+      "target_id": "circ_khac_phuc",
+      "accepted_values": ["established"],
+      "weight": 1,
+      "criterion_id": "criterion_circumstance",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_circumstances"
+    },
+    {
+      "id": "exp_circ_thanh_khan",
+      "path_ids": ["path_a", "path_b"],
+      "field_id": "circumstance_status",
+      "target_id": "circ_thanh_khan",
+      "accepted_values": ["unresolved"],
+      "weight": 1,
+      "criterion_id": "criterion_circumstance",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "explanation_id": "expl_circumstances"
+    },
+    {
+      "id": "exp_path_a_basis",
+      "path_ids": ["path_a"],
+      "field_id": "legal_basis",
+      "target_id": "conclusion_a",
+      "accepted_values": ["prov_blhs_175"],
+      "weight": 1,
+      "criterion_id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "explanation_id": "expl_law"
+    },
+    {
+      "id": "exp_path_b_basis",
+      "path_ids": ["path_b"],
+      "field_id": "legal_basis",
+      "target_id": "conclusion_b",
+      "accepted_values": ["prov_blhs_174"],
+      "weight": 1,
+      "criterion_id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "explanation_id": "expl_law"
+    }
+  ],
+  "answer_paths": [
+    {
+      "id": "path_a",
+      "label": "Lạm dụng tín nhiệm (ý định phát sinh sau khi nhận xe)",
+      "description": "Lời giải chủ đạo: nhận xe hợp pháp theo thỏa thuận mượn, ý định chiếm đoạt hình thành sau (khoảng 03–04/03/2024).",
+      "conclusion_ids": ["conclusion_a"],
+      "charge_ids": ["charge_a"],
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_02", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_03", "value": "supported" },
+          {
+            "op": "any",
+            "args": [
+              { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "not_supported" },
+              { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "unresolved" }
+            ]
+          },
+          {
+            "op": "any",
+            "args": [
+              { "op": "equals", "field_id": "element_status", "target_id": "element_b_02", "value": "not_supported" },
+              { "op": "equals", "field_id": "element_status", "target_id": "element_b_02", "value": "unresolved" }
+            ]
+          },
+          { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_a" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_a" }
+        ]
+      }
+    },
+    {
+      "id": "path_b",
+      "label": "Lừa đảo (ý định có trước/khi nhận xe)",
+      "description": "Lời giải thay thế: suy ra ý định có trước từ tin nhắn 29/02 và cam kết hoàn trả không thật.",
+      "conclusion_ids": ["conclusion_b"],
+      "charge_ids": ["charge_b"],
+      "match": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_02", "value": "supported" },
+          {
+            "op": "any",
+            "args": [
+              { "op": "equals", "field_id": "element_status", "target_id": "element_a_03", "value": "not_supported" },
+              { "op": "equals", "field_id": "element_status", "target_id": "element_a_03", "value": "unresolved" }
+            ]
+          },
+          { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_b" },
+          { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_b" }
+        ]
+      }
+    }
+  ],
+  "consistency_rules": [
+    {
+      "id": "rule_charge_a_elements",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_a" },
+      "assert": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_02", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_a_03", "value": "supported" }
+        ]
+      },
+      "severity": "blocking",
+      "message": "Chọn lạm dụng tín nhiệm cần cả ba dấu hiệu của định danh này được đánh giá là có dữ kiện hỗ trợ."
+    },
+    {
+      "id": "rule_charge_b_elements",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_b" },
+      "assert": {
+        "op": "all",
+        "args": [
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
+          { "op": "equals", "field_id": "element_status", "target_id": "element_b_02", "value": "supported" }
+        ]
+      },
+      "severity": "blocking",
+      "message": "Chọn lừa đảo cần cả hai dấu hiệu của định danh này được đánh giá là có dữ kiện hỗ trợ."
+    },
+    {
+      "id": "rule_charge_a_implies_concl_a",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_a" },
+      "assert": { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_a" },
+      "severity": "blocking",
+      "message": "Chọn định danh lạm dụng tín nhiệm thì kết luận phải tương ứng."
+    },
+    {
+      "id": "rule_charge_b_implies_concl_b",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_b" },
+      "assert": { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_b" },
+      "severity": "blocking",
+      "message": "Chọn định danh lừa đảo thì kết luận phải tương ứng."
+    },
+    {
+      "id": "rule_concl_a_requires_charge_a",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_a" },
+      "assert": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_a" },
+      "severity": "blocking",
+      "message": "Kết luận lạm dụng tín nhiệm cần chọn định danh tương ứng."
+    },
+    {
+      "id": "rule_concl_b_requires_charge_b",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_b" },
+      "assert": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "charge_b" },
+      "severity": "blocking",
+      "message": "Kết luận lừa đảo cần chọn định danh tương ứng."
+    },
+    {
+      "id": "rule_insufficient_excludes_charge",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "conclusion", "target_id": "person_hai:conduct_ban_xe", "value": "conclusion_insufficient" },
+      "assert": { "op": "equals", "field_id": "selected_charge", "target_id": "person_hai:conduct_ban_xe", "value": "none_selected" },
+      "severity": "blocking",
+      "message": "Kết luận chưa đủ căn cứ loại trừ việc chọn một định danh cho cùng người và hành vi."
+    },
+    {
+      "id": "rule_intent_timing_exclusive",
+      "scope": { "person_id": "person_hai", "conduct_event_id": "conduct_ban_xe" },
+      "when": { "op": "equals", "field_id": "element_status", "target_id": "element_a_03", "value": "supported" },
+      "assert": { "op": "not_equals", "field_id": "element_status", "target_id": "element_b_02", "value": "supported" },
+      "severity": "blocking",
+      "message": "Ý định không thể vừa phát sinh sau khi nhận xe vừa có trước/khi nhận xe."
+    }
+  ],
+  "criteria": [
+    {
+      "id": "criterion_evidence",
+      "learning_outcome_ids": ["lo_evidence_01", "lo_source_fact_01"],
+      "answer_field_ids": ["source_assessment", "procedure_assessment", "reliability_assessment", "intent_timing_relevance"],
+      "label": "Đánh giá chứng cứ bốn lớp"
+    },
+    {
+      "id": "criterion_hypothesis",
+      "learning_outcome_ids": ["lo_reasoning_01"],
+      "answer_field_ids": ["hypothesis_support", "hypothesis_challenge"],
+      "label": "So sánh giả thuyết cạnh tranh"
+    },
+    {
+      "id": "criterion_proof",
+      "learning_outcome_ids": ["lo_source_fact_01", "lo_proof_01"],
+      "answer_field_ids": ["proof_assessment"],
+      "label": "Ma trận chứng minh"
+    },
+    {
+      "id": "criterion_elements",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "answer_field_ids": ["element_status"],
+      "label": "Phân tích dấu hiệu cấu thành"
+    },
+    {
+      "id": "criterion_charge",
+      "learning_outcome_ids": ["lo_charge_01"],
+      "answer_field_ids": ["selected_charge", "conclusion"],
+      "label": "Định danh và kết luận nhất quán"
+    },
+    {
+      "id": "criterion_circumstance",
+      "learning_outcome_ids": ["lo_elements_01"],
+      "answer_field_ids": ["circumstance_status"],
+      "label": "Đánh giá tình tiết"
+    },
+    {
+      "id": "criterion_law",
+      "learning_outcome_ids": ["lo_law_01"],
+      "answer_field_ids": ["legal_basis"],
+      "label": "Căn cứ pháp lý"
+    }
+  ],
+  "scoring": {
+    "max_total_points": 100,
+    "path_weights": [
+      {
+        "path_id": "path_a",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 10,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 20,
+          "criterion_circumstance": 5,
+          "criterion_law": 10
+        }
+      },
+      {
+        "path_id": "path_b",
+        "criterion_points": {
+          "criterion_evidence": 20,
+          "criterion_hypothesis": 10,
+          "criterion_proof": 15,
+          "criterion_elements": 20,
+          "criterion_charge": 20,
+          "criterion_circumstance": 5,
+          "criterion_law": 10
+        }
+      }
+    ],
+    "partial_credit": {
+      "method": "weighted_expectation_ratio",
+      "rounding": "nearest_integer",
+      "weight_scope": "within_criterion"
+    }
+  },
+  "review": {
+    "status": "not_reviewed",
+    "review_ids": []
+  },
+  "explanations": [
+    {
+      "id": "expl_evidence_sources",
+      "title": "Nguồn, thủ tục, độ tin cậy của từng chứng cứ",
+      "body": "Chứng cứ có giá trị khác nhau theo bốn lớp: nguồn và tính toàn vẹn, quy trình thu thập, độ tin cậy, và sức chứng minh cho từng mệnh đề. Tin nhắn Zalo do người bị hại tự chụp (ev_zalo_ab) và biên bản hỏi cung có sai lệch thời gian, thiếu chữ ký (ev_hoi_cung_a) có khiếm khuyết cần nhận diện; ảnh giấy vay chỉ là bản sao do chủ nợ cung cấp. Đánh giá khiếm khuyết không đồng nghĩa với việc tự động loại chứng cứ: hệ quả pháp lý do reviewer xác định. [Cần reviewer xác nhận.]",
+      "legal_basis_ids": ["prov_bltths_chung_cu", "prov_bltths_hoi_cung"]
+    },
+    {
+      "id": "expl_proof_basic",
+      "title": "Hai sự kiện không tranh chấp",
+      "body": "Việc ông A nhận xe theo thỏa thuận mượn và việc ông A bán xe được chứng minh bằng nhiều nguồn độc lập (đơn trình báo, tin nhắn, giấy mua bán, sao kê, lời khai bà Mai). Điểm tranh luận của case không nằm ở việc có bán xe hay không, mà ở thời điểm hình thành ý định chiếm đoạt.",
+      "legal_basis_ids": []
+    },
+    {
+      "id": "expl_intent_timing",
+      "title": "Thời điểm hình thành ý định chiếm đoạt",
+      "body": "Cách phân biệt thường dùng trong tài liệu học thuật: nếu ý định chiếm đoạt có trước hoặc ngay khi nhận tài sản và người đó dùng thủ đoạn gian dối để được giao, nghiêng về lừa đảo; nếu nhận tài sản hợp pháp rồi mới nảy sinh ý định chiếm đoạt, nghiêng về lạm dụng tín nhiệm. Trong case: các chứng cứ ủng hộ ý định phát sinh sau (camera ngày 03/03 cho thấy xe được dùng đúng mục đích mượn; ảnh chụp xe 18:47 ngày 03/03 và bài rao bán ngày 04/03; nhắc nợ 09:40 ngày 03/03) mạnh hơn chứng cứ ủng hộ ý định có trước (tin nhắn hỏi giá ngày 29/02, vốn mơ hồ và bị giải thích là 'hỏi chơi'). Khoản nợ chứng minh động cơ tồn tại từ trước, không chứng minh thời điểm ý định. Lời giải chủ đạo là path_a; path_b được chấp nhận khi người chơi suy ra ý định có trước từ tin nhắn 29/02 và coi cam kết hoàn trả là không thật, nhưng lập luận này mỏng hơn. [Cần reviewer xác nhận lời giải chủ đạo và điều kiện chấp nhận path_b.]",
+      "legal_basis_ids": ["prov_blhs_174", "prov_blhs_175"]
+    },
+    {
+      "id": "expl_charge_a",
+      "title": "Lập luận định danh lạm dụng tín nhiệm (lời giải chủ đạo)",
+      "body": "Ông A nhận xe hợp pháp theo thỏa thuận mượn (element_a_01), sau đó bán xe, nói dối bà Mai về nguồn gốc xe, tắt máy và không hoàn trả (element_a_02); ý định chiếm đoạt phát sinh sau khi nhận xe, muộn nhất sáng 04/03/2024 (element_a_03). Các dấu hiệu của lừa đảo, nhất là gian dối để được giao xe và ý định có trước, chưa được chứng minh. [Cần reviewer xác nhận điểm/khoản của điều luật áp dụng.]",
+      "legal_basis_ids": ["prov_blhs_175"]
+    },
+    {
+      "id": "expl_charge_b",
+      "title": "Lập luận định danh lừa đảo (lời giải thay thế)",
+      "body": "Nếu coi tin nhắn ngày 29/02 là bước chuẩn bị nhắm vào chiếc SH đời 2019 và cam kết 'mai trả' là không thật ngay từ 02/03, thì ý định chiếm đoạt có trước và cam kết là thủ đoạn gian dối để được giao xe. Lập luận này phải giải thích camera ngày 03/03 (xe dùng đúng mục đích mượn) và chấp nhận rủi ro suy diễn từ một tin nhắn có thể hiểu khác. [Cần reviewer xác nhận điều kiện chấp nhận.]",
+      "legal_basis_ids": ["prov_blhs_174"]
+    },
+    {
+      "id": "expl_circumstances",
+      "title": "Giá trị tài sản và tình tiết",
+      "body": "Giá trị tài sản (định giá 41 triệu đồng, giá bán thực tế 28 triệu đồng) được đối chiếu với mức định khung của căn cứ đã duyệt. Việc gia đình hoàn trả 28 triệu đồng cho bà Mai là dữ kiện về khắc phục hậu quả. Thành khẩn khai báo chưa thể kết luận vì lời khai có khiếm khuyết biên bản và bị can chỉ thừa nhận một phần. [Cần reviewer xác nhận cách áp dụng, không có mức hình phạt trong case.]",
+      "legal_basis_ids": ["prov_blhs_51", "prov_blhs_175"]
+    },
+    {
+      "id": "expl_law",
+      "title": "Căn cứ pháp lý và phiên bản luật",
+      "body": "Căn cứ chọn theo lời giải: Điều 175 BLHS cho path_a, Điều 174 BLHS cho path_b (số điều dự kiến, cần xác minh). Hành vi xảy ra ngày 04/03/2024, trước thời điểm Luật 86/2025/QH15 có hiệu lực; reviewer xác định phiên bản áp dụng và tác động của quy định chuyển tiếp.",
+      "legal_basis_ids": ["prov_blhs_174", "prov_blhs_175"]
+    }
+  ],
+  "issues": [
+    {
+      "id": "issue_evidence",
+      "label": "Đánh giá chứng cứ",
+      "description": "Phân loại nguồn, thủ tục, độ tin cậy và sức chứng minh của 12 chứng cứ.",
+      "evidence_ids": [
+        "ev_don_trinh_bao",
+        "ev_zalo_ab",
+        "ev_zalo_atu",
+        "ev_loi_khai_tu",
+        "ev_giay_vay",
+        "ev_camera_que",
+        "ev_tin_dang_ban",
+        "ev_giay_mua_ban",
+        "ev_sao_ke",
+        "ev_hoi_cung_a",
+        "ev_dinh_gia",
+        "ev_bien_lai"
+      ],
+      "answer_field_ids": ["source_assessment", "procedure_assessment", "reliability_assessment", "intent_timing_relevance"]
+    },
+    {
+      "id": "issue_intent",
+      "label": "Ý định chiếm đoạt hình thành khi nào?",
+      "description": "Trước/ngay khi nhận xe hay sau khi nhận xe.",
+      "critical": true,
+      "evidence_ids": [
+        "ev_zalo_atu",
+        "ev_loi_khai_tu",
+        "ev_giay_vay",
+        "ev_camera_que",
+        "ev_tin_dang_ban",
+        "ev_zalo_ab",
+        "ev_hoi_cung_a"
+      ],
+      "answer_field_ids": ["hypothesis_support", "hypothesis_challenge", "proof_assessment", "element_status"]
+    },
+    {
+      "id": "issue_charge",
+      "label": "Định danh và tình tiết",
+      "description": "Chọn định danh, kết luận và đánh giá tình tiết.",
+      "critical": true,
+      "evidence_ids": ["ev_dinh_gia", "ev_bien_lai", "ev_hoi_cung_a"],
+      "answer_field_ids": ["selected_charge", "conclusion", "circumstance_status", "legal_basis"]
+    }
+  ],
+  "critical_issue_ids": ["issue_intent", "issue_charge"],
+  "hints": [
+    {
+      "id": "hint_01",
+      "level": 1,
+      "text": "Lập mốc thời gian từ 29/02 đến 04/03 và đánh dấu từng chứng cứ rơi vào trước hay sau 17:30 ngày 02/03.",
+      "order": 0,
+      "issue_id": "issue_intent",
+      "rubric_id": "criterion_evidence"
+    },
+    {
+      "id": "hint_02",
+      "level": 2,
+      "text": "Chứng cứ chứng minh việc bán xe khác với chứng cứ chứng minh ý định tại thời điểm nhận xe; hãy tách hai loại.",
+      "order": 1,
+      "issue_id": "issue_intent",
+      "rubric_id": "criterion_proof"
+    },
+    {
+      "id": "hint_03",
+      "level": 3,
+      "text": "Hai chứng cứ ngày 29/02 có đủ chắc chắn để loại trừ giả thuyết ý định phát sinh sau, khi đặt cạnh camera ngày 03/03 và ảnh chụp xe 18:47 ngày 03/03 không?",
+      "order": 2,
+      "issue_id": "issue_intent",
+      "rubric_id": "criterion_hypothesis"
+    }
+  ],
+  "glossary": [
+    {
+      "id": "gl_ly_do",
+      "term": "Lạm dụng tín nhiệm chiếm đoạt tài sản",
+      "definition": "Nhận tài sản của người khác qua giao dịch hợp pháp (vay, mượn, thuê, hợp đồng) rồi mới chiếm đoạt. Định nghĩa học tập, cần đối chiếu điều luật.",
+      "legal_basis_ids": ["prov_blhs_175"]
+    },
+    {
+      "id": "gl_lua_dao",
+      "term": "Lừa đảo chiếm đoạt tài sản",
+      "definition": "Dùng thủ đoạn gian dối để người khác giao tài sản, ý định chiếm đoạt có trước hoặc ngay khi nhận. Định nghĩa học tập, cần đối chiếu điều luật.",
+      "legal_basis_ids": ["prov_blhs_174"]
+    },
+    {
+      "id": "gl_chung_cu",
+      "term": "Chứng cứ điện tử",
+      "definition": "Dữ liệu điện tử cần có nguồn gốc và quá trình thu thập rõ ràng để đánh giá giá trị chứng minh. Cần đối chiếu quy định tố tụng.",
+      "legal_basis_ids": ["prov_bltths_chung_cu"]
+    },
+    {
+      "id": "gl_giam_nhe",
+      "term": "Tình tiết giảm nhẹ",
+      "definition": "Tình tiết có thể làm giảm trách nhiệm hình sự theo căn cứ đã duyệt; case không yêu cầu mức hình phạt.",
+      "legal_basis_ids": ["prov_blhs_51"]
+    }
+  ],
+  "references": {
+    "legal_basis_ids": [
+      "prov_blhs_174",
+      "prov_blhs_175",
+      "prov_blhs_51",
+      "prov_bltths_chung_cu",
+      "prov_bltths_hoi_cung",
+      "prov_bltths_dinh_gia"
+    ]
+  }
+}

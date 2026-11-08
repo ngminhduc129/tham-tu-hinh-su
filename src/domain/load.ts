@@ -1,5 +1,8 @@
-import rawCase from '../content/cases/case_001.json'
-import lawBundle from '../content/laws/law_bundle_v1.json'
+import rawCase001 from '../content/cases/case_001.json'
+import rawCase002 from '../content/cases/case_002.json'
+import lawBundleBlhs from '../content/laws/law_bundle_blhs.json'
+import lawBundleBltths from '../content/laws/law_bundle_bltths.json'
+import lawBundleV1 from '../content/laws/law_bundle_v1.json'
 import manifestJson from '../content/manifest.json'
 import outcomesJson from '../content/learning-outcomes.json'
 import type {
@@ -15,11 +18,14 @@ export const manifest = manifestJson as unknown as Manifest
 export const outcomeCatalog = outcomesJson as unknown as OutcomeCatalog
 
 const LAW_BUNDLES: Record<string, LawBundle> = {
-  [lawBundle.id]: lawBundle as unknown as LawBundle,
+  [lawBundleV1.id]: lawBundleV1 as unknown as LawBundle,
+  [lawBundleBlhs.id]: lawBundleBlhs as unknown as LawBundle,
+  [lawBundleBltths.id]: lawBundleBltths as unknown as LawBundle,
 }
 
 const RAW_CASES: Record<string, unknown> = {
-  case_001: rawCase,
+  case_001: rawCase001,
+  case_002: rawCase002,
 }
 
 export type CaseLoadResult =

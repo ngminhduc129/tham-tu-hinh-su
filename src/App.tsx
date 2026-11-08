@@ -238,7 +238,7 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
 
           <div className="app-header__meta">
             <span className="case-chip" title="Hồ sơ vụ án đang mở">
-              Vụ án {caseFile.metadata.id === 'case_001' ? '001' : caseFile.metadata.id} · bản {caseFile.metadata.version}
+              Vụ án {caseFile.metadata.id.replace(/^case_/, '')} · bản {caseFile.metadata.version}
             </span>
             {session.status === 'submitted' && <Badge tone="success">Đã nộp bài</Badge>}
             <button
@@ -349,17 +349,24 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
 
 export function App() {
   const route = useHashRoute()
+  const activeCaseId =
+    route.kind === 'case' ? route.caseId : manifest.cases[0]?.id ?? null
   const loaded = useMemo(() => {
-    const firstCase = manifest.cases[0]
-    if (!firstCase) {
+    if (!activeCaseId) {
       return { ok: false as const, errors: ['Danh mục không có hồ sơ nào.'] }
     }
-    return loadCase(firstCase.id)
-  }, [])
+    return loadCase(activeCaseId)
+  }, [activeCaseId])
 
   if (!loaded.ok) {
     return <LoadErrorScreen errors={loaded.errors} />
   }
 
-  return <GameShell caseFile={loaded.caseFile} route={route} />
+  return (
+    <GameShell
+      key={loaded.caseFile.metadata.id}
+      caseFile={loaded.caseFile}
+      route={route}
+    />
+  )
 }

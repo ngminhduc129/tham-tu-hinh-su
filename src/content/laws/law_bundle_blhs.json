@@ -1,0 +1,31 @@
+{
+  "id": "law_bundle_blhs",
+  "version": "placeholder",
+  "jurisdiction": "VN",
+  "provisions": [
+    {
+      "id": "prov_blhs_174",
+      "citation": "Điều 174 BLHS 2015 – Tội lừa đảo chiếm đoạt tài sản [dự kiến, chưa xác minh]",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer đối chiếu văn bản chính thức: BLHS 2015; Luật 12/2017/QH14; Luật 59/2024/QH15; Luật 86/2025/QH15 (hiệu lực 01/7/2025, có quy định chuyển tiếp). Xác định phiên bản áp dụng cho hành vi ngày 04/03/2024.]",
+      "review_status": "not_reviewed"
+    },
+    {
+      "id": "prov_blhs_175",
+      "citation": "Điều 175 BLHS 2015 – Tội lạm dụng tín nhiệm chiếm đoạt tài sản [dự kiến, chưa xác minh]",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer đối chiếu văn bản chính thức: BLHS 2015; Luật 12/2017/QH14; Luật 59/2024/QH15; Luật 86/2025/QH15 (hiệu lực 01/7/2025, có quy định chuyển tiếp). Xác định phiên bản áp dụng cho hành vi ngày 04/03/2024.]",
+      "review_status": "not_reviewed"
+    },
+    {
+      "id": "prov_blhs_51",
+      "citation": "Điều 51 BLHS 2015 – Các tình tiết giảm nhẹ trách nhiệm hình sự [dự kiến, chưa xác minh]",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer đối chiếu văn bản chính thức: BLHS 2015; Luật 12/2017/QH14; Luật 59/2024/QH15; Luật 86/2025/QH15 (hiệu lực 01/7/2025, có quy định chuyển tiếp). Xác định phiên bản áp dụng cho hành vi ngày 04/03/2024.]",
+      "review_status": "not_reviewed"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "law_bundle_bltths",
+  "version": "placeholder",
+  "jurisdiction": "VN",
+  "provisions": [
+    {
+      "id": "prov_bltths_chung_cu",
+      "citation": "Nhóm quy định về chứng cứ, nguồn chứng cứ, đánh giá chứng cứ – BLTTHS 2015 [dự kiến, chưa xác minh]",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer đối chiếu văn bản chính thức BLTTHS 2015 và văn bản sửa đổi, xác định phiên bản có hiệu lực tại thời điểm thu thập chứng cứ.]",
+      "review_status": "not_reviewed"
+    },
+    {
+      "id": "prov_bltths_hoi_cung",
+      "citation": "Quy định về hỏi cung bị can – BLTTHS 2015 [dự kiến, chưa xác minh]",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer đối chiếu văn bản chính thức BLTTHS 2015 và văn bản sửa đổi, xác định phiên bản có hiệu lực tại thời điểm thu thập chứng cứ.]",
+      "review_status": "not_reviewed"
+    },
+    {
+      "id": "prov_bltths_dinh_gia",
+      "citation": "Quy định về định giá tài sản – BLTTHS 2015 và văn bản hướng dẫn [dự kiến, chưa xác minh]",
+      "effective_from": null,
+      "effective_to": null,
+      "source_ref": "[Reviewer đối chiếu văn bản chính thức BLTTHS 2015 và văn bản sửa đổi, xác định phiên bản có hiệu lực tại thời điểm thu thập chứng cứ.]",
+      "review_status": "not_reviewed"
+    }
+  ]
+}

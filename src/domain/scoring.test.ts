@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { scoreSubmission } from './scoring'
 import { setValue, isAnswerValueEqual } from './answers'
 import { answersForPath, fixtureCase } from './test-helpers'
+import { loadCase } from './load'
 
 const NOW = '2026-01-01T00:00:00.000Z'
 
@@ -252,5 +253,39 @@ describe('quy tắc nhất quán và đường đáp án không khớp', () => {
     expect(score.total).toBeNull()
     expect(score.pathId).toBeNull()
     expect(score.diagnostics.length).toBeGreaterThan(0)
+  })
+})
+
+describe('hồ sơ nhiều đường đáp án (case_002)', () => {
+  it('cả hai đường đáp án đạt 100 điểm với câu trả lời lý tưởng', () => {
+    const loaded = loadCase('case_002')
+    expect(loaded.ok).toBe(true)
+    if (!loaded.ok) return
+
+    for (const pathId of ['path_a', 'path_b']) {
+      const score = scoreSubmission(loaded.caseFile, answersForPath(loaded.caseFile, pathId), NOW)
+      expect(score.blocking, pathId).toBe(false)
+      expect(score.unmatched, pathId).toBe(false)
+      expect(score.pathId, pathId).toBe(pathId)
+      expect(score.total, pathId).toBe(100)
+    }
+  })
+
+  it('trường chọn một nhận một trong các giá trị thay thế được chấp nhận', () => {
+    const loaded = loadCase('case_002')
+    expect(loaded.ok).toBe(true)
+    if (!loaded.ok) return
+
+    const answers = setValue(
+      answersForPath(loaded.caseFile, 'path_a'),
+      'element_status',
+      'element_b_01',
+      'unresolved',
+    )
+
+    const score = scoreSubmission(loaded.caseFile, answers, NOW)
+    expect(score.blocking).toBe(false)
+    expect(score.pathId).toBe('path_a')
+    expect(score.total).toBe(100)
   })
 })

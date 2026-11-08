@@ -5,6 +5,7 @@ export const FIELD_LABELS: Record<string, string> = {
   procedure_assessment: 'Quy trình thu thập và khiếm khuyết',
   reliability_assessment: 'Xác thực và độ tin cậy',
   relevance_assessment: 'Liên quan và sức hỗ trợ',
+  intent_timing_relevance: 'Liên quan đến thời điểm hình thành ý định',
   proof_assessment: 'Đánh giá mệnh đề chứng minh',
   hypothesis_support: 'Chứng cứ ủng hộ giả thuyết',
   hypothesis_challenge: 'Chứng cứ phản bác giả thuyết',
@@ -24,6 +25,8 @@ export const FIELD_HINTS: Record<string, string> = {
     'Đánh giá độ chính xác và giới hạn của thông tin, tách khỏi câu hỏi hợp pháp/hợp lệ.',
   relevance_assessment:
     'Chứng cứ đang hỗ trợ, phản bác hay chỉ làm bối cảnh cho mệnh đề trọng tâm?',
+  intent_timing_relevance:
+    'Chứng cứ này nói gì về thời điểm ý định chiếm đoạt: có trước, phát sinh sau, hay không kết luận được?',
   proof_assessment:
     'Mệnh đề có được nhiều nguồn đối chiếu hay chỉ có một nguồn trong giới hạn?',
   hypothesis_support: 'Chọn các nguồn thực sự ủng hộ giả thuyết này, không chọn vì có liên quan chung.',
@@ -58,6 +61,11 @@ export const ROLE_LABELS: Record<string, string> = {
   witness: 'Người làm chứng',
   security_guard: 'Bảo vệ',
   warehouse_manager: 'Quản lý kho',
+  victim: 'Người bị hại',
+  vehicle_owner: 'Chủ sở hữu xe',
+  buyer: 'Người mua',
+  creditor: 'Chủ nợ',
+  family_member: 'Thân nhân',
 }
 
 export const PLAYER_ROLE_COPY: Record<string, { title: string; body: string }> = {
@@ -80,6 +88,17 @@ export const EVIDENCE_TYPE_LABELS: Record<string, string> = {
   statement: 'Lời trình bày',
   message: 'Tin nhắn',
   physical: 'Vật chứng',
+  complaint: 'Đơn trình báo',
+  electronic_message: 'Tin nhắn điện tử',
+  witness_statement: 'Lời khai người làm chứng',
+  financial_document: 'Tài liệu tài chính',
+  video_record: 'Bản ghi hình',
+  electronic_data: 'Dữ liệu điện tử',
+  contract_and_statement: 'Hợp đồng và lời khai',
+  bank_record: 'Sao kê ngân hàng',
+  interrogation_record: 'Biên bản hỏi cung',
+  valuation: 'Kết luận định giá',
+  remedy_record: 'Hồ sơ khắc phục hậu quả',
 }
 
 export const REVIEW_STATUS_LABELS: Record<string, string> = {
@@ -167,6 +186,9 @@ export function formatSourceRef(sourceRef?: string | null): string {
 }
 
 export function formatChargeLabel(charge: { id: string; display_label?: string }): string {
+  if (charge.display_label && !charge.display_label.startsWith('Định danh')) {
+    return charge.display_label
+  }
   if (charge.id === 'charge_a') {
     return 'Tội trộm cắp tài sản (Điều 173 BLHS) — Dấu hiệu hành vi chuyển dịch lén lút'
   }
@@ -219,8 +241,16 @@ export function pathCategoryLabel(pathId: string, pathLabel?: string | null): st
     }
     return 'Nhánh: Chưa đủ căn cứ'
   }
-  if (pathId === 'path_a') return 'Nhánh: Định danh A (Trộm cắp tài sản)'
-  if (pathId === 'path_b') return 'Nhánh: Định danh B (Lạm dụng tín nhiệm)'
+  if (pathId === 'path_a') {
+    return pathLabel === 'Hỗ trợ định danh A' || !pathLabel
+      ? 'Nhánh: Định danh A (Trộm cắp tài sản)'
+      : `Nhánh: ${pathLabel}`
+  }
+  if (pathId === 'path_b') {
+    return pathLabel === 'Hỗ trợ định danh B' || !pathLabel
+      ? 'Nhánh: Định danh B (Lạm dụng tín nhiệm)'
+      : `Nhánh: ${pathLabel}`
+  }
   if (pathLabel) return `Nhánh: ${pathLabel}`
   return 'Nhánh: Đáp án hợp lệ'
 }
@@ -232,5 +262,7 @@ export function fieldLabel(fieldId: string): string {
 export function conductEventLabel(eventId: string): string {
   if (eventId === 'conduct_01') return 'Hành vi ngày 31/05/2024 (22:10 – 22:35)'
   if (eventId === 'conduct_02') return 'Hành vi ngày 01/06/2024 (03:40)'
+  if (eventId === 'conduct_nhan_xe') return 'Nhận xe ngày 02/03/2024 (khoảng 17:30)'
+  if (eventId === 'conduct_ban_xe') return 'Bán xe ngày 04/03/2024'
   return eventId
 }

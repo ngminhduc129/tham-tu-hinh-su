@@ -1,7 +1,37 @@
 import { manifest } from '../../domain/load'
+import { SESSION_SCHEMA_VERSION, sessionKey, type StoredSession } from '../../state/persistence'
 import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { STAGES } from '../../domain/types'
+
+interface CaseProgress {
+  label: string
+  target: string
+}
+
+function savedProgress(caseId: string, caseVersion: string): CaseProgress | null {
+  try {
+    const raw = window.localStorage.getItem(sessionKey(caseId))
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as Partial<StoredSession>
+    if (parsed.sessionSchemaVersion !== SESSION_SCHEMA_VERSION) return null
+    const saved = parsed.session
+    if (!saved || saved.caseVersion !== caseVersion) return null
+
+    const submitted = saved.status === 'submitted'
+    const hasProgress =
+      submitted ||
+      saved.viewedEvidenceIds.length > 0 ||
+      Object.keys(saved.answers).length > 0
+    if (!hasProgress) return null
+
+    return submitted
+      ? { label: 'Xem lại kết quả', target: 'feedback' }
+      : { label: 'Tiếp tục phiên học', target: saved.currentStage }
+  } catch {
+    return null
+  }
+}
 
 export function HomeScreen() {
   const { caseFile, session, navigate } = useGame()
@@ -10,7 +40,6 @@ export function HomeScreen() {
     session.viewedEvidenceIds.length > 0 ||
     Object.keys(session.answers).length > 0
 
-  const entry = manifest.cases.find((item) => item.id === caseFile.metadata.id)
   const submitted = session.status === 'submitted'
   const startLabel = submitted ? 'Xem lại kết quả' : hasProgress ? 'Tiếp tục phiên học' : 'Bắt đầu hồ sơ'
   const target = submitted ? 'feedback' : hasProgress ? session.currentStage : 'brief'
@@ -34,7 +63,7 @@ export function HomeScreen() {
             </Button>
           </div>
           <ul className="hero__facts" aria-label="Thông tin nhanh">
-            <li>10–20 phút mỗi hồ sơ</li>
+            <li>10–25 phút mỗi hồ sơ</li>
             <li>Không cần tài khoản</li>
             <li>Tiến độ lưu trên thiết bị</li>
           </ul>
@@ -88,61 +117,81 @@ export function HomeScreen() {
         <SectionHeading
           eyebrow="Thư viện hồ sơ"
           title="Hồ sơ khả dụng"
-          description="Bản thử nghiệm hiện có một hồ sơ hoàn chỉnh. Hồ sơ mới chỉ được thêm khi đi qua cùng quy trình kiểm duyệt."
+          description="Mỗi hồ sơ đi qua cùng quy trình kiểm duyệt trước khi được đưa vào thư viện. Hồ sơ mới chỉ hiển thị khi đã vượt qua bước kiểm tra cấu trúc và tham chiếu chéo."
         />
-        <article className="case-card">
-          <div className="case-card__head">
-            <div>
-              <div className="chip-row">
-                <Badge tone="warn">Bản nháp — chưa thẩm định</Badge>
-                <Badge tone="neutral">{entry?.difficulty ?? 'Nhập môn'}</Badge>
-                <Badge tone="accent">{entry?.durationMinutes?.[0] ?? 10}–{entry?.durationMinutes?.[1] ?? 20} phút</Badge>
+        {manifest.cases.map((entry) => {
+          const isCurrent = entry.id === caseFile.metadata.id
+          const progress = isCurrent
+            ? { label: startLabel, target }
+            : savedProgress(entry.id, entry.version)
+          const cardLabel = progress?.label ?? 'Bắt đầu hồ sơ'
+          const cardTarget = progress?.target ?? 'brief'
+
+          return (
+            <article className="case-card" key={entry.id}>
+              <div className="case-card__head">
+                <div>
+                  <div className="chip-row">
+                    <Badge tone="warn">Bản nháp — chưa thẩm định</Badge>
+                    {isCurrent ? <Badge tone="accent">Đang mở</Badge> : null}
+                    <Badge tone="neutral">{entry.difficulty}</Badge>
+                    <Badge tone="accent">
+                      {entry.durationMinutes[0]}–{entry.durationMinutes[1]} phút
+                    </Badge>
+                  </div>
+                  <h2>{entry.title}</h2>
+                  <p className="case-card__subtitle">{entry.subtitle}</p>
+                </div>
+                <div className="case-card__status">
+                  <span className="muted small">Phiên bản</span>
+                  <strong>{entry.version}</strong>
+                  <span className="muted small">Hồ sơ + bộ văn bản luật</span>
+                </div>
               </div>
-              <h2>{caseFile.metadata.title}</h2>
-              <p className="case-card__subtitle">{entry?.subtitle}</p>
-            </div>
-            <div className="case-card__status">
-              <span className="muted small">Phiên bản</span>
-              <strong>{caseFile.metadata.version}</strong>
-              <span className="muted small">Hồ sơ + bộ văn bản luật</span>
-            </div>
-          </div>
 
-          <p>{entry?.summary}</p>
+              <p>{entry.summary}</p>
 
-          <dl className="fact-grid">
-            <div>
-              <dt>Vai trò mô phỏng</dt>
-              <dd>Học viên phân tích hồ sơ</dd>
-            </div>
-            <div>
-              <dt>Phạm vi</dt>
-              <dd>Hồ sơ hư cấu, một nhiệm vụ học tập</dd>
-            </div>
-            <div>
-              <dt>Thời điểm pháp luật</dt>
-              <dd>Chưa phân giải — chờ người rà soát</dd>
-            </div>
-            <div>
-              <dt>Căn cứ pháp luật</dt>
-              <dd>Chưa xác minh</dd>
-            </div>
-          </dl>
+              <dl className="fact-grid">
+                <div>
+                  <dt>Vai trò mô phỏng</dt>
+                  <dd>Học viên phân tích hồ sơ</dd>
+                </div>
+                <div>
+                  <dt>Phạm vi</dt>
+                  <dd>Hồ sơ hư cấu, một nhiệm vụ học tập</dd>
+                </div>
+                <div>
+                  <dt>Thời điểm pháp luật</dt>
+                  <dd>Chưa phân giải — chờ người rà soát</dd>
+                </div>
+                <div>
+                  <dt>Căn cứ pháp luật</dt>
+                  <dd>Chưa xác minh</dd>
+                </div>
+              </dl>
 
-          <Callout tone="warn" title="Hồ sơ đang ở trạng thái nháp">
-            {entry?.notice} Bạn vẫn có thể chơi để kiểm chứng luồng học tập và hệ thống chấm điểm; kết
-            quả không phải kết luận pháp lý và không được dùng như nội dung đã duyệt.
-          </Callout>
+              <Callout tone="warn" title="Hồ sơ đang ở trạng thái nháp">
+                {entry.notice} Bạn vẫn có thể chơi để kiểm chứng luồng học tập và hệ thống chấm điểm;
+                kết quả không phải kết luận pháp lý và không được dùng như nội dung đã duyệt.
+              </Callout>
 
-          <div className="case-card__actions">
-            <Button variant="primary" onClick={() => navigate(`case/${caseFile.metadata.id}/${target}`)}>
-              {startLabel}
-            </Button>
-            <Button variant="secondary" onClick={() => navigate(`case/${caseFile.metadata.id}/notebook`)}>
-              Xem sổ tay và thuật ngữ
-            </Button>
-          </div>
-        </article>
+              <div className="case-card__actions">
+                <Button
+                  variant="primary"
+                  onClick={() => navigate(`case/${entry.id}/${cardTarget}`)}
+                >
+                  {cardLabel}
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate(`case/${entry.id}/notebook`)}
+                >
+                  Xem sổ tay và thuật ngữ
+                </Button>
+              </div>
+            </article>
+          )
+        })}
       </section>
 
       <section className="home__footer">

@@ -30,6 +30,30 @@
         "lo_law_01"
       ],
       "notice": "Bản nháp nội dung: toàn bộ căn cứ pháp luật, nhãn định danh và một số đáp án còn chờ người rà soát chuyên môn xác nhận."
+    },
+    {
+      "id": "case_002",
+      "version": "0.1.0",
+      "title": "Chiếc xe tay ga cho mượn",
+      "subtitle": "Một chiếc xe được mượn rồi bán; câu hỏi là ý định chiếm đoạt hình thành khi nào.",
+      "summary": "Dựng lại mốc thời gian từ 29/02 đến 04/03, đánh giá 12 chứng cứ theo bốn lớp, so sánh hai giả thuyết về thời điểm hình thành ý định và chọn định danh phù hợp với hồ sơ.",
+      "difficulty": "Trung cấp",
+      "durationMinutes": [15, 25],
+      "status": "draft",
+      "review": "not_reviewed",
+      "playable": true,
+      "publishable": false,
+      "lawBundleIds": ["law_bundle_blhs", "law_bundle_bltths"],
+      "learningOutcomeIds": [
+        "lo_source_fact_01",
+        "lo_evidence_01",
+        "lo_reasoning_01",
+        "lo_proof_01",
+        "lo_elements_01",
+        "lo_charge_01",
+        "lo_law_01"
+      ],
+      "notice": "Bản nháp nội dung: điều khoản, nhãn định danh và lời giải còn chờ người rà soát chuyên môn xác nhận; kết quả không phải kết luận pháp lý."
     }
   ]
 }

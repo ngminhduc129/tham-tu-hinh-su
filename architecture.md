@@ -14,7 +14,7 @@ Trò chơi lập luận pháp lý tiếng Việt chạy trên trình duyệt: ng
 |-------|------------|
 | Khung giao diện | React 19 + TypeScript |
 | Dựng | Vite 7 |
-| Kiểm thử | Vitest (160 bài kiểm thử, 21 tệp) + Testing Library + happy-dom |
+| Kiểm thử | Vitest (163 bài kiểm thử, 21 tệp) + Testing Library + happy-dom |
 | Kiểm thử trình duyệt | Playwright (Chromium), đo tràn ngang và cỡ chữ ở 5 độ rộng |
 | Kiểm tra hợp lệ | Ajv 2020 + ajv-formats (lược đồ JSON bản 2020-12) |
 | Định tuyến | Bộ định tuyến hash tự viết (`#/case/<id>/<screen>`) |
@@ -24,11 +24,11 @@ Trò chơi lập luận pháp lý tiếng Việt chạy trên trình duyệt: ng
 | Nội dung | JSON (hồ sơ, bộ văn bản luật, danh mục, mục tiêu học tập) |
 
 ### 1.3 Quyết định kiến trúc chính
-- **Tách bộ văn bản luật khỏi hồ sơ** — nhiều hồ sơ có thể dùng chung một bộ văn bản luật (`src/content/laws/law_bundle_v1.json`)
+- **Tách bộ văn bản luật khỏi hồ sơ** — nhiều hồ sơ có thể dùng chung một bộ văn bản luật; hiện có `law_bundle_v1.json` (case_001), `law_bundle_blhs.json` và `law_bundle_bltths.json` (case_002)
 - **Cú pháp nghiêm ngặt cho đường đáp án** — biểu thức `all`/`any`/`equals`/`contains`/`is_empty`; đường đáp án phải khớp đầy đủ
 - **Quy tắc nhất quán chạy trước khi chấm điểm** — lỗi chặn = không có điểm, không nộp bài hợp lệ
 - **Kiểm tra hai lớp** — Lớp 1: lược đồ Ajv (cấu trúc/tham chiếu); Lớp 2: bộ kiểm tra ngữ nghĩa (bất biến, chồng lấn đường đáp án, nội dung mồ côi)
-- **Cổng xuất bản** — `metadata.status !== 'approved'` cùng 17 mục chặn xuất bản ngăn triển khai bản phát hành
+- **Cổng xuất bản** — `metadata.status !== 'approved'` cùng các mục chặn xuất bản (17 ở case_001, 40 ở case_002) ngăn triển khai bản phát hành
 - **Đánh phiên bản lược đồ** — 2.1.0 (tương thích ngược với 2.0.0); tệp hồ sơ mang `schema_version`
 
 ---
@@ -44,7 +44,10 @@ src/
 │   ├── manifest.json            # Danh mục hồ sơ, cờ chơi được/xuất bản được
 │   ├── learning-outcomes.json   # Danh mục mục tiêu học tập toàn cục
 │   ├── cases/case_001.json      # Hồ sơ nháp (lược đồ 2.0.0)
-│   └── laws/law_bundle_v1.json  # Bộ văn bản luật tách riêng (điều khoản chưa rà soát)
+│   ├── cases/case_002.json      # Hồ sơ nháp thứ hai (lược đồ 2.1.0, hai đường đáp án)
+│   ├── laws/law_bundle_v1.json  # Bộ văn bản luật của case_001 (điều khoản chưa rà soát)
+│   ├── laws/law_bundle_blhs.json    # BLHS cho case_002 (Điều 174, 175, 51)
+│   └── laws/law_bundle_bltths.json  # BLTTHS cho case_002
 ├── domain/
 │   ├── types.ts                 # 510 dòng: toàn bộ giao diện TypeScript
 │   ├── load.ts                  # Nạp hồ sơ + ghép bộ văn bản luật + kiểm tra bằng Ajv
@@ -59,7 +62,7 @@ src/
 │   ├── semantic.ts              # Lớp 2: bộ kiểm tra bất biến ngữ nghĩa
 │   ├── lookups.ts               # Bản đồ chỉ mục cho giao diện (evidenceById, chargeById, v.v.)
 │   ├── linter.ts                # Tham chiếu chéo + cổng xuất bản (chế độ nháp và xuất bản)
-│   └── *.test.ts                # 21 tệp kiểm thử, 160 bài kiểm thử
+│   └── *.test.ts                # 21 tệp kiểm thử, 163 bài kiểm thử
 ├── state/
 │   ├── reducer.ts               # GameAction + chuyển trạng thái phiên chơi
 │   └── persistence.ts           # localStorage (phiên chơi + sao lưu + xuất/nhập)
@@ -98,11 +101,11 @@ playwright.config.ts             # Cấu hình Playwright + máy chủ dev
 ### 3.2 Luồng dữ liệu: nạp hồ sơ (`domain/load.ts`)
 
 ```
-manifest.cases[0] → getCaseEntry()
+manifest.cases[n] → getCaseEntry()
        ↓
-RAW_CASES['case_001'] (JSON gốc chưa có law_bundles)
+RAW_CASES[caseId] (JSON gốc chưa có law_bundles)
        ↓
-metadata.law_bundle_ids → LAW_BUNDLES[bundleId] (từ law_bundle_v1.json)
+metadata.law_bundle_ids → LAW_BUNDLES[bundleId] (law_bundle_v1 / blhs / bltths)
        ↓
 Ghép: { ...rawCase, law_bundles: bundles[] }
        ↓
@@ -395,12 +398,14 @@ navigate(path): void   // gán window.location.hash
 
 ## 7. Kiến trúc nội dung
 
-### 7.1 Tệp hồ sơ (`src/content/cases/case_001.json`)
+### 7.1 Tệp hồ sơ (`src/content/cases/case_001.json`, `case_002.json`)
+
+`case_001` dùng lược đồ 2.0.0 và 6 đường đáp án (4 biến thể “chưa đủ căn cứ” + A/B). `case_002` dùng lược đồ 2.1.0, 12 chứng cứ, hai đường đáp án loại trừ nhau (`path_a` lạm dụng tín nhiệm, `path_b` lừa đảo chiếm đoạt) và 79 kỳ vọng. Cấu trúc chung:
 
 ```json
 {
   "schema_version": "2.0.0",
-  "metadata": { "id": "case_001", "version": "draft-0.1.0", "status": "draft", ... },
+  "metadata": { "id": "case_001", "version": "0.2.0", "status": "draft", ... },
   "brief": { "narrative": "...", "task_prompt": "...", "player_role": "learner_case_analyst" },
   "law_bundles": [],  // được điền khi nạp
   "temporal_context": { "conduct_events": [{ "id": "conduct_01", "date_interval": {...}, "law_resolution": {...} }] },
@@ -435,7 +440,7 @@ navigate(path): void   // gán window.location.hash
 }
 ```
 
-### 7.2 Bộ văn bản luật (`src/content/laws/law_bundle_v1.json`)
+### 7.2 Bộ văn bản luật (`src/content/laws/`)
 
 ```json
 {
@@ -448,13 +453,16 @@ navigate(path): void   // gán window.location.hash
 }
 ```
 
+`case_002` tách luật thành hai bundle: `law_bundle_blhs` (3 điều BLHS) và `law_bundle_bltths` (3 nhóm quy định BLTTHS). Tệp hồ sơ trên đĩa để `law_bundles: []`; `load.ts` ghép cả hai trước khi validate.
+
 ### 7.3 Danh mục (`src/content/manifest.json`)
 
 ```json
 {
   "app": { "name": "Thám tử Hình sự", "version": "1.0.0", "schemaVersion": "2.1.0", "sessionSchemaVersion": 1, "platform": "web" },
   "cases": [
-    { "id": "case_001", "version": "draft-0.1.0", "title": "...", "subtitle": "...", "summary": "...", "difficulty": "Nhập môn", "durationMinutes": [10, 20], "status": "draft", "review": "not_reviewed", "playable": true, "publishable": false, "lawBundleIds": ["law_bundle_v1"], "learningOutcomeIds": [...], "notice": "..." }
+    { "id": "case_001", "version": "0.2.0", "title": "...", "subtitle": "...", "summary": "...", "difficulty": "Nhập môn", "durationMinutes": [10, 20], "status": "draft", "review": "not_reviewed", "playable": true, "publishable": false, "lawBundleIds": ["law_bundle_v1"], "learningOutcomeIds": [...], "notice": "..." },
+    { "id": "case_002", "version": "0.1.0", "title": "Chiếc xe tay ga cho mượn", "subtitle": "...", "summary": "...", "difficulty": "Trung cấp", "durationMinutes": [15, 25], "status": "draft", "review": "not_reviewed", "playable": true, "publishable": false, "lawBundleIds": ["law_bundle_blhs", "law_bundle_bltths"], "learningOutcomeIds": [...], "notice": "..." }
   ]
 }
 ```
@@ -478,26 +486,26 @@ navigate(path): void   // gán window.location.hash
 
 | Kiểm tra | Kết quả |
 |-------|--------|
-| `npm run lint:content` (nháp) | 0 lỗi, 7 cảnh báo, 1 thông tin |
-| `npm run lint:content -- --publish` | **17 lỗi** (chặn xuất bản) |
-| `npm test` | 160 bài kiểm thử đạt |
+| `npm run lint:content` (nháp) | 0 lỗi, 22 cảnh báo, 2 thông tin (case_001: 7 cảnh báo; case_002: 15 cảnh báo) |
+| `npm run lint:content -- --publish` | **57 lỗi** (case_001: 17, case_002: 40) |
+| `npm test` | 163 bài kiểm thử đạt |
 | `npm run build` | Đạt (bước dựng trước chạy kiểm tra nháp) |
 
-**Các mục chặn xuất bản cho case_001**:
+**Các mục chặn xuất bản cho cả hai hồ sơ**:
 - `metadata.status` chưa `approved`/`published`
 - `review.status` chưa `approved`, `review_ids` rỗng
 - Điều khoản luật chưa rà soát, thiếu `effective_from`, không có nguồn chính thức
-- Phân giải luật của `conduct_01` chưa hoàn tất
-- Quy tắc tuổi chưa rà soát, chưa có điều kiện
+- Phân giải luật của `conduct_01` (case_001) và `conduct_nhan_xe`/`conduct_ban_xe` (case_002) chưa hoàn tất
+- Quy tắc tuổi chưa rà soát, chưa có điều kiện; case_002 thiếu ngày sinh nhân vật
 - Khiếm khuyết thủ tục, tình tiết chưa rà soát
 - Còn dấu hiệu chưa xác minh trong nội dung
-- Phần giải thích không được dùng (`sem_explanation_unused`)
+- Phần giải thích không được dùng (`sem_explanation_unused`, case_001)
 
 ---
 
 ## 9. Chiến lược kiểm thử
 
-### 9.1 Phân bố kiểm thử (160 bài kiểm thử, 21 tệp)
+### 9.1 Phân bố kiểm thử (163 bài kiểm thử, 21 tệp)
 
 | Tệp | Trọng tâm | Số lượng |
 |------|-------|-------|
@@ -506,13 +514,13 @@ navigate(path): void   // gán window.location.hash
 | `linter.test.ts` | Cổng nháp/xuất bản, biến thể lỗi tham chiếu, luật nhiều đoạn | ~15 |
 | `semantic.test.ts` | Lớp 2: bất biến chấm điểm, chính sách đường đáp án, nội dung mồ côi, chu trình mở khoá | ~15 |
 | `schema-2.1.0.test.ts` | Bộ dữ liệu hợp lệ/không hợp lệ + tương thích ngược 2.0.0 | ~10 |
-| `load.test.ts` | Ghép bộ văn bản luật, danh mục, kiểm tra lược đồ | ~8 |
+| `load.test.ts` | Ghép bộ văn bản luật, danh mục hai hồ sơ, kiểm tra lược đồ, nạp case_002 | ~9 |
 | `legalVersion.test.ts` | không hợp lệ/vắt qua/thiếu/đạt + nhiều đoạn hiệu lực | ~12 |
 | `age.test.ts` | Khoảng tuổi, xấp xỉ, chưa rõ, ngày không hợp lệ | ~8 |
 | `evidence.test.ts` | Mở khoá, theo dõi tiến độ | ~10 |
 | `persistence.test.ts` | Vòng lưu-tải, sao lưu, phiên bản lược đồ/hồ sơ, nhập/xuất, xoá | ~12 |
 | `reducer.test.ts` | Đáp án, ghi chú, gợi ý, nộp/mở lại/đặt lại/nhập | ~15 |
-| `content.test.ts` | Bất biến nội dung C-01 → C-16 cho case_001 | ~16 |
+| `content.test.ts` | Bất biến nội dung C-01 → C-16 cho case_001 và case_002 | ~16 |
 | `src/ui/**/*.test.tsx` | Hiển thị + tương tác (Testing Library + happy-dom) | ~24 |
 
 ### 9.2 Lệnh
@@ -530,7 +538,7 @@ npm run check         # Kiểm tra nháp + kiểm thử + dựng
 
 ### 9.3 Kiểm thử trình duyệt (`e2e/typography.spec.ts`)
 
-Playwright chạy trên Chromium với máy chủ dev do `playwright.config.ts` tự khởi động. Bảy bài kiểm thử:
+Playwright chạy trên Chromium với máy chủ dev do `playwright.config.ts` tự khởi động. Tám bài kiểm thử:
 
 | Bài kiểm thử | Nội dung |
 |---|---|
@@ -538,6 +546,7 @@ Playwright chạy trên Chromium với máy chủ dev do `playwright.config.ts` 
 | Sàn cỡ chữ, sáng/tối | Không phần tử văn bản hiển thị nào dưới 11px (bỏ qua `.sr-only` và phần tử ẩn) |
 | Thang chữ theo breakpoint | body 15px; hero 56/38/34px; tiêu đề hồ sơ 28/23px |
 | Font tiếng Việt | `document.fonts.check` với dấu kết hợp; computed family chứa đúng tên font tự lưu |
+| Hồ sơ 002 | Mở từ thư viện, chip “Vụ án 002”, đủ 12 chứng cứ, không tràn ngang ở 360/768/1440px |
 | Ảnh chụp | 3 độ rộng × 3 màn hình × 2 chế độ, lưu vào `test-results/` để rà soát thủ công |
 
 Ảnh chụp **không** dùng làm baseline pixel; mục tiêu là phát hiện tràn bố cục và kiểm tra glyph tiếng Việt.
@@ -548,15 +557,15 @@ Playwright chạy trên Chromium với máy chủ dev do `playwright.config.ts` 
 
 | Lĩnh vực | Vấn đề |
 |------|-------|
-| **Kích thước gói** | ~557 KB JavaScript (Vite cảnh báo: khối > 500 KB) — không tách mã |
+| **Kích thước gói** | ~635 KB JavaScript (Vite cảnh báo: khối > 500 KB) — không tách mã |
 | **Tải font** | ~253 KB woff2 (latin + vietnamese) ở lần tải đầu; các subset cyrillic/greek không được tải |
-| **Nội dung nháp** | case_001 còn chỗ chưa xác minh, thiếu dòng chứng minh cho `element_b_01`, `issue_03` không có gợi ý, phần giải thích không dùng |
+| **Nội dung nháp** | case_001 còn chỗ chưa xác minh, thiếu dòng chứng minh cho `element_b_01`, `issue_03` không có gợi ý, phần giải thích không dùng; case_002 thiếu ngày sinh nhân vật và chưa phân giải luật |
 | **Chồng lấn đường đáp án** | `conclusion_insufficient` + tự đánh giá `supported` → không khớp đường nào (chỉ có chẩn đoán) |
 | **Chọn đường đáp án** | Kiểm tra chồng lấn loại trừ dùng xấp xỉ tĩnh; bỏ qua nhánh `any` |
 | **Không có máy chủ** | Không đồng bộ, không tài khoản, không dữ liệu đo lường từ xa |
 | **Không chấm điểm bằng trí tuệ nhân tạo** | Không hỗ trợ câu trả lời văn bản tự do |
 | **Kiểm thử trình duyệt** | Playwright chỉ kiểm tra tràn ngang, cỡ chữ và font; không có baseline pixel, không kiểm tra tương tác bàn phím |
-| **Một hồ sơ duy nhất** | Toàn bộ kiểm thử/kiểm tra chỉ dựa trên case_001 |
+| **Hai hồ sơ** | Kiểm thử nội dung và Playwright chủ yếu dựa trên case_001; case_002 mới có smoke test trình duyệt |
 | **Chế độ tối** | Đã kiểm tra 7 màn hình ở 5 độ rộng; modal và trạng thái lỗi lưu trữ chưa phủ |
 | **Bảng kiểu in** | Chưa triển khai (Feedback/Notebook có thể cần in) |
 | **Giảm chuyển động** | Đã tôn trọng `prefers-reduced-motion`; chưa kiểm tra trên thiết bị thật |
@@ -606,11 +615,14 @@ Playwright chạy trên Chromium với máy chủ dev do `playwright.config.ts` 
 | `src/ui/labels.ts` | 230 | Toàn bộ nhãn hiển thị + bộ định dạng |
 | `src/ui/screens/*.tsx` | 12 tệp | 12 thành phần màn hình |
 | `src/styles.css` | 2606 | Hệ thống thiết kế đầy đủ + token kiểu chữ |
-| `e2e/typography.spec.ts` | 155 | Kiểm thử trình duyệt: tràn ngang, cỡ chữ, font tiếng Việt |
+| `e2e/typography.spec.ts` | 200 | Kiểm thử trình duyệt: tràn ngang, cỡ chữ, font tiếng Việt, smoke test case_002 |
 | `playwright.config.ts` | 20 | Cấu hình Playwright và máy chủ dev |
-| `src/content/cases/case_001.json` | ~1500 | Nội dung hồ sơ nháp |
-| `src/content/laws/law_bundle_v1.json` | ~100 | Bộ văn bản luật |
-| `src/content/manifest.json` | ~50 | Danh mục hồ sơ |
+| `src/content/cases/case_001.json` | ~1500 | Nội dung hồ sơ nháp thứ nhất |
+| `src/content/cases/case_002.json` | ~2087 | Hồ sơ nháp thứ hai, hai đường đáp án, 12 chứng cứ |
+| `src/content/laws/law_bundle_v1.json` | ~100 | Bộ văn bản luật của case_001 |
+| `src/content/laws/law_bundle_blhs.json` | ~31 | BLHS cho case_002 |
+| `src/content/laws/law_bundle_bltths.json` | ~31 | BLTTHS cho case_002 |
+| `src/content/manifest.json` | ~59 | Danh mục hai hồ sơ |
 
 ---
 
@@ -624,14 +636,14 @@ npm install
 npm run dev
 
 # Kiểm thử
-npm test                 # Toàn bộ 160 bài kiểm thử
+npm test                 # Toàn bộ 163 bài kiểm thử
 npm run test:watch       # Chế độ theo dõi
 npm run test:corpus      # Lược đồ + bộ kiểm tra ngữ nghĩa
 npm run test:e2e         # Playwright: bố cục, cỡ chữ, font tiếng Việt
 
 # Kiểm tra nội dung
-npm run lint:content     # Chế độ nháp (0 lỗi, 7 cảnh báo)
-npm run lint:content -- --publish  # Cổng xuất bản (17 lỗi)
+npm run lint:content     # Chế độ nháp (0 lỗi, 22 cảnh báo)
+npm run lint:content -- --publish  # Cổng xuất bản (57 lỗi)
 
 # Dựng
 npm run build            # Dựng trước (kiểm tra nháp) + tsc + vite build

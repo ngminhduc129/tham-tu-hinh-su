@@ -14,12 +14,29 @@ interface DiagnosticGroup {
   fieldId: string
   targetId: string
   weight: number
+  valueType: 'single_choice' | 'multi_select'
   acceptedSets: string[][]
 }
 
+function expectationMet(
+  valueType: 'single_choice' | 'multi_select',
+  actual: string[],
+  accepted: string[],
+): boolean {
+  if (accepted.length === 0) return actual.length === 0
+  if (valueType === 'single_choice') {
+    return actual.length === 1 && accepted.includes(actual[0])
+  }
+  return isAnswerValueEqual(actual, accepted)
+}
+
 function buildDiagnostics(caseFile: CaseFile, answers: Answers): DiagnosticCriterionResult[] {
+  const fieldTypes = new Map(
+    caseFile.answer_fields.map((field) => [field.id, field.value_type] as const),
+  )
   const groups = new Map<string, DiagnosticGroup>()
   for (const expectation of caseFile.expected_responses) {
+    const valueType = fieldTypes.get(expectation.field_id) ?? 'single_choice'
     const key = `${expectation.criterion_id}|${expectation.field_id}|${expectation.target_id}`
     const existing = groups.get(key)
     if (existing) {
@@ -31,6 +48,7 @@ function buildDiagnostics(caseFile: CaseFile, answers: Answers): DiagnosticCrite
         fieldId: expectation.field_id,
         targetId: expectation.target_id,
         weight: expectation.weight,
+        valueType,
         acceptedSets: [expectation.accepted_values],
       })
     }
@@ -46,7 +64,11 @@ function buildDiagnostics(caseFile: CaseFile, answers: Answers): DiagnosticCrite
       for (const group of relevant) {
         totalWeight += group.weight
         const actual = getValues(answers, group.fieldId, group.targetId)
-        if (group.acceptedSets.some((accepted) => isAnswerValueEqual(actual, accepted))) {
+        if (
+          group.acceptedSets.some((accepted) =>
+            expectationMet(group.valueType, actual, accepted),
+          )
+        ) {
           metWeight += group.weight
         }
       }
@@ -104,6 +126,9 @@ export function scoreSubmission(
   }
 
   const pathWeights = caseFile.scoring.path_weights.find((entry) => entry.path_id === path.id)
+  const fieldTypes = new Map(
+    caseFile.answer_fields.map((field) => [field.id, field.value_type] as const),
+  )
   const criteria: CriterionResult[] = []
 
   for (const criterion of caseFile.criteria) {
@@ -118,13 +143,14 @@ export function scoreSubmission(
 
     const expectations: ExpectationResult[] = applicable.map((expectation) => {
       const actual = getValues(answers, expectation.field_id, expectation.target_id)
+      const valueType = fieldTypes.get(expectation.field_id) ?? 'single_choice'
       return {
         expectationId: expectation.id,
         criterionId: expectation.criterion_id,
         fieldId: expectation.field_id,
         targetId: expectation.target_id,
         weight: expectation.weight,
-        met: isAnswerValueEqual(actual, expectation.accepted_values),
+        met: expectationMet(valueType, actual, expectation.accepted_values),
         accepted: expectation.accepted_values,
         actual,
         explanationId: expectation.explanation_id,

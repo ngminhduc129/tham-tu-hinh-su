@@ -643,12 +643,8 @@ export function lintCase(
           )
         }
       }
-      if (expectation.accepted_values.length > 1 && field.value_type === 'single_choice') {
-        err(
-          'expectation_single',
-          `Kỳ vọng "${expectation.id}": trường chọn một không được nhận nhiều giá trị.`,
-        )
-      }
+      // Nhiều giá trị được chấp nhận trong trường chọn một là các đáp án thay thế
+      // cùng đạt điểm; engine chấm điểm so khớp tập giá trị nên cấu hình này hợp lệ.
     }
     for (const pathId of expectation.path_ids) {
       expectExists(pathId, paths, 'expectation_path', `kỳ vọng "${expectation.id}"`)

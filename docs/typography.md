@@ -158,6 +158,7 @@ npm run build
 - không phần tử văn bản nào dưới 11px;
 - cỡ chữ hero và tiêu đề hồ sơ đúng theo breakpoint;
 - `document.fonts.check` với dấu kết hợp tiếng Việt và computed family chứa đúng tên font;
+- hồ sơ `case_002` mở được từ thư viện, hiển thị đủ 12 chứng cứ và không tràn ngang ở 360 / 768 / 1440px;
 - ảnh chụp lưu ở `test-results/` để rà soát thủ công (không dùng baseline pixel).
 
 Checklist glyph thủ công: `ă â ê ô ơ ư đ`, dấu kết hợp `ắ ấ ệ ộ ợ ữ`, chữ hoa có dấu, weight 400/600/700, xác nhận không có ký tự nào rơi riêng về fallback.

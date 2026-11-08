@@ -4,13 +4,13 @@ Trò chơi học tập chạy trên trình duyệt bằng tiếng Việt về đ
 
 > **Lưu ý:** Tình huống và phản hồi phục vụ học tập; không phải tư vấn pháp lý cho vụ việc thực tế. Trò chơi không mô phỏng đầy đủ thủ tục tố tụng Việt Nam và không tự động diễn giải luật.
 
-Hồ sơ duy nhất hiện có (`case_001`) là **bản nháp chưa thẩm định**: toàn bộ điều khoản, nhãn định danh và một số đáp án còn chờ người rà soát chuyên môn. Hồ sơ vẫn chơi được nhưng bị chặn xuất bản.
+Thư viện hiện có hai hồ sơ, `case_001` và `case_002`, đều là **bản nháp chưa thẩm định**: điều khoản, nhãn định danh và một số đáp án còn chờ người rà soát chuyên môn. Cả hai vẫn chơi được nhưng bị chặn xuất bản. `case_002` (“Chiếc xe tay ga cho mượn”) có hai đường đáp án cạnh tranh — lạm dụng tín nhiệm và lừa đảo chiếm đoạt — cùng 12 chứng cứ.
 
 ## Bản chạy thử
 
 Bản chạy thử công khai: <https://ngminhduc129.github.io/tham-tu-hinh-su/>
 
-Bản chạy thử giữ nguyên `case_001` ở nhãn bản nháp/chưa thẩm định; cổng xuất bản vẫn chặn. Mỗi lần đẩy lên `main`, GitHub Actions dựng và triển khai lại qua `.github/workflows/deploy-pages.yml`.
+Bản chạy thử giữ nguyên cả hai hồ sơ ở nhãn bản nháp/chưa thẩm định; cổng xuất bản vẫn chặn. Mỗi lần đẩy lên `main`, GitHub Actions dựng và triển khai lại qua `.github/workflows/deploy-pages.yml`.
 
 ## Chạy nhanh
 
@@ -26,7 +26,7 @@ Mở địa chỉ Vite in ra trong terminal. Ứng dụng không có máy chủ,
 | Lệnh | Mục đích |
 | --- | --- |
 | `npm run dev` | Chạy máy chủ phát triển |
-| `npm test` | Chạy toàn bộ Vitest (160 bài kiểm thử) |
+| `npm test` | Chạy toàn bộ Vitest (163 bài kiểm thử) |
 | `npm run test:watch` | Chạy kiểm thử ở chế độ theo dõi |
 | `npm run test:corpus` | Chạy riêng bộ dữ liệu kiểm thử lược đồ 2.1.0, bộ kiểm tra ngữ nghĩa và bất biến nội dung |
 | `npm run test:e2e` | Chạy Playwright trên Chromium: tràn ngang, cỡ chữ và font tiếng Việt |
@@ -65,7 +65,10 @@ src/
     manifest.json                 # danh mục hồ sơ, cờ chơi được/xuất bản được
     learning-outcomes.json        # danh mục mục tiêu học tập
     cases/case_001.json           # hồ sơ nháp (chưa gắn bộ văn bản luật)
-    laws/law_bundle_v1.json       # bộ văn bản luật tách riêng
+    cases/case_002.json           # hồ sơ nháp thứ hai (lược đồ 2.1.0, chưa gắn luật)
+    laws/law_bundle_v1.json       # bộ văn bản luật của case_001
+    laws/law_bundle_blhs.json     # BLHS cho case_002 (Điều 174, 175, 51)
+    laws/law_bundle_bltths.json   # BLTTHS cho case_002
   domain/
     types.ts                      # kiểu hồ sơ, luật, phiên, kết quả chấm
     validate.ts                   # kiểm tra lược đồ bằng Ajv
@@ -105,7 +108,7 @@ src/
 
 1. Tìm mục trong `manifest.json`.
 2. Đọc tệp JSON của hồ sơ.
-3. Lấy `metadata.law_bundle_ids`, tra trong danh mục đăng ký `LAW_BUNDLES` (hiện là `src/content/laws/law_bundle_v1.json`).
+3. Lấy `metadata.law_bundle_ids`, tra trong danh mục đăng ký `LAW_BUNDLES` (hiện có `law_bundle_v1.json`, `law_bundle_blhs.json`, `law_bundle_bltths.json`).
 4. Ghép `law_bundles` vào hồ sơ **trước khi** kiểm tra bằng Ajv.
 5. Kiểm tra `metadata.id` và `metadata.version` khớp danh mục.
 
@@ -134,6 +137,8 @@ Không lưu đáp án theo nhãn hiển thị, không lưu văn bản tự do đ
 
 Với `case_001`, “chưa đủ căn cứ” là trục chính. Có 4 biến thể `path_insufficient*` cho các tổ hợp `unresolved`/`not_supported` của hai dấu hiệu, cộng `path_a` và `path_b` cho hai định danh có điều kiện. Đường A/B chỉ chấm dấu hiệu và định danh tương ứng, không đòi dấu hiệu của định danh còn lại. Kết luận `conclusion_a`/`conclusion_b` bị chặn nếu không chọn đúng `charge_a`/`charge_b`.
 
+Với `case_002`, hai đường `path_a` (lạm dụng tín nhiệm) và `path_b` (lừa đảo chiếm đoạt) loại trừ nhau qua đánh giá thời điểm hình thành ý định; quy tắc `rule_intent_timing_exclusive` chặn tổ hợp mâu thuẫn. Cả hai đường đều đạt 100 điểm với câu trả lời lý tưởng.
+
 ### 4. Quy tắc nhất quán chạy trước khi chấm
 
 `consistency_rules` được đánh giá trước khi so khớp đường đáp án. Nếu có quy tắc `severity: "blocking"` thất bại:
@@ -161,6 +166,7 @@ earned = max_points × (tổng trọng số kỳ vọng đạt) / (tổng trọn
 Quy tắc:
 
 - Chỉ kỳ vọng có `path_ids` chứa đường đã khớp mới được tính.
+- `single_choice` nhận **một giá trị** nằm trong `accepted_values`; nhiều giá trị là các đáp án thay thế cùng đạt điểm.
 - `multi_select` so khớp **đúng toàn bộ tập giá trị**.
 - `accepted_values: []` nghĩa là phải để trống lựa chọn.
 - `scoring.max_total_points` (2.1.0) cố định thang điểm ở 100.
@@ -221,7 +227,7 @@ Các bổ sung chính:
 
 Chi tiết đầy đủ và ma trận tương thích: [`docs/schema-2.1.0.md`](docs/schema-2.1.0.md).
 
-`case_001` vẫn giữ `"2.0.0"` để chứng minh đường tương thích ngược; danh mục của ứng dụng đã chuyển sang `"2.1.0"`.
+`case_001` vẫn giữ `"2.0.0"` để chứng minh đường tương thích ngược; `case_002` dùng `"2.1.0"` với `scoring.max_total_points` và `partial_credit.weight_scope`; danh mục của ứng dụng đã chuyển sang `"2.1.0"`.
 
 Các tập nội dung như `evidence`, `hypotheses`, `issues`, `hints`, `glossary` dùng `content_record` với trường mở. Tuy vậy, mọi tham chiếu chéo vẫn bị bộ kiểm tra nội dung rà soát; trường mở không phải giấy phép bỏ qua rà soát.
 
@@ -255,22 +261,22 @@ Chi tiết mã kiểm tra: [`docs/semantic-validator.md`](docs/semantic-validato
 
 ### Trạng thái hiện tại
 
-- `npm run lint:content` → **0 lỗi, 7 cảnh báo, 1 thông tin**
-- `npm run lint:content -- --publish` → **17 lỗi**, mã thoát 1
+- `npm run lint:content` → **0 lỗi, 22 cảnh báo, 2 thông tin** (case_001: 7 cảnh báo; case_002: 15 cảnh báo)
+- `npm run lint:content -- --publish` → **57 lỗi** (case_001: 17, case_002: 40), mã thoát 1
 - `npm run build` chạy kiểm tra nháp trong bước dựng trước, nên bản dựng vẫn qua dù hồ sơ bị chặn xuất bản
 
-Các nhóm mục chặn xuất bản đang bật cho `case_001`:
+Các nhóm mục chặn xuất bản đang bật cho cả hai hồ sơ:
 
 - `metadata.status` chưa `approved`/`published`
 - `review.status` chưa `approved`, `review_ids` rỗng
 - điều khoản luật chưa duyệt, thiếu ngày bắt đầu hiệu lực, thiếu nguồn chính thức
-- `conduct_01` chưa phân giải bộ văn bản luật
-- quy tắc tuổi chưa duyệt và chưa có điều kiện
+- `conduct_01` (case_001) và `conduct_nhan_xe`/`conduct_ban_xe` (case_002) chưa phân giải bộ văn bản luật
+- quy tắc tuổi chưa duyệt và chưa có điều kiện; `case_002` còn thiếu ngày sinh của các nhân vật
 - khiếm khuyết thủ tục chưa duyệt
 - tình tiết chưa duyệt
 - `legal_time_anchor_reason` còn chỗ chưa xác minh
 - còn dấu hiệu chưa xác minh trong nội dung
-- `explanation_01` không được kỳ vọng hoặc phần so sánh định danh nào dùng (`sem_explanation_unused`)
+- `explanation_01` không được kỳ vọng hoặc phần so sánh định danh nào dùng (`sem_explanation_unused`, case_001)
 
 Danh mục đặt `publishable: false`. Công cụ dòng lệnh cũng chặn trường hợp danh mục và metadata lệch nhau, hoặc hồ sơ được đánh dấu xuất bản được nhưng còn lỗi xuất bản.
 
@@ -289,14 +295,14 @@ Danh mục đặt `publishable: false`. Công cụ dòng lệnh cũng chặn tr�
 
 ## Kiểm thử
 
-21 tệp, 160 bài kiểm thử:
+21 tệp, 163 bài kiểm thử:
 
-- `scoring.test.ts`: đường A/B và 4 biến thể chưa đủ căn cứ đạt 100, đường A/B không đòi dấu hiệu của định danh còn lại, điểm từng phần, làm tròn một lần, chọn nhiều đúng tập, chặn nộp bài, chẩn đoán không khớp đường
+- `scoring.test.ts`: đường A/B và 4 biến thể chưa đủ căn cứ đạt 100, đường A/B không đòi dấu hiệu của định danh còn lại, điểm từng phần, làm tròn một lần, chọn nhiều đúng tập, chặn nộp bài, chẩn đoán không khớp đường; `case_002` đạt 100 ở cả hai đường và nhận đáp án thay thế cho `single_choice`
 - `matching.test.ts`: cú pháp DSL, so khớp đường đáp án, ưu tiên `path_selection`, quy tắc nhất quán
 - `linter.test.ts`: cổng nháp/xuất bản, các biến thể lỗi tham chiếu, luật nhiều đoạn
 - `semantic.test.ts`: Lớp 2 — bất biến chấm điểm, chính sách đường đáp án, nội dung mồ côi, chu trình mở khoá
 - `schema-2.1.0.test.ts`: bộ dữ liệu hợp lệ/không hợp lệ cho lược đồ và tương thích ngược
-- `load.test.ts`: ghép bộ văn bản luật, danh mục, lược đồ đóng
+- `load.test.ts`: ghép bộ văn bản luật, danh mục hai hồ sơ, lược đồ đóng, nạp `case_002` với hai bundle/6 điều khoản
 - `legalVersion.test.ts`: không hợp lệ/vắt qua/thiếu/đạt và nhiều đoạn
 - `age.test.ts`: khoảng tuổi, xấp xỉ, chưa rõ, ngày không tồn tại
 - `evidence.test.ts`: mở khoá và tiến độ
@@ -306,21 +312,23 @@ Danh mục đặt `publishable: false`. Công cụ dòng lệnh cũng chặn tr�
 - `src/ui/**/*.test.tsx`: hiển thị và tương tác các màn hình chính bằng Testing Library + happy-dom
 - `src/test/e2e-playthrough.test.ts`: hành trình bộ giảm trạng thái từ xem chứng cứ đến nộp bài (không phải kiểm thử trình duyệt)
 
-Kiểm thử trình duyệt nằm ở `e2e/typography.spec.ts` (Playwright + Chromium, 7 bài):
+Kiểm thử trình duyệt nằm ở `e2e/typography.spec.ts` (Playwright + Chromium, 8 bài):
 
 - 5 độ rộng × 7 màn hình × sáng/tối: không tràn ngang và không có chữ dưới 11px
 - thang cỡ chữ đúng theo breakpoint 1440 / 768 / 390 / 360px
 - `document.fonts.check` xác nhận font tự lưu phủ dấu tiếng Việt, computed family đúng
+- mở hồ sơ `case_002` từ thư viện: đủ 12 chứng cứ, chip “Vụ án 002”, không tràn ngang ở 360/768/1440px
 - ảnh chụp lưu ở `test-results/` để rà soát thủ công, không dùng baseline pixel
 
 ## Giới hạn đã biết
 
-- Hồ sơ mẫu là nội dung nháp, chưa được thẩm định pháp lý; không thể xuất bản cho tới khi có người rà soát đủ năng lực.
+- Cả hai hồ sơ đều là nội dung nháp, chưa được thẩm định pháp lý; không thể xuất bản cho tới khi có người rà soát đủ năng lực.
 - Các khoảng trống nội dung đã biết của `case_001`: thiếu dòng chứng minh cho `element_b_01`, `issue_03` chưa có gợi ý, `explanation_01` chưa được dùng, quy tắc tuổi chưa có điều kiện, phân giải luật còn chưa phân giải, còn chỗ chưa xác minh.
+- `case_002` còn thiếu ngày sinh của năm nhân vật, chưa phân giải luật cho hai hành vi, và các điều khoản BLHS/BLTTHS chưa được rà soát.
 - Tổ hợp `conclusion_insufficient` nhưng tự đánh giá ít nhất một dấu hiệu là `supported` không khớp đường nào; người chơi nhận chẩn đoán "không khớp đường đáp án" thay vì bị chặn bởi quy tắc nhất quán.
 - `path_selection` chống chồng lấn bằng phân tích tĩnh xấp xỉ; nhánh có `any` được bỏ qua thay vì khẳng định.
 - Không có máy chủ, tài khoản, đồng bộ đa thiết bị hoặc dữ liệu đo lường từ xa.
 - Không có chấm điểm văn bản tự do bằng trí tuệ nhân tạo.
 - Kiểm thử trình duyệt dùng Playwright chỉ kiểm tra tràn ngang, cỡ chữ và font; không có baseline pixel và chưa kiểm tra tương tác bàn phím.
-- Gói JavaScript bản phát hành hiện khoảng 557 kB (Vite cảnh báo khối > 500 kB). Font tự lưu thêm ~253 kB woff2 ở lần tải đầu (chỉ subset latin + vietnamese). Cảnh báo không chặn bản dựng.
+- Gói JavaScript bản phát hành hiện khoảng 635 kB (Vite cảnh báo khối > 500 kB). Font tự lưu thêm ~253 kB woff2 ở lần tải đầu (chỉ subset latin + vietnamese). Cảnh báo không chặn bản dựng.
 - Ứng dụng là mô phỏng học tập rút gọn, không phải quy trình tố tụng đầy đủ.

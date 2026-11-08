@@ -20,15 +20,18 @@ export function cloneCase(caseFile: CaseFile): CaseFile {
  * Dùng để kiểm tra nhánh đạt điểm đầy đủ và các phép so khớp.
  */
 export function answersForPath(caseFile: CaseFile, pathId: string): Answers {
+  const fieldTypes = new Map(
+    caseFile.answer_fields.map((field) => [field.id, field.value_type] as const),
+  )
   let answers: Answers = {}
   for (const expectation of caseFile.expected_responses) {
     if (!expectation.path_ids.includes(pathId)) continue
-    answers = setValue(
-      answers,
-      expectation.field_id,
-      expectation.target_id,
-      expectation.accepted_values,
-    )
+    const valueType = fieldTypes.get(expectation.field_id) ?? 'single_choice'
+    const value =
+      valueType === 'single_choice'
+        ? expectation.accepted_values[0]
+        : expectation.accepted_values
+    answers = setValue(answers, expectation.field_id, expectation.target_id, value)
   }
   return answers
 }
