@@ -4,6 +4,8 @@ import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { STAGES } from '../../domain/types'
 
+const heroWatermark = new URL('../../assets/illustrations/hellokitty_1.png', import.meta.url).href
+
 interface CaseProgress {
   label: string
   target: string
@@ -55,7 +57,11 @@ export function HomeScreen() {
             vệ kết luận bằng lập luận — không chỉ bằng một đáp án.
           </p>
           <div className="hero__actions">
-            <Button variant="primary" onClick={() => navigate(`case/${caseFile.metadata.id}/${target}`)}>
+            <Button
+              variant="primary"
+              className="hero__primary-action"
+              onClick={() => navigate(`case/${caseFile.metadata.id}/${target}`)}
+            >
               {startLabel}
             </Button>
             <Button variant="ghost" onClick={() => navigate('settings')}>
@@ -70,22 +76,33 @@ export function HomeScreen() {
         </div>
         <aside className="hero__panel" aria-label="Cách chơi">
           <p className="hero__panel-title">Một phiên học gồm</p>
-          <ol className="timeline-list">
-            {STAGES.filter((stage) => stage.id !== 'feedback').map((stage, index) => (
-              <li key={stage.id}>
+          <div className="hero__panel-content">
+            <ol className="timeline-list">
+              {STAGES.filter((stage) => stage.id !== 'feedback').map((stage, index) => (
+                <li key={stage.id}>
+                  <span className="timeline-list__index" aria-hidden="true">
+                    {index + 1}
+                  </span>
+                  <span>{stage.label}</span>
+                </li>
+              ))}
+              <li>
                 <span className="timeline-list__index" aria-hidden="true">
-                  {index + 1}
+                  ✓
                 </span>
-                <span>{stage.label}</span>
+                <span>Phản hồi theo từng tiêu chí</span>
               </li>
-            ))}
-            <li>
-              <span className="timeline-list__index" aria-hidden="true">
-                ✓
-              </span>
-              <span>Phản hồi theo từng tiêu chí</span>
-            </li>
-          </ol>
+            </ol>
+          </div>
+          <img
+            className="hero__watermark"
+            src={heroWatermark}
+            alt=""
+            aria-hidden="true"
+            width="721"
+            height="1280"
+            decoding="async"
+          />
         </aside>
       </section>
 

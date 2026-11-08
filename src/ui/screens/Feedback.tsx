@@ -23,6 +23,11 @@ import {
 } from '../labels'
 import type { ExpectationResult } from '../../domain/types'
 
+const feedbackWatermark = new URL(
+  '../../assets/illustrations/hellokitty_2.png',
+  import.meta.url,
+).href
+
 function targetLabel(
   fieldId: string,
   targetId: string,
@@ -182,6 +187,15 @@ export function FeedbackScreen() {
       />
 
       <Card className="feedback-summary">
+        <img
+          className="feedback-summary__watermark"
+          src={feedbackWatermark}
+          alt=""
+          aria-hidden="true"
+          width="640"
+          height="460"
+          decoding="async"
+        />
         <ScoreOverview>
           <div>
             <p className="muted small">Điểm năng lực</p>
