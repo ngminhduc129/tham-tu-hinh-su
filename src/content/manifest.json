@@ -4,14 +4,14 @@
     "version": "0.1.0",
     "schemaVersion": "2.1.0",
     "sessionSchemaVersion": 1,
-    "platform": "Web responsive, client-side"
+    "platform": "Ứng dụng chạy trên trình duyệt, thích ứng với mọi kích thước màn hình"
   },
   "cases": [
     {
       "id": "case_001",
       "version": "0.2.0",
       "title": "Hồ sơ xưởng cơ khí Đông An",
-      "subtitle": "Một thùng linh kiện biến mất trong khoảng thời gian camera không ghi liên tục.",
+      "subtitle": "Một thùng linh kiện biến mất trong khoảng thời gian máy quay không ghi liên tục.",
       "summary": "Đọc hồ sơ, tách nguồn tài liệu khỏi sự kiện, so sánh hai giả thuyết cạnh tranh và đánh giá từng dấu hiệu cấu thành trước khi chọn kết luận.",
       "difficulty": "Nhập môn",
       "durationMinutes": [10, 20],

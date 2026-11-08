@@ -64,11 +64,11 @@ export function validateExpr(expr: Expr, fields: Map<string, AnswerField>): stri
     return errors
   }
   if (!field.target_ids.includes(atom.target_id)) {
-    errors.push(`Target "${atom.target_id}" không thuộc trường "${field.id}".`)
+    errors.push(`Đối tượng "${atom.target_id}" không thuộc trường "${field.id}".`)
   }
   if ('value' in atom) {
     if (!field.options.some((option) => option.id === atom.value)) {
-      errors.push(`Giá trị "${atom.value}" không có trong options của trường "${field.id}".`)
+      errors.push(`Giá trị "${atom.value}" không có trong các lựa chọn của trường "${field.id}".`)
     }
     if (field.value_type === 'multi_select' && (atom.op === 'equals' || atom.op === 'not_equals')) {
       errors.push(`Không dùng ${atom.op} cho trường multi_select "${field.id}"; hãy dùng contains/not_contains.`)

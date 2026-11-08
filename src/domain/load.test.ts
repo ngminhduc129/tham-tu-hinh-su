@@ -57,7 +57,7 @@ describe('tải case và schema', () => {
     const result = loadCase('case_khong_ton_tai')
     expect(result.ok).toBe(false)
     if (result.ok) return
-    expect(result.errors[0]).toContain('manifest')
+    expect(result.errors[0]).toContain('danh mục')
   })
 
   it('catalog learning outcome đủ cho mọi outcome case công bố', () => {

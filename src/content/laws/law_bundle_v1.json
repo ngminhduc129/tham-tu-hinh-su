@@ -5,10 +5,10 @@
   "provisions": [
     {
       "id": "provision_placeholder_01",
-      "citation": "[Chưa xác minh] Quy định giả định dùng cho bài học — reviewer phải thay bằng điều, khoản, điểm đã đối chiếu văn bản gốc",
+      "citation": "[Chưa xác minh] Quy định giả định dùng cho bài học — người rà soát phải thay bằng điều, khoản, điểm đã đối chiếu văn bản gốc",
       "effective_from": null,
       "effective_to": null,
-      "source_ref": "[Reviewer bổ sung URL/định danh nguồn chính thức và ngày đối chiếu]",
+      "source_ref": "[Người rà soát bổ sung địa chỉ hoặc mã nguồn chính thức và ngày đối chiếu]",
       "review_status": "not_reviewed"
     }
   ]

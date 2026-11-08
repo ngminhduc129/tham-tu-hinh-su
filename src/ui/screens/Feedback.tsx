@@ -11,7 +11,15 @@ import {
 import { useGame } from '../GameContext'
 import { answerLabel } from '../../domain/lookups'
 import { formatDateInterval } from '../../domain/legalVersion'
-import { REVIEW_STATUS_LABELS, fieldLabel } from '../labels'
+import {
+  REVIEW_STATUS_LABELS,
+  fieldLabel,
+  formatCitation,
+  formatExplanationBody,
+  formatSourceRef,
+  pathBadgeLabel,
+  pathCategoryLabel,
+} from '../labels'
 import type { ExpectationResult } from '../../domain/types'
 
 function targetLabel(
@@ -28,7 +36,9 @@ function targetLabel(
   if (fieldScope === 'conclusion') return lookups.conclusions.get(targetId)?.label ?? targetId
   if (fieldScope === 'person_conduct') {
     const [personId, conductId] = targetId.split(':')
-    return `${lookups.characters.get(personId) ?? personId} · ${conductId}`
+    const characterName = lookups.characters.get(personId) ?? personId
+    const eventName = conductId === 'conduct_01' ? 'hành vi ngày 31/05/2024' : conductId
+    return `${characterName} · ${eventName}`
   }
   if (fieldId === 'legal_basis') return lookups.conclusions.get(targetId)?.label ?? targetId
   return targetId
@@ -99,7 +109,7 @@ function ExpectationRow({
           {open && (
             <div className="explanation-box">
               <p className="explanation-box__title">{explanation.title}</p>
-              <p>{explanation.body}</p>
+              <p>{formatExplanationBody(explanation.body, explanation.id)}</p>
             </div>
           )}
         </div>
@@ -121,7 +131,7 @@ export function FeedbackScreen() {
     return (
       <div className="screen">
         <SectionHeading
-          eyebrow="Giai đoạn 7 · Phản hồi"
+          eyebrow="Giai đoạn 6 · Phản hồi"
           title="Chưa có kết quả"
           description={<p>Bạn cần nộp bài trước khi xem phản hồi chi tiết.</p>}
         />
@@ -155,7 +165,7 @@ export function FeedbackScreen() {
   return (
     <div className="screen">
       <SectionHeading
-        eyebrow="Giai đoạn 7 · Phản hồi"
+        eyebrow="Giai đoạn 6 · Phản hồi"
         title={score.total === null ? 'Chẩn đoán câu trả lời' : 'Kết quả phiên học'}
         description={
           <p>
@@ -187,14 +197,15 @@ export function FeedbackScreen() {
             <p className="muted small">Đường đáp án</p>
             <p className="feedback-path">{score.pathLabel ?? 'Không khớp đường đáp án'}</p>
             <p className="muted small">
-              {score.pathId ??
-                (score.blocking
-                  ? 'Bị chặn bởi quy tắc nhất quán'
-                  : 'Cấu hình case chưa nhận diện tổ hợp này')}
+              {score.pathId
+                ? pathCategoryLabel(score.pathId, score.pathLabel)
+                : (score.blocking
+                    ? 'Bị chặn bởi quy tắc nhất quán'
+                    : 'Cấu hình hồ sơ chưa nhận diện tổ hợp này')}
             </p>
           </div>
           <div>
-            <p className="muted small">Mức đạt expectation</p>
+            <p className="muted small">Mức đạt kỳ vọng</p>
             <p className="feedback-path">
               {score.total === null ? '—' : `${metCount}/${expectationCount}`}
             </p>
@@ -234,7 +245,7 @@ export function FeedbackScreen() {
       {score.unmatched && (
         <Callout tone="warn" title="Tổ hợp câu trả lời chưa khớp đường đáp án nào">
           <p>
-            Câu trả lời không vi phạm quy tắc blocking, nhưng không khớp một đường đáp án đã cấu
+            Câu trả lời không vi phạm quy tắc nhất quán chặn nộp bài, nhưng không khớp một đường đáp án đã cấu
             hình. Hệ thống không gán điểm kết luận tùy tiện; các thanh dưới đây chỉ là chẩn đoán
             từng tiêu chí để bạn xem lại.
           </p>
@@ -261,7 +272,7 @@ export function FeedbackScreen() {
                   />
                 ))}
                 <p className="muted small">
-                  Đây là tỷ lệ trọng số expectation đạt trên toàn bộ case, không phải điểm cuối của
+                  Đây là tỷ lệ trọng số kỳ vọng đạt trên toàn bộ hồ sơ, không phải điểm cuối của
                   một đường đáp án.
                 </p>
               </div>
@@ -330,7 +341,7 @@ export function FeedbackScreen() {
                           </li>
                         )),
                     )}
-                    {metCount === 0 && <li>Chưa có expectation nào đạt.</li>}
+                    {metCount === 0 && <li>Chưa có kỳ vọng nào đạt.</li>}
                   </ul>
                 </div>
                 <div>
@@ -373,7 +384,7 @@ export function FeedbackScreen() {
           <Card>
             <h3>Đường đáp án thay thế</h3>
             <p className="muted small">
-              Case có thể chấp nhận nhiều kết luận khác nhau, nhưng mỗi đường là một tổ hợp nhất
+              Hồ sơ có thể chấp nhận nhiều kết luận khác nhau, nhưng mỗi đường là một tổ hợp nhất
               quán đã được cấu hình.
             </p>
             <ul className="path-list">
@@ -381,17 +392,19 @@ export function FeedbackScreen() {
                 <li key={path.id}>
                   <div className="chip-row">
                     <strong>{path.label ?? path.id}</strong>
-                    <Badge tone="neutral">{path.id}</Badge>
+                    <Badge tone="neutral">
+                      {pathBadgeLabel(path.id)}
+                    </Badge>
                   </div>
                   {path.description && <p className="small muted">{path.description}</p>}
                 </li>
               ))}
-              {alternatives.length === 0 && <li className="muted">Case chỉ có một đường đáp án.</li>}
+              {alternatives.length === 0 && <li className="muted">Hồ sơ chỉ có một đường đáp án.</li>}
             </ul>
           </Card>
 
           <Card>
-            <h3>Căn cứ được case tham chiếu</h3>
+            <h3>Căn cứ được hồ sơ tham chiếu</h3>
             <ul className="law-list">
               {referencedProvisions.map((provision) => (
                 <li key={provision.id}>
@@ -399,17 +412,17 @@ export function FeedbackScreen() {
                     <Badge tone="warn">
                       {REVIEW_STATUS_LABELS[provision.review_status] ?? provision.review_status}
                     </Badge>
-                    <span className="mono small">{provision.id}</span>
+                    <span className="small font-medium">{formatCitation(provision.citation, provision.id)}</span>
                   </div>
-                  <p className="small">{provision.citation}</p>
+                  <p className="small">{formatCitation(provision.citation, provision.id)}</p>
                   <p className="muted small">
                     Hiệu lực: {formatDateInterval(provision.effective_from, provision.effective_to)}
                   </p>
-                  <p className="muted small">Nguồn: {provision.source_ref}</p>
+                  <p className="muted small">Nguồn: {formatSourceRef(provision.source_ref)}</p>
                 </li>
               ))}
               {referencedProvisions.length === 0 && (
-                <li className="muted">Case không tham chiếu điều khoản cụ thể.</li>
+                <li className="muted">Hồ sơ không tham chiếu điều khoản cụ thể.</li>
               )}
             </ul>
           </Card>
@@ -420,7 +433,7 @@ export function FeedbackScreen() {
               {caseFile.explanations.slice(0, 3).map((explanation) => (
                 <li key={explanation.id}>
                   <strong>{explanation.title ?? explanation.id}</strong>
-                  <p className="small muted">{explanation.body}</p>
+                  <p className="small muted">{formatExplanationBody(explanation.body, explanation.id)}</p>
                 </li>
               ))}
             </ul>
@@ -451,7 +464,7 @@ export function FeedbackScreen() {
       </div>
 
       <Callout tone="info" title="Giới hạn của phản hồi">
-        Tình huống và phản hồi phục vụ học tập; không phải tư vấn pháp lý cho vụ việc thực tế. Case
+        Tình huống và phản hồi phục vụ học tập; không phải tư vấn pháp lý cho vụ việc thực tế. Hồ sơ
         này đang ở trạng thái nháp, chưa được thẩm định pháp lý.
       </Callout>
 

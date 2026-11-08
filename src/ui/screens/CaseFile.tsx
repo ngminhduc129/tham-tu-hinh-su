@@ -2,7 +2,7 @@ import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { computeAgeRange, formatAgeRange } from '../../domain/age'
 import { checkLawResolution, formatDateInterval } from '../../domain/legalVersion'
-import { ROLE_LABELS } from '../labels'
+import { ROLE_LABELS, PRECISION_LABELS, EVIDENCE_TYPE_LABELS } from '../labels'
 
 export function CaseFileScreen() {
   const { caseFile, lookups, navigate } = useGame()
@@ -86,7 +86,7 @@ export function CaseFileScreen() {
                             character.birth_date_interval.start_date,
                             character.birth_date_interval.end_date,
                           )}{' '}
-                          · {character.birth_date_interval.precision}
+                          · {PRECISION_LABELS[character.birth_date_interval.precision] ?? character.birth_date_interval.precision}
                         </dd>
                       </div>
                       <div>
@@ -98,9 +98,9 @@ export function CaseFileScreen() {
                 )
               })}
             </div>
-            <Callout tone="info" title="Cách engine xử lý tuổi">
-              Engine chỉ tính khoảng tuổi từ hai khoảng ngày đã ghi nguồn. Engine không áp ngưỡng
-              trách nhiệm hình sự; ngưỡng và hệ quả phải là quy tắc đã được reviewer duyệt.
+            <Callout tone="info" title="Cách hệ thống xử lý tuổi">
+              Hệ thống chỉ tính khoảng tuổi từ hai khoảng ngày đã ghi nguồn. Hệ thống không áp ngưỡng
+              trách nhiệm hình sự; ngưỡng và hệ quả phải là quy tắc đã được người rà soát duyệt.
             </Callout>
           </Card>
         </div>
@@ -116,7 +116,7 @@ export function CaseFileScreen() {
                     <p className="timeline__date">
                       {formatDateInterval(event.date_interval.start_date, event.date_interval.end_date)}
                     </p>
-                    <p>{event.id}</p>
+                    <p className="font-medium">{event.id === 'conduct_01' ? 'Hành vi nghi vấn dịch chuyển tài sản trong ca đêm' : event.id}</p>
                     <Badge tone={check?.status === 'ok' ? 'success' : 'warn'}>
                       {check?.status === 'ok' ? 'Luật đã đối chiếu' : 'Luật chưa phân giải'}
                     </Badge>
@@ -139,15 +139,15 @@ export function CaseFileScreen() {
               {caseFile.evidence.map((item) => (
                 <li key={item.id}>
                   <span>{item.title ?? item.id}</span>
-                  <Badge tone="neutral">{item.type ?? 'tài liệu'}</Badge>
+                  <Badge tone="neutral">{EVIDENCE_TYPE_LABELS[item.type ?? ''] ?? item.type ?? 'Tài liệu'}</Badge>
                 </li>
               ))}
             </ul>
             <Button
               variant="primary"
-              onClick={() => navigate(`case/${caseFile.metadata.id}/investigation`)}
+              onClick={() => navigate(`case/${caseFile.metadata.id}/evidence`)}
             >
-              Mở khu khám phá
+              Mở khu chứng cứ
             </Button>
           </Card>
         </aside>

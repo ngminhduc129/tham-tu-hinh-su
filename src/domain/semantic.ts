@@ -5,8 +5,8 @@ import { flattenAtoms } from './expr'
  * Layer 2 — Semantic Validator.
  *
  * Module này kiểm tra các bất biến ngữ nghĩa mà JSON Schema không thể biểu diễn:
- * quan hệ giữa entity, tính duy nhất của nhóm đáp án, chính sách chọn path,
- * scoring, orphan content và chu trình mở khoá chứng cứ.
+ * quan hệ giữa các thực thể, tính duy nhất của nhóm đáp án, chính sách chọn đường đáp án,
+ * chấm điểm, nội dung mồ côi và chu trình mở khoá chứng cứ.
  *
  * Các kiểm tra tham chiếu ID cơ bản đang nằm trong `linter.ts` (legacy gate).
  * Khi migrate sang 2.2.0, các kiểm tra đó sẽ được chuyển dần về đây; trong
@@ -120,7 +120,7 @@ export function validateCaseSemantics(
   )
 
   // ---------------------------------------------------------------------------
-  // Scoring: nguồn trọng số và nhóm expectation
+  // Chấm điểm: nguồn trọng số và nhóm kỳ vọng
   // ---------------------------------------------------------------------------
   if (caseFile.scoring.max_total_points !== undefined && caseFile.scoring.max_total_points !== 100) {
     add(
@@ -149,7 +149,7 @@ export function validateCaseSemantics(
         'sem_score_max_total_missing',
         'warning',
         'scoring.max_total_points',
-        'Case 2.1.0 nên khai báo max_total_points = 100 để cố định thang điểm.',
+        'Hồ sơ 2.1.0 nên khai báo max_total_points = 100 để cố định thang điểm.',
       )
     }
     if (caseFile.scoring.partial_credit.weight_scope === undefined) {
@@ -157,7 +157,7 @@ export function validateCaseSemantics(
         'sem_score_weight_scope_missing',
         'warning',
         'scoring.partial_credit.weight_scope',
-        'Case 2.1.0 nên khai báo weight_scope = "within_criterion".',
+        'Hồ sơ 2.1.0 nên khai báo weight_scope = "within_criterion".',
       )
     }
   }
@@ -180,13 +180,13 @@ export function validateCaseSemantics(
       'sem_unique_expectation',
       'error',
       `expected_responses(${ids.join(',')})`,
-      `Có ${ids.length} expectation cùng chấm một nhóm (${pathId}/${criterionId}/${fieldId}/${targetId}); điểm sẽ bị cộng trùng.`,
+      `Có ${ids.length} kỳ vọng cùng chấm một nhóm (${pathId}/${criterionId}/${fieldId}/${targetId}); điểm sẽ bị cộng trùng.`,
       ids[0],
     )
   }
 
   // ---------------------------------------------------------------------------
-  // Path selection
+  // Chọn đường đáp án
   // ---------------------------------------------------------------------------
   const selection = caseFile.path_selection
   if (selection) {
@@ -199,7 +199,7 @@ export function validateCaseSemantics(
             'sem_path_order_unknown',
             'error',
             'path_selection.order',
-            `Path "${pathId}" trong thứ tự ưu tiên không tồn tại.`,
+            `Đường đáp án "${pathId}" trong thứ tự ưu tiên không tồn tại.`,
           )
         }
         if (seen.has(pathId)) {
@@ -207,7 +207,7 @@ export function validateCaseSemantics(
             'sem_path_order_duplicate',
             'error',
             'path_selection.order',
-            `Path "${pathId}" xuất hiện nhiều lần trong thứ tự ưu tiên.`,
+            `Đường đáp án "${pathId}" xuất hiện nhiều lần trong thứ tự ưu tiên.`,
           )
         }
         seen.add(pathId)
@@ -218,7 +218,7 @@ export function validateCaseSemantics(
             'sem_path_order_missing',
             'error',
             'path_selection.order',
-            `Path "${path.id}" chưa có trong thứ tự ưu tiên.`,
+            `Đường đáp án "${path.id}" chưa có trong thứ tự ưu tiên.`,
           )
         }
       }
@@ -234,7 +234,7 @@ export function validateCaseSemantics(
               'sem_path_overlap',
               'error',
               `answer_paths[${i}].match`,
-              `Path "${left.id}" và "${right.id}" có thể cùng khớp nhưng chính sách là exclusive.`,
+              `Đường đáp án "${left.id}" và "${right.id}" có thể cùng khớp nhưng chính sách là exclusive.`,
               left.id,
             )
           }
@@ -252,7 +252,7 @@ export function validateCaseSemantics(
         'sem_reference_law',
         'error',
         'references.legal_basis_ids',
-        `Provision "${basisId}" không tồn tại trong law_bundles.`,
+        `Điều khoản "${basisId}" không tồn tại trong law_bundles.`,
       )
     }
   }
@@ -266,14 +266,14 @@ export function validateCaseSemantics(
             'sem_segment_provision',
             'error',
             `temporal_context.conduct_events[${index}].law_resolution.segments[${segmentIndex}].provision_ids`,
-            `Provision "${provisionId}" không tồn tại.`,
+            `Điều khoản "${provisionId}" không tồn tại.`,
           )
         } else if (provision.bundleId !== segment.bundle_id) {
           add(
             'sem_segment_provision_bundle',
             'error',
             `temporal_context.conduct_events[${index}].law_resolution.segments[${segmentIndex}].provision_ids`,
-            `Provision "${provisionId}" thuộc bundle "${provision.bundleId}", không thuộc "${segment.bundle_id}".`,
+            `Điều khoản "${provisionId}" thuộc bộ văn bản "${provision.bundleId}", không thuộc "${segment.bundle_id}".`,
           )
         }
       }
@@ -290,7 +290,7 @@ export function validateCaseSemantics(
         'sem_critical_flag',
         'error',
         `issues(${issue.id}).critical`,
-        `Issue "${issue.id}" đánh dấu critical nhưng không nằm trong critical_issue_ids.`,
+        `Vấn đề "${issue.id}" đánh dấu nghiêm trọng nhưng không nằm trong critical_issue_ids.`,
         issue.id,
       )
     }
@@ -299,7 +299,7 @@ export function validateCaseSemantics(
         'sem_critical_flag',
         'warning',
         `critical_issue_ids(${issue.id})`,
-        `Issue "${issue.id}" nằm trong critical_issue_ids nhưng không đánh dấu critical.`,
+        `Vấn đề "${issue.id}" nằm trong critical_issue_ids nhưng không đánh dấu nghiêm trọng.`,
         issue.id,
       )
     }
@@ -366,7 +366,7 @@ export function validateCaseSemantics(
         'sem_evidence_orphan',
         'warning',
         `evidence(${item.id})`,
-        `Chứng cứ "${item.id}" không được tham chiếu ở facts, proof matrix, element, issue, discovery hoặc expectation.`,
+        `Chứng cứ "${item.id}" không được tham chiếu ở dữ kiện, ma trận chứng minh, dấu hiệu, vấn đề, cơ chế mở tài liệu hoặc kỳ vọng.`,
         item.id,
       )
     }
@@ -383,7 +383,7 @@ export function validateCaseSemantics(
         'sem_explanation_unused',
         'warning',
         `explanations(${explanation.id})`,
-        `Giải thích "${explanation.id}" không được expectation hoặc charge comparison nào dùng.`,
+        `Giải thích "${explanation.id}" không được kỳ vọng hoặc phần so sánh định danh nào dùng.`,
         explanation.id,
       )
     }
@@ -398,7 +398,7 @@ export function validateCaseSemantics(
         'sem_criterion_no_expectation',
         'warning',
         `criteria(${criterion.id})`,
-        `Criterion "${criterion.id}" không có expectation nào nên không thể sinh điểm.`,
+        `Tiêu chí "${criterion.id}" không có kỳ vọng nào nên không thể sinh điểm.`,
         criterion.id,
       )
     }
@@ -410,13 +410,13 @@ export function validateCaseSemantics(
         'sem_element_no_fact',
         'warning',
         `charge_elements(${element.id}).fact_ids`,
-        `Dấu hiệu bắt buộc "${element.id}" chưa có fact_ids để đối chiếu.`,
+        `Dấu hiệu bắt buộc "${element.id}" chưa có mã dữ kiện để đối chiếu.`,
         element.id,
       )
     }
   }
 
-  // Trong publish mode, các warning về nội dung chưa đầy đủ trở thành error.
+  // Ở chế độ xuất bản, các cảnh báo về nội dung chưa đầy đủ trở thành lỗi.
   if (options.mode === 'publish') {
     return findings.map((finding) =>
       finding.severity === 'warning' && finding.code !== 'sem_score_max_total_missing'

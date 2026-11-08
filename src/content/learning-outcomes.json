@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "note": "Catalog chuẩn cho learning outcome. Mọi outcome case công bố phải có trong catalog và phải được đo bởi ít nhất một criterion.",
+  "note": "Danh mục chuẩn cho mục tiêu học tập. Mọi mục tiêu của hồ sơ công bố phải có trong danh mục và phải được đo bởi ít nhất một tiêu chí.",
   "outcomes": [
     {
       "id": "lo_source_fact_01",
@@ -25,7 +25,7 @@
     {
       "id": "lo_elements_01",
       "label": "Ánh xạ dữ kiện vào dấu hiệu cấu thành",
-      "description": "Chỉ ra dấu hiệu có dữ kiện hỗ trợ, dấu hiệu chưa được hỗ trợ và tình tiết mà case yêu cầu đánh giá."
+      "description": "Chỉ ra dấu hiệu có dữ kiện hỗ trợ, dấu hiệu chưa được hỗ trợ và tình tiết mà hồ sơ yêu cầu đánh giá."
     },
     {
       "id": "lo_charge_01",
@@ -35,7 +35,7 @@
     {
       "id": "lo_law_01",
       "label": "Dùng căn cứ pháp luật đúng phiên bản",
-      "description": "Chọn căn cứ từ thư viện case, nhận biết trạng thái chưa xác minh và giải thích mối liên hệ với kết luận."
+      "description": "Chọn căn cứ từ thư viện hồ sơ, nhận biết trạng thái chưa xác minh và giải thích mối liên hệ với kết luận."
     }
   ]
 }

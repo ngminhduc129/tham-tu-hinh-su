@@ -6,7 +6,7 @@ import { createSession } from '../state/reducer'
 export function fixtureCase(): CaseFile {
   const loaded = loadCase('case_001')
   if (!loaded.ok) {
-    throw new Error(`Không tải được case mẫu: ${loaded.errors.join('; ')}`)
+    throw new Error(`Không tải được hồ sơ mẫu: ${loaded.errors.join('; ')}`)
   }
   return loaded.caseFile
 }

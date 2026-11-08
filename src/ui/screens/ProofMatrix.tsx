@@ -9,13 +9,7 @@ import {
 } from '../components'
 import { useGame } from '../GameContext'
 import { getSingle } from '../../domain/answers'
-import { FIELD_HINTS, fieldLabel } from '../labels'
-
-const RELATION_LABELS: Record<string, string> = {
-  supports: 'Ủng hộ',
-  challenges: 'Phản bác',
-  context: 'Bối cảnh',
-}
+import { FIELD_HINTS, RELATION_LABELS, fieldLabel } from '../labels'
 
 export function ProofMatrixScreen() {
   const { caseFile, session, dispatch, readOnly, lookups, navigate } = useGame()

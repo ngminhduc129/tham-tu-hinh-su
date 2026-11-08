@@ -40,14 +40,21 @@ export function evidenceProgress(session: GameSession, evidence: EvidenceRecord[
   return { discovered, total: evidence.length }
 }
 
-export function lockedReason(evidence: EvidenceRecord, session: GameSession): string | null {
+export function lockedReason(
+  evidence: EvidenceRecord,
+  session: GameSession,
+  resolveTitle?: (id: string) => string,
+): string | null {
   const rule = evidence.discovery ?? { kind: 'always' as const }
+  const formatList = (ids: string[]) =>
+    resolveTitle ? ids.map(resolveTitle).join(', ') : ids.join(', ')
+
   if (rule.kind === 'viewed') {
     const missing = (rule.evidence_ids ?? []).filter(
       (id) => !session.viewedEvidenceIds.includes(id),
     )
     if (missing.length > 0) {
-      return `Cần xem trước: ${missing.join(', ')}`
+      return `Cần xem trước: ${formatList(missing)}`
     }
   }
   if (rule.kind === 'check') {
@@ -55,7 +62,7 @@ export function lockedReason(evidence: EvidenceRecord, session: GameSession): st
       (id) => !session.viewedEvidenceIds.includes(id),
     )
     if (missing.length > 0) {
-      return `Cần xem trước: ${missing.join(', ')}`
+      return `Cần xem trước: ${formatList(missing)}`
     }
   }
   return null

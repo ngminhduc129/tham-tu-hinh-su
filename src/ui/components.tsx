@@ -394,7 +394,7 @@ export function HintPanel() {
           Mở gợi ý tiếp theo
         </Button>
       )}
-      {!next && <p className="hint-panel__done">Bạn đã mở toàn bộ gợi ý của case.</p>}
+      {!next && <p className="hint-panel__done">Bạn đã mở toàn bộ gợi ý của hồ sơ.</p>}
     </details>
   )
 }

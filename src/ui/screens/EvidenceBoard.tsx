@@ -1,15 +1,23 @@
 import { useState } from 'react'
-import { Badge, Button, Callout, Card, HintPanel, ProgressBar, SectionHeading } from '../components'
+import { Badge, Button, Card, HintPanel, ProgressBar, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { answerLabel } from '../../domain/lookups'
 import { getValues } from '../../domain/answers'
-import { evidenceState, isEvidenceDiscovered } from '../../domain/evidence'
+import {
+  evidenceProgress,
+  evidenceState,
+  isEvidenceDiscovered,
+  lockedReason,
+} from '../../domain/evidence'
 import { EvidenceAssessmentFields, EvidenceDetail } from '../evidence-detail'
 import { NoteField } from '../components'
+import { EVIDENCE_STATE_LABELS, EVIDENCE_TYPE_LABELS } from '../labels'
 
 export function EvidenceBoardScreen() {
   const { caseFile, session, dispatch, navigate, readOnly, lookups } = useGame()
   const [issueFilter, setIssueFilter] = useState<string>('all')
+
+  const progress = evidenceProgress(session, caseFile.evidence)
 
   const evidenceFields = caseFile.answer_fields.filter((field) => field.scope === 'evidence')
   const totalTargets = evidenceFields.reduce((sum, field) => sum + field.target_ids.length, 0)
@@ -30,21 +38,20 @@ export function EvidenceBoardScreen() {
   return (
     <div className="screen">
       <SectionHeading
-        eyebrow="Giai đoạn 3 · Bảng chứng cứ"
-        title="Đánh giá chứng cứ theo bốn lớp"
+        eyebrow="Giai đoạn 2 · Khám phá & Đánh giá chứng cứ"
+        title="Khám phá hồ sơ & Đánh giá chứng cứ"
         description={
           <p>
-            Với mỗi tài liệu trọng tâm, đánh giá riêng: nguồn và tính toàn vẹn, quy trình thu thập,
-            độ tin cậy, và mức liên quan tới mệnh đề. Không gộp thành một nhãn “đáng tin/không đáng
-            tin”.
+            Mở tài liệu, đọc nguồn và thẩm định chứng cứ theo bốn lớp riêng biệt: Nguồn &amp; tính toàn
+            vẹn, quy trình thu thập, độ tin cậy, và mức liên quan.
           </p>
         }
         actions={
           <Button
             variant="secondary"
-            onClick={() => navigate(`case/${caseFile.metadata.id}/investigation`)}
+            onClick={() => navigate(`case/${caseFile.metadata.id}/brief`)}
           >
-            ← Quay lại khám phá
+            ← Tóm tắt hồ sơ
           </Button>
         }
       />
@@ -75,6 +82,13 @@ export function EvidenceBoardScreen() {
             {filtered.map((evidence) => {
               const state = evidenceState(evidence, session)
               const discovered = isEvidenceDiscovered(state)
+              const rule = evidence.discovery ?? { kind: 'always' as const }
+              const isCheck = rule.kind === 'check'
+              const locked = lockedReason(
+                evidence,
+                session,
+                (id) => lookups.evidence.get(id)?.title ?? id,
+              )
               const fields = caseFile.answer_fields.filter(
                 (field) => field.scope === 'evidence' && field.target_ids.includes(evidence.id),
               )
@@ -84,13 +98,31 @@ export function EvidenceBoardScreen() {
                   .map((targetId) => ({ field, targetId })),
               )
               return (
-                <Card key={evidence.id} className="evidence-card" as="article">
+                <Card
+                  key={evidence.id}
+                  className={`evidence-card evidence-card--${state}`}
+                  as="article"
+                >
                   <div id={`evidence-${evidence.id}`} className="anchor-target" />
                   <div className="evidence-card__head">
                     <div>
                       <div className="chip-row">
+                        <Badge tone="neutral">
+                          {EVIDENCE_TYPE_LABELS[evidence.type ?? ''] ?? 'Tài liệu'}
+                        </Badge>
+                        <Badge
+                          tone={
+                            state === 'viewed' || state === 'requested'
+                              ? 'success'
+                              : state === 'available'
+                                ? 'accent'
+                                : 'neutral'
+                          }
+                        >
+                          {EVIDENCE_STATE_LABELS[state]}
+                        </Badge>
                         <Badge tone={fields.length > 0 ? 'warn' : 'neutral'}>
-                          {fields.length > 0 ? 'Có mục đánh giá' : 'Không chấm điểm'}
+                          {fields.length > 0 ? 'Trọng tâm chấm điểm' : 'Không chấm điểm'}
                         </Badge>
                         {(evidence.issue_ids ?? []).map((issueId) => (
                           <span key={issueId} className="chip">
@@ -99,8 +131,9 @@ export function EvidenceBoardScreen() {
                         ))}
                       </div>
                       <h3>{evidence.title ?? evidence.id}</h3>
+                      <p className="muted">{evidence.summary}</p>
                     </div>
-                    {fields.length > 0 && (
+                    {fields.length > 0 && discovered && (
                       <span className="muted small">
                         {fields.reduce((sum, field) => sum + field.target_ids.length, 0) - missing.length}/
                         {fields.reduce((sum, field) => sum + field.target_ids.length, 0)} mục
@@ -109,27 +142,40 @@ export function EvidenceBoardScreen() {
                   </div>
 
                   {!discovered ? (
-                    <Callout tone="info" title="Chưa mở tài liệu">
-                      <p>Bạn cần mở tài liệu trong khu khám phá trước khi đánh giá.</p>
-                      <Button
-                        variant="secondary"
-                        onClick={() => navigate(`case/${caseFile.metadata.id}/investigation`)}
-                      >
-                        Tới khu khám phá
-                      </Button>
-                    </Callout>
+                    <div className="evidence-card__locked">
+                      <p className="muted">
+                        {locked ?? 'Tài liệu chưa được mở trong phiên này.'}
+                      </p>
+                      {state === 'available' && (
+                        <Button
+                          variant="primary"
+                          disabled={readOnly}
+                          onClick={() =>
+                            dispatch(
+                              isCheck
+                                ? { type: 'REQUEST_CHECK', evidenceId: evidence.id }
+                                : { type: 'VIEW_EVIDENCE', evidenceId: evidence.id },
+                            )
+                          }
+                        >
+                          {isCheck && rule.kind === 'check' ? rule.label : 'Đọc tài liệu'}
+                        </Button>
+                      )}
+                    </div>
                   ) : (
                     <>
-                      <details className="disclosure">
-                        <summary>Xem nội dung, nguồn và giới hạn</summary>
-                        <EvidenceDetail evidence={evidence} />
-                      </details>
+                      <EvidenceDetail evidence={evidence} />
 
                       {fields.length > 0 ? (
-                        <EvidenceAssessmentFields evidenceId={evidence.id} />
+                        <div className="evidence-assessment-section">
+                          <h4 style={{ margin: '1.25rem 0 0.5rem', fontSize: '1rem', color: 'var(--text-strong)' }}>
+                            Thẩm định chứng cứ theo bốn lớp
+                          </h4>
+                          <EvidenceAssessmentFields evidenceId={evidence.id} />
+                        </div>
                       ) : (
-                        <p className="muted small">
-                          Tài liệu này không có mục đánh giá bắt buộc. Nội dung vẫn được dùng cho
+                        <p className="muted small" style={{ marginTop: '0.75rem' }}>
+                          Tài liệu này không có mục đánh giá bắt buộc. Nội dung dùng làm căn cứ cho
                           phần giả thuyết và phân tích.
                         </p>
                       )}
@@ -153,6 +199,20 @@ export function EvidenceBoardScreen() {
 
         <aside className="stack">
           <Card>
+            <h3>Tiến độ khám phá</h3>
+            <ProgressBar
+              value={progress.discovered}
+              total={progress.total}
+              label="Tài liệu đã mở"
+            />
+            <p className="muted small">
+              {progress.total - progress.discovered > 0
+                ? `Còn ${progress.total - progress.discovered} tài liệu có thể mở hoặc trích xuất.`
+                : 'Bạn đã mở toàn bộ tài liệu của hồ sơ.'}
+            </p>
+          </Card>
+
+          <Card>
             <h3>Hoàn thành đánh giá</h3>
             <ProgressBar
               value={answeredTargets}
@@ -174,7 +234,7 @@ export function EvidenceBoardScreen() {
             </ol>
             <p className="muted small">
               Đánh giá “có vấn đề thủ tục” không đồng nghĩa chứng cứ tự động bị loại bỏ. Hệ quả do
-              reviewer xác định.
+              người rà soát xác định.
             </p>
           </Card>
 
@@ -221,6 +281,21 @@ export function EvidenceBoardScreen() {
 
           <HintPanel />
         </aside>
+      </div>
+
+      <div className="screen-actions">
+        <Button
+          variant="secondary"
+          onClick={() => navigate(`case/${caseFile.metadata.id}/brief`)}
+        >
+          ← Tóm tắt hồ sơ
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => navigate(`case/${caseFile.metadata.id}/hypotheses`)}
+        >
+          Sang phần Giả thuyết →
+        </Button>
       </div>
     </div>
   )

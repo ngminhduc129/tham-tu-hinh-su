@@ -70,7 +70,7 @@ export function loadSession(
     const backupKey = backupRaw(storage, caseId, raw)
     return {
       status: 'invalid',
-      reason: 'Bản lưu cục bộ không đọc được (JSON lỗi). Dữ liệu gốc vẫn được giữ.',
+      reason: 'Bản lưu cục bộ không đọc được (tệp dữ liệu bị lỗi). Dữ liệu gốc vẫn được giữ.',
       raw,
       backupKey,
     }
@@ -92,7 +92,7 @@ export function loadSession(
     return {
       status: 'invalid',
       reason:
-        'Phiên bản schema của bản lưu không khớp ứng dụng hiện tại. Bản cũ được giữ nguyên, không tự ghi đè.',
+        'Phiên bản lược đồ của bản lưu không khớp ứng dụng hiện tại. Bản cũ được giữ nguyên, không tự ghi đè.',
       raw,
       backupKey,
     }
@@ -112,7 +112,7 @@ export function loadSession(
     const backupKey = backupRaw(storage, caseId, raw)
     return {
       status: 'invalid',
-      reason: `Bản lưu thuộc case phiên bản ${candidate.session.caseVersion}, ứng dụng đang dùng ${expectedCaseVersion}. Không tự ghi đè kết quả đã nộp.`,
+      reason: `Bản lưu thuộc hồ sơ phiên bản ${candidate.session.caseVersion}, ứng dụng đang dùng ${expectedCaseVersion}. Không tự ghi đè kết quả đã nộp.`,
       raw,
       backupKey,
     }
@@ -157,7 +157,7 @@ export function parseSessionImport(
   try {
     parsed = JSON.parse(text)
   } catch {
-    return { ok: false, error: 'Tệp không phải JSON hợp lệ.' }
+    return { ok: false, error: 'Tệp không phải tệp dữ liệu hợp lệ.' }
   }
   if (!parsed || typeof parsed !== 'object') {
     return { ok: false, error: 'Tệp không đúng cấu trúc phiên chơi.' }
@@ -166,24 +166,24 @@ export function parseSessionImport(
   const candidate = parsed as Partial<StoredSession> & { session?: GameSession }
   const session = candidate.session
   if (!session || typeof session !== 'object') {
-    return { ok: false, error: 'Tệp thiếu trường session.' }
+    return { ok: false, error: 'Tệp thiếu dữ liệu phiên chơi.' }
   }
   if (candidate.sessionSchemaVersion !== SESSION_SCHEMA_VERSION) {
     return {
       ok: false,
-      error: `Schema phiên chơi trong tệp là ${String(candidate.sessionSchemaVersion)}, ứng dụng cần ${SESSION_SCHEMA_VERSION}.`,
+      error: `Lược đồ phiên chơi trong tệp là ${String(candidate.sessionSchemaVersion)}, ứng dụng cần ${SESSION_SCHEMA_VERSION}.`,
     }
   }
   if (session.caseId !== expectedCaseId) {
     return {
       ok: false,
-      error: `Tệp thuộc case "${session.caseId}", không khớp case "${expectedCaseId}".`,
+      error: `Tệp thuộc hồ sơ "${session.caseId}", không khớp hồ sơ "${expectedCaseId}".`,
     }
   }
   if (session.caseVersion !== expectedCaseVersion) {
     return {
       ok: false,
-      error: `Tệp thuộc case phiên bản ${session.caseVersion}, ứng dụng cần ${expectedCaseVersion}.`,
+      error: `Tệp thuộc hồ sơ phiên bản ${session.caseVersion}, ứng dụng cần ${expectedCaseVersion}.`,
     }
   }
   if (!Array.isArray(session.viewedEvidenceIds) || typeof session.answers !== 'object') {

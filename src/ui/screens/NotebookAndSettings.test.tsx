@@ -35,12 +35,12 @@ describe('NotebookScreen & SettingsScreen', () => {
     const exportBtn = screen.getByRole('button', { name: /Xuất phiên chơi/i })
     expect(exportBtn).toBeDefined()
 
-    // Nút xóa phiên của case này
-    const resetCaseBtn = screen.getByRole('button', { name: /Làm lại case hiện tại/i })
+    // Nút xóa phiên của hồ sơ này
+    const resetCaseBtn = screen.getByRole('button', { name: /Làm lại hồ sơ hiện tại/i })
     fireEvent.click(resetCaseBtn)
 
     // Modal xác nhận xuất hiện
-    expect(screen.getByText('Làm lại case hiện tại?')).toBeDefined()
+    expect(screen.getByText('Làm lại hồ sơ hiện tại?')).toBeDefined()
   })
 
   it('SettingsScreen có nút quay lại trang chủ', () => {

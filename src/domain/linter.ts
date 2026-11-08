@@ -35,7 +35,7 @@ function duplicateIds(
         push({
           severity: 'error',
           code: 'duplicate_id',
-          message: `ID "${item.id}" xuất hiện ở cả ${previous} và ${name}.`,
+          message: `Mã định danh "${item.id}" xuất hiện ở cả ${previous} và ${name}.`,
         })
       } else {
         seen.set(item.id, name)
@@ -66,14 +66,14 @@ function checkInterval(
     push({
       severity: mode === 'publish' ? 'error' : 'warning',
       code: 'date_missing',
-      message: `${context}: thiếu ngày bắt đầu hoặc kết thúc; không thể đối chiếu thời điểm áp dụng.`,
+      message: `${context}: thiếu ngày bắt đầu hoặc ngày kết thúc; không thể đối chiếu thời điểm áp dụng.`,
     })
   }
   if (interval.precision === 'unknown' && interval.start_date) {
     push({
       severity: 'warning',
       code: 'date_precision',
-      message: `${context}: precision "unknown" nhưng vẫn có ngày cụ thể.`,
+      message: `${context}: độ chính xác "unknown" nhưng vẫn có ngày cụ thể.`,
     })
   }
   if (
@@ -85,7 +85,7 @@ function checkInterval(
     push({
       severity: 'error',
       code: 'date_precision_mismatch',
-      message: `${context}: precision là "day" nhưng start_date (${interval.start_date}) khác end_date (${interval.end_date}).`,
+      message: `${context}: độ chính xác là "day" nhưng ngày bắt đầu (${interval.start_date}) khác ngày kết thúc (${interval.end_date}).`,
     })
   }
   for (const sourceId of interval.source_ids) {
@@ -93,7 +93,7 @@ function checkInterval(
       push({
         severity: 'error',
         code: 'source_missing',
-        message: `${context}: source_id "${sourceId}" không tồn tại trong facts/evidence.`,
+        message: `${context}: mã nguồn "${sourceId}" không tồn tại trong dữ kiện hoặc chứng cứ.`,
       })
     }
   }
@@ -242,18 +242,18 @@ export function lintCase(
     if (!exists) err(code, `${context}: "${id}" không tồn tại.`)
   }
 
-  // Metadata và catalog
+  // Thông tin mô tả và danh mục
   for (const bundleId of caseFile.metadata.law_bundle_ids) {
     expectExists(bundleId, bundles, 'bundle_missing', 'metadata.law_bundle_ids')
   }
   for (const bundle of caseFile.law_bundles) {
     if (!caseFile.metadata.law_bundle_ids.includes(bundle.id)) {
-      warn('bundle_unreferenced', `Law bundle "${bundle.id}" không được metadata tham chiếu.`)
+      warn('bundle_unreferenced', `Bộ văn bản luật "${bundle.id}" không được metadata tham chiếu.`)
     }
   }
   for (const outcomeId of caseFile.metadata.learning_outcome_ids) {
     if (!outcomes.has(outcomeId)) {
-      err('outcome_missing', `Learning outcome "${outcomeId}" không có trong catalog.`)
+      err('outcome_missing', `Mục tiêu học tập "${outcomeId}" không có trong danh mục.`)
     }
   }
   if (!caseFile.metadata.legal_time_anchor_reason.trim()) {
@@ -263,7 +263,7 @@ export function lintCase(
     options.mode === 'publish' &&
     /^\[|\breviewer\b|\bTBD\b/i.test(caseFile.metadata.legal_time_anchor_reason)
   ) {
-    err('anchor_reason_placeholder', 'legal_time_anchor_reason còn placeholder/chưa được reviewer xác nhận.')
+    err('anchor_reason_placeholder', 'legal_time_anchor_reason còn chỗ chưa xác minh hoặc chưa được người rà soát xác nhận.')
   }
 
   // Date intervals
@@ -271,7 +271,7 @@ export function lintCase(
   for (const character of caseFile.characters) {
     checkInterval(
       character.birth_date_interval,
-      `character "${character.id}".birth_date_interval`,
+      `nhân vật "${character.id}".birth_date_interval`,
       sourceIds,
       options.mode,
       push,
@@ -280,7 +280,7 @@ export function lintCase(
   for (const event of caseFile.temporal_context.conduct_events) {
     checkInterval(
       event.date_interval,
-      `conduct_event "${event.id}".date_interval`,
+      `hành vi "${event.id}".date_interval`,
       sourceIds,
       options.mode,
       push,
@@ -290,49 +290,49 @@ export function lintCase(
   // Characters
   for (const character of caseFile.characters) {
     if (character.roles.length === 0) {
-      err('character_roles', `Character "${character.id}" không có role.`)
+      err('character_roles', `Nhân vật "${character.id}" không có vai trò.`)
     }
   }
 
   // Facts & evidence
   for (const fact of caseFile.facts) {
     for (const sourceId of fact.source_ids ?? []) {
-      expectExists(sourceId, sourceIds, 'fact_source_missing', `fact "${fact.id}".source_ids`)
+      expectExists(sourceId, sourceIds, 'fact_source_missing', `dữ kiện "${fact.id}".source_ids`)
     }
     if (!fact.text || !String(fact.text).trim()) {
-      warn('fact_empty', `Fact "${fact.id}" không có nội dung.`)
+      warn('fact_empty', `Dữ kiện "${fact.id}" không có nội dung.`)
     }
   }
   for (const item of caseFile.evidence) {
     for (const defectId of item.procedural_defect_ids ?? []) {
-      expectExists(defectId, defects, 'defect_missing', `evidence "${item.id}".procedural_defect_ids`)
+      expectExists(defectId, defects, 'defect_missing', `chứng cứ "${item.id}".procedural_defect_ids`)
     }
     for (const limitationId of item.limitation_ids ?? []) {
       expectExists(
         limitationId,
         limitations,
         'limitation_missing',
-        `evidence "${item.id}".limitation_ids`,
+        `chứng cứ "${item.id}".limitation_ids`,
       )
     }
     for (const issueId of item.issue_ids ?? []) {
-      expectExists(issueId, issuesById, 'issue_missing', `evidence "${item.id}".issue_ids`)
+      expectExists(issueId, issuesById, 'issue_missing', `chứng cứ "${item.id}".issue_ids`)
     }
     const discovery = item.discovery
     if (discovery) {
       if (discovery.kind === 'viewed') {
         for (const requiredId of discovery.evidence_ids ?? []) {
-          expectExists(requiredId, evidence, 'unlock_missing', `evidence "${item.id}".discovery`)
+          expectExists(requiredId, evidence, 'unlock_missing', `chứng cứ "${item.id}".discovery`)
           if (requiredId === item.id) {
-            err('unlock_cycle', `Evidence "${item.id}" tự mở khóa chính nó.`)
+            err('unlock_cycle', `Chứng cứ "${item.id}" tự mở khóa chính nó.`)
           }
         }
       }
       if (discovery.kind === 'check') {
         for (const requiredId of discovery.requires_viewed ?? []) {
-          expectExists(requiredId, evidence, 'unlock_missing', `evidence "${item.id}".discovery`)
+          expectExists(requiredId, evidence, 'unlock_missing', `chứng cứ "${item.id}".discovery`)
           if (requiredId === item.id) {
-            err('unlock_cycle', `Evidence "${item.id}" tự mở khóa chính nó.`)
+            err('unlock_cycle', `Chứng cứ "${item.id}" tự mở khóa chính nó.`)
           }
         }
       }
@@ -340,30 +340,30 @@ export function lintCase(
   }
   for (const defect of caseFile.procedural_defects) {
     if (!defect.evidence_id) {
-      err('defect_evidence', `Procedural defect "${defect.id}" thiếu evidence_id.`)
+      err('defect_evidence', `Khiếm khuyết thủ tục "${defect.id}" thiếu evidence_id.`)
     } else {
-      expectExists(defect.evidence_id, evidence, 'defect_evidence', `defect "${defect.id}"`)
+      expectExists(defect.evidence_id, evidence, 'defect_evidence', `khiếm khuyết "${defect.id}"`)
     }
     for (const basisId of defect.legal_basis_ids ?? []) {
-      expectExists(basisId, provisions, 'basis_missing', `defect "${defect.id}".legal_basis_ids`)
+      expectExists(basisId, provisions, 'basis_missing', `khiếm khuyết "${defect.id}".legal_basis_ids`)
     }
     if (defect.review_status !== 'approved') {
-      warn('defect_unreviewed', `Procedural defect "${defect.id}" chưa được duyệt.`)
+      warn('defect_unreviewed', `Khiếm khuyết thủ tục "${defect.id}" chưa được duyệt.`)
     }
   }
   for (const limitation of caseFile.evidence_limitations) {
     if (limitation.evidence_id) {
-      expectExists(limitation.evidence_id, evidence, 'limitation_evidence', `limitation "${limitation.id}"`)
+      expectExists(limitation.evidence_id, evidence, 'limitation_evidence', `hạn chế chứng cứ "${limitation.id}"`)
     }
   }
 
   // Issues & hints
   for (const issue of caseFile.issues ?? []) {
     for (const fieldId of issue.answer_field_ids ?? []) {
-      expectExists(fieldId, fields, 'issue_field_missing', `issue "${issue.id}".answer_field_ids`)
+      expectExists(fieldId, fields, 'issue_field_missing', `vấn đề "${issue.id}".answer_field_ids`)
     }
     for (const evidenceId of issue.evidence_ids ?? []) {
-      expectExists(evidenceId, evidence, 'issue_evidence_missing', `issue "${issue.id}".evidence_ids`)
+      expectExists(evidenceId, evidence, 'issue_evidence_missing', `vấn đề "${issue.id}".evidence_ids`)
     }
   }
   for (const criticalId of caseFile.critical_issue_ids ?? []) {
@@ -371,135 +371,135 @@ export function lintCase(
   }
   for (const hint of caseFile.hints ?? []) {
     if (hint.issue_id) {
-      expectExists(hint.issue_id, issuesById, 'hint_issue_missing', `hint "${hint.id}"`)
+      expectExists(hint.issue_id, issuesById, 'hint_issue_missing', `gợi ý "${hint.id}"`)
     }
     if (hint.rubric_id) {
-      expectExists(hint.rubric_id, criteria, 'hint_rubric_missing', `hint "${hint.id}"`)
+      expectExists(hint.rubric_id, criteria, 'hint_rubric_missing', `gợi ý "${hint.id}"`)
     }
   }
   for (const entry of caseFile.glossary ?? []) {
     for (const basisId of entry.legal_basis_ids ?? []) {
-      expectExists(basisId, provisions, 'glossary_basis_missing', `glossary "${entry.id}"`)
+      expectExists(basisId, provisions, 'glossary_basis_missing', `thuật ngữ "${entry.id}"`)
     }
   }
 
   // Proof matrix
   for (const row of caseFile.proof_matrix) {
     for (const elementId of row.charge_element_ids) {
-      expectExists(elementId, elements, 'proof_element_missing', `proof row "${row.id}"`)
+      expectExists(elementId, elements, 'proof_element_missing', `dòng chứng minh "${row.id}"`)
     }
     for (const link of row.evidence_links ?? []) {
-      expectExists(link.evidence_id, evidence, 'proof_evidence_missing', `proof row "${row.id}"`)
+      expectExists(link.evidence_id, evidence, 'proof_evidence_missing', `dòng chứng minh "${row.id}"`)
       if (!['supports', 'challenges', 'contradicts', 'context', 'contextual'].includes(link.relation)) {
-        err('proof_relation', `Proof row "${row.id}" có relation không hợp lệ: ${link.relation}.`)
+        err('proof_relation', `Dòng chứng minh "${row.id}" có relation không hợp lệ: ${link.relation}.`)
       }
       for (const limitationId of link.limitation_ids ?? []) {
-        expectExists(limitationId, limitations, 'proof_limitation_missing', `proof row "${row.id}"`)
+        expectExists(limitationId, limitations, 'proof_limitation_missing', `dòng chứng minh "${row.id}"`)
       }
     }
   }
 
-  // Charges & elements
+  // Định danh và dấu hiệu
   for (const charge of caseFile.candidate_charges) {
-    expectExists(charge.person_id, characters, 'charge_person', `charge "${charge.id}"`)
+    expectExists(charge.person_id, characters, 'charge_person', `định danh "${charge.id}"`)
     for (const eventId of charge.conduct_event_ids) {
-      expectExists(eventId, conductEvents, 'charge_event', `charge "${charge.id}"`)
+      expectExists(eventId, conductEvents, 'charge_event', `định danh "${charge.id}"`)
     }
     for (const elementId of charge.charge_element_ids) {
-      expectExists(elementId, elements, 'charge_element', `charge "${charge.id}"`)
+      expectExists(elementId, elements, 'charge_element', `định danh "${charge.id}"`)
       const el = elements.get(elementId)
       if (el && el.charge_id !== charge.id) {
         err(
           'charge_element_mismatch',
-          `Charge "${charge.id}" tham chiếu element "${elementId}" nhưng element này thuộc charge "${el.charge_id}".`,
+          `Định danh "${charge.id}" tham chiếu dấu hiệu "${elementId}" nhưng dấu hiệu này thuộc định danh "${el.charge_id}".`,
         )
       }
     }
     for (const basisId of charge.legal_basis_ids) {
-      expectExists(basisId, provisions, 'charge_basis', `charge "${charge.id}"`)
+      expectExists(basisId, provisions, 'charge_basis', `định danh "${charge.id}"`)
     }
     const required = caseFile.charge_elements.filter(
       (element) => element.charge_id === charge.id && element.required,
     )
     if (required.length === 0) {
-      err('charge_no_required_element', `Charge "${charge.id}" không có dấu hiệu bắt buộc.`)
+      err('charge_no_required_element', `Định danh "${charge.id}" không có dấu hiệu bắt buộc.`)
     }
   }
   for (const element of caseFile.charge_elements) {
-    expectExists(element.charge_id, charges, 'element_charge', `element "${element.id}"`)
+    expectExists(element.charge_id, charges, 'element_charge', `dấu hiệu "${element.id}"`)
     const ch = charges.get(element.charge_id)
     if (ch && !ch.charge_element_ids.includes(element.id)) {
       err(
         'charge_element_unreferenced',
-        `Element "${element.id}" thuộc charge "${element.charge_id}" nhưng charge không liệt kê element này trong charge_element_ids.`,
+        `Dấu hiệu "${element.id}" thuộc định danh "${element.charge_id}" nhưng định danh không liệt kê dấu hiệu này trong charge_element_ids.`,
       )
     }
     for (const factId of element.fact_ids ?? []) {
-      expectExists(factId, facts, 'element_fact', `element "${element.id}"`)
+      expectExists(factId, facts, 'element_fact', `dấu hiệu "${element.id}"`)
     }
     for (const evidenceId of element.evidence_ids ?? []) {
-      expectExists(evidenceId, evidence, 'element_evidence', `element "${element.id}"`)
+      expectExists(evidenceId, evidence, 'element_evidence', `dấu hiệu "${element.id}"`)
     }
     for (const basisId of element.legal_basis_ids) {
-      expectExists(basisId, provisions, 'element_basis', `element "${element.id}"`)
+      expectExists(basisId, provisions, 'element_basis', `dấu hiệu "${element.id}"`)
     }
-    if (!element.label) warn('element_label', `Element "${element.id}" thiếu label.`)
+    if (!element.label) warn('element_label', `Dấu hiệu "${element.id}" thiếu nhãn.`)
   }
 
   // Comparisons
   for (const comparison of caseFile.charge_comparisons) {
     for (const chargeId of comparison.candidate_charge_ids ?? []) {
-      expectExists(chargeId, charges, 'comparison_charge', `comparison "${comparison.id}"`)
+      expectExists(chargeId, charges, 'comparison_charge', `so sánh "${comparison.id}"`)
     }
     for (const elementId of comparison.distinguishing_element_ids ?? []) {
       const element = elements.get(elementId)
       if (!element) {
-        err('comparison_element', `comparison "${comparison.id}": element "${elementId}" không tồn tại.`)
+        err('comparison_element', `so sánh "${comparison.id}": dấu hiệu "${elementId}" không tồn tại.`)
       } else if (!(comparison.candidate_charge_ids ?? []).includes(element.charge_id)) {
         err(
           'comparison_element_charge',
-          `comparison "${comparison.id}": element "${elementId}" thuộc charge ngoài danh sách so sánh.`,
+          `so sánh "${comparison.id}": dấu hiệu "${elementId}" thuộc định danh ngoài danh sách so sánh.`,
         )
       }
     }
     if (comparison.explanation_id) {
-      expectExists(comparison.explanation_id, explanations, 'comparison_explanation', `comparison "${comparison.id}"`)
+      expectExists(comparison.explanation_id, explanations, 'comparison_explanation', `so sánh "${comparison.id}"`)
     }
   }
 
-  // Age rules
+  // Quy tắc tuổi
   for (const rule of caseFile.age_rules) {
     for (const chargeId of rule.candidate_charge_ids) {
-      expectExists(chargeId, charges, 'age_charge', `age rule "${rule.id}"`)
+      expectExists(chargeId, charges, 'age_charge', `quy tắc tuổi "${rule.id}"`)
     }
     for (const eventId of rule.conduct_event_ids) {
-      expectExists(eventId, conductEvents, 'age_event', `age rule "${rule.id}"`)
+      expectExists(eventId, conductEvents, 'age_event', `quy tắc tuổi "${rule.id}"`)
     }
     for (const bundleId of rule.law_bundle_ids) {
-      expectExists(bundleId, bundles, 'age_bundle', `age rule "${rule.id}"`)
+      expectExists(bundleId, bundles, 'age_bundle', `quy tắc tuổi "${rule.id}"`)
     }
     for (const basisId of rule.legal_basis_ids) {
-      expectExists(basisId, provisions, 'age_basis', `age rule "${rule.id}"`)
+      expectExists(basisId, provisions, 'age_basis', `quy tắc tuổi "${rule.id}"`)
     }
     const rangesByCharge = new Map<string, Array<[number, number]>>()
     for (const condition of rule.conditions ?? []) {
       if (condition.min_age_years > condition.max_age_years) {
-        err('age_range', `age rule "${rule.id}": min_age_years lớn hơn max_age_years.`)
+        err('age_range', `quy tắc tuổi "${rule.id}": min_age_years lớn hơn max_age_years.`)
       }
       for (const chargeId of condition.applies_to_charge_ids) {
-        expectExists(chargeId, charges, 'age_condition_charge', `age rule "${rule.id}"`)
+        expectExists(chargeId, charges, 'age_condition_charge', `quy tắc tuổi "${rule.id}"`)
         if (!rule.candidate_charge_ids.includes(chargeId)) {
           err(
             'age_condition_charge_scope',
-            `age rule "${rule.id}": condition áp cho charge "${chargeId}" ngoài candidate_charge_ids.`,
+            `quy tắc tuổi "${rule.id}": điều kiện áp cho định danh "${chargeId}" ngoài candidate_charge_ids.`,
           )
         }
       }
       for (const basisId of condition.legal_basis_ids) {
-        expectExists(basisId, provisions, 'age_condition_basis', `age rule "${rule.id}"`)
+        expectExists(basisId, provisions, 'age_condition_basis', `quy tắc tuổi "${rule.id}"`)
       }
       if (!condition.review_id) {
-        err('age_condition_review', `age rule "${rule.id}": condition thiếu review_id.`)
+        err('age_condition_review', `quy tắc tuổi "${rule.id}": điều kiện thiếu review_id.`)
       }
       for (const chargeId of condition.applies_to_charge_ids) {
         const list = rangesByCharge.get(chargeId) ?? []
@@ -513,56 +513,56 @@ export function lintCase(
         if (sorted[i][0] <= sorted[i - 1][1]) {
           err(
             'age_overlap',
-            `age rule "${rule.id}": khoảng tuổi chồng lấn cho charge "${chargeId}".`,
+            `quy tắc tuổi "${rule.id}": khoảng tuổi chồng lấn cho định danh "${chargeId}".`,
           )
         }
       }
       if (sorted.length > 0 && sorted[0][0] > 0) {
-        warn('age_gap', `age rule "${rule.id}": thiếu khoảng tuổi từ 0 đến ${sorted[0][0]} cho charge "${chargeId}".`)
+        warn('age_gap', `quy tắc tuổi "${rule.id}": thiếu khoảng tuổi từ 0 đến ${sorted[0][0]} cho định danh "${chargeId}".`)
       }
     }
     if (rule.conditions.length === 0) {
-      warn('age_conditions_empty', `age rule "${rule.id}" chưa có conditions do reviewer điền.`)
+      warn('age_conditions_empty', `quy tắc tuổi "${rule.id}" chưa có điều kiện do người rà soát điền.`)
     }
     if (rule.review_status !== 'approved') {
-      warn('age_rule_unreviewed', `age rule "${rule.id}" chưa được duyệt.`)
+      warn('age_rule_unreviewed', `quy tắc tuổi "${rule.id}" chưa được duyệt.`)
     }
     if (rule.conditions.length === 0 && options.mode === 'publish') {
-      err('age_conditions_publish', `age rule "${rule.id}" không được publish khi conditions rỗng.`)
+      err('age_conditions_publish', `quy tắc tuổi "${rule.id}" không được xuất bản khi điều kiện rỗng.`)
     }
   }
 
-  // Circumstances
+  // Tình tiết
   for (const circumstance of caseFile.circumstances) {
-    expectExists(circumstance.person_id, characters, 'circumstance_person', `circumstance "${circumstance.id}"`)
+    expectExists(circumstance.person_id, characters, 'circumstance_person', `tình tiết "${circumstance.id}"`)
     for (const eventId of circumstance.conduct_event_ids) {
-      expectExists(eventId, conductEvents, 'circumstance_event', `circumstance "${circumstance.id}"`)
+      expectExists(eventId, conductEvents, 'circumstance_event', `tình tiết "${circumstance.id}"`)
     }
     for (const basisId of circumstance.legal_basis_ids) {
-      expectExists(basisId, provisions, 'circumstance_basis', `circumstance "${circumstance.id}"`)
+      expectExists(basisId, provisions, 'circumstance_basis', `tình tiết "${circumstance.id}"`)
     }
     for (const factId of circumstance.fact_ids ?? []) {
-      expectExists(factId, facts, 'circumstance_fact', `circumstance "${circumstance.id}"`)
+      expectExists(factId, facts, 'circumstance_fact', `tình tiết "${circumstance.id}"`)
     }
     if (circumstance.review_status !== 'approved') {
-      warn('circumstance_unreviewed', `circumstance "${circumstance.id}" chưa được duyệt.`)
+      warn('circumstance_unreviewed', `tình tiết "${circumstance.id}" chưa được duyệt.`)
     }
   }
 
-  // Conclusions
+  // Kết luận
   for (const conclusion of caseFile.conclusions) {
     if (conclusion.type === 'charge_supported' && !conclusion.charge_id) {
-      err('conclusion_charge', `Conclusion "${conclusion.id}" kiểu charge_supported nhưng thiếu charge_id.`)
+      err('conclusion_charge', `Kết luận "${conclusion.id}" kiểu charge_supported nhưng thiếu charge_id.`)
     }
     if (conclusion.type === 'insufficient_information' && conclusion.charge_id) {
-      err('conclusion_charge', `Conclusion "${conclusion.id}" kiểu insufficient_information nhưng có charge_id.`)
+      err('conclusion_charge', `Kết luận "${conclusion.id}" kiểu insufficient_information nhưng có charge_id.`)
     }
     if (conclusion.charge_id) {
-      expectExists(conclusion.charge_id, charges, 'conclusion_charge', `conclusion "${conclusion.id}"`)
+      expectExists(conclusion.charge_id, charges, 'conclusion_charge', `kết luận "${conclusion.id}"`)
     }
-    expectExists(conclusion.person_id, characters, 'conclusion_person', `conclusion "${conclusion.id}"`)
+    expectExists(conclusion.person_id, characters, 'conclusion_person', `kết luận "${conclusion.id}"`)
     for (const eventId of conclusion.conduct_event_ids) {
-      expectExists(eventId, conductEvents, 'conclusion_event', `conclusion "${conclusion.id}"`)
+      expectExists(eventId, conductEvents, 'conclusion_event', `kết luận "${conclusion.id}"`)
     }
   }
 
@@ -571,43 +571,43 @@ export function lintCase(
     const optionIds = new Set<string>()
     for (const option of field.options) {
       if (optionIds.has(option.id)) {
-        err('option_duplicate', `Field "${field.id}" có option trùng "${option.id}".`)
+        err('option_duplicate', `Trường "${field.id}" có lựa chọn trùng "${option.id}".`)
       }
       optionIds.add(option.id)
     }
     if (field.options.length === 0) {
-      err('field_no_options', `Field "${field.id}" không có option.`)
+      err('field_no_options', `Trường "${field.id}" không có lựa chọn.`)
     }
     if (field.target_ids.length === 0 && field.scope !== 'case') {
-      err('field_no_targets', `Field "${field.id}" không có target.`)
+      err('field_no_targets', `Trường "${field.id}" không có đối tượng.`)
     }
     for (const targetId of field.target_ids) {
       switch (field.scope) {
         case 'evidence':
-          expectExists(targetId, evidence, 'field_target', `field "${field.id}"`)
+          expectExists(targetId, evidence, 'field_target', `trường "${field.id}"`)
           break
         case 'hypothesis':
-          expectExists(targetId, hypotheses, 'field_target', `field "${field.id}"`)
+          expectExists(targetId, hypotheses, 'field_target', `trường "${field.id}"`)
           break
         case 'proof_row':
-          expectExists(targetId, proofRows, 'field_target', `field "${field.id}"`)
+          expectExists(targetId, proofRows, 'field_target', `trường "${field.id}"`)
           break
         case 'charge_element':
-          expectExists(targetId, elements, 'field_target', `field "${field.id}"`)
+          expectExists(targetId, elements, 'field_target', `trường "${field.id}"`)
           break
         case 'circumstance':
-          expectExists(targetId, circumstances, 'field_target', `field "${field.id}"`)
+          expectExists(targetId, circumstances, 'field_target', `trường "${field.id}"`)
           break
         case 'conclusion':
-          expectExists(targetId, conclusions, 'field_target', `field "${field.id}"`)
+          expectExists(targetId, conclusions, 'field_target', `trường "${field.id}"`)
           break
         case 'person_conduct': {
           const [personId, conductId] = targetId.split(':')
           if (!personId || !conductId) {
-            err('field_target', `field "${field.id}": target "${targetId}" không đúng dạng person:conduct.`)
+            err('field_target', `trường "${field.id}": đối tượng "${targetId}" không đúng dạng person:conduct.`)
           } else {
-            expectExists(personId, characters, 'field_target', `field "${field.id}"`)
-            expectExists(conductId, conductEvents, 'field_target', `field "${field.id}"`)
+            expectExists(personId, characters, 'field_target', `trường "${field.id}"`)
+            expectExists(conductId, conductEvents, 'field_target', `trường "${field.id}"`)
           }
           break
         }
@@ -627,65 +627,65 @@ export function lintCase(
   for (const expectation of caseFile.expected_responses) {
     const field = fields.get(expectation.field_id)
     if (!field) {
-      err('expectation_field', `Expectation "${expectation.id}": field "${expectation.field_id}" không tồn tại.`)
+      err('expectation_field', `Kỳ vọng "${expectation.id}": trường "${expectation.field_id}" không tồn tại.`)
     } else {
       if (!field.target_ids.includes(expectation.target_id)) {
         err(
           'expectation_target',
-          `Expectation "${expectation.id}": target "${expectation.target_id}" không thuộc field "${field.id}".`,
+          `Kỳ vọng "${expectation.id}": đối tượng "${expectation.target_id}" không thuộc trường "${field.id}".`,
         )
       }
       for (const value of expectation.accepted_values) {
         if (!field.options.some((option) => option.id === value)) {
           err(
             'expectation_value',
-            `Expectation "${expectation.id}": accepted value "${value}" không có trong options của "${field.id}".`,
+            `Kỳ vọng "${expectation.id}": giá trị được chấp nhận "${value}" không có trong lựa chọn của "${field.id}".`,
           )
         }
       }
       if (expectation.accepted_values.length > 1 && field.value_type === 'single_choice') {
         err(
           'expectation_single',
-          `Expectation "${expectation.id}": single_choice không được nhận nhiều giá trị.`,
+          `Kỳ vọng "${expectation.id}": trường chọn một không được nhận nhiều giá trị.`,
         )
       }
     }
     for (const pathId of expectation.path_ids) {
-      expectExists(pathId, paths, 'expectation_path', `expectation "${expectation.id}"`)
+      expectExists(pathId, paths, 'expectation_path', `kỳ vọng "${expectation.id}"`)
     }
     if (expectation.path_ids.length === 0) {
-      err('expectation_no_path', `Expectation "${expectation.id}" không thuộc path nào.`)
+      err('expectation_no_path', `Kỳ vọng "${expectation.id}" không thuộc đường đáp án nào.`)
     }
-    expectExists(expectation.criterion_id, criteria, 'expectation_criterion', `expectation "${expectation.id}"`)
-    expectExists(expectation.explanation_id, explanations, 'expectation_explanation', `expectation "${expectation.id}"`)
+    expectExists(expectation.criterion_id, criteria, 'expectation_criterion', `kỳ vọng "${expectation.id}"`)
+    expectExists(expectation.explanation_id, explanations, 'expectation_explanation', `kỳ vọng "${expectation.id}"`)
     for (const outcomeId of expectation.learning_outcome_ids) {
       if (!outcomes.has(outcomeId)) {
-        err('expectation_outcome', `Expectation "${expectation.id}": outcome "${outcomeId}" không có trong catalog.`)
+        err('expectation_outcome', `Kỳ vọng "${expectation.id}": mục tiêu "${outcomeId}" không có trong danh mục.`)
       }
     }
   }
 
-  // Paths
+  // Đường đáp án
   for (const path of caseFile.answer_paths) {
-    validateExprAgainst(path.match, `path "${path.id}".match`)
+    validateExprAgainst(path.match, `đường đáp án "${path.id}".match`)
     for (const conclusionId of path.conclusion_ids) {
       const conclusion = conclusions.get(conclusionId)
       if (!conclusion) {
-        err('path_conclusion', `Path "${path.id}": conclusion "${conclusionId}" không tồn tại.`)
+        err('path_conclusion', `Đường đáp án "${path.id}": kết luận "${conclusionId}" không tồn tại.`)
         continue
       }
       if (conclusion.type === 'charge_supported') {
         if (!conclusion.charge_id || !path.charge_ids.includes(conclusion.charge_id)) {
           err(
             'path_conclusion_charge',
-            `Path "${path.id}": conclusion "${conclusionId}" cần charge "${conclusion.charge_id}" trong charge_ids.`,
+            `Đường đáp án "${path.id}": kết luận "${conclusionId}" cần định danh "${conclusion.charge_id}" trong charge_ids.`,
           )
         }
       }
       if (conclusion.type === 'insufficient_information' && path.charge_ids.length > 0) {
         err(
           'path_conclusion_charge',
-          `Path "${path.id}": conclusion "${conclusionId}" là chưa đủ căn cứ nhưng path có charge_ids.`,
+          `Đường đáp án "${path.id}": kết luận "${conclusionId}" là chưa đủ căn cứ nhưng đường đáp án có charge_ids.`,
         )
       }
       const hasConclusionExpectation = caseFile.expected_responses.some(
@@ -697,14 +697,14 @@ export function lintCase(
       if (!hasConclusionExpectation) {
         err(
           'path_conclusion_expectation',
-          `Path "${path.id}": thiếu expectation cho conclusion "${conclusionId}".`,
+          `Đường đáp án "${path.id}": thiếu kỳ vọng cho kết luận "${conclusionId}".`,
         )
       }
     }
     for (const chargeId of path.charge_ids) {
       const charge = charges.get(chargeId)
       if (!charge) {
-        err('path_charge', `Path "${path.id}": charge "${chargeId}" không tồn tại.`)
+        err('path_charge', `Đường đáp án "${path.id}": định danh "${chargeId}" không tồn tại.`)
         continue
       }
       for (const element of caseFile.charge_elements) {
@@ -719,7 +719,7 @@ export function lintCase(
         if (!expected) {
           err(
             'path_charge_element',
-            `Path "${path.id}": định danh "${chargeId}" cần expectation "supported" cho dấu hiệu bắt buộc "${element.id}".`,
+            `Đường đáp án "${path.id}": định danh "${chargeId}" cần kỳ vọng "supported" cho dấu hiệu bắt buộc "${element.id}".`,
           )
         }
       }
@@ -736,7 +736,7 @@ export function lintCase(
       if (!sameConclusion && !pathsConflict(left, right)) {
         warn(
           'path_overlap',
-          `Path "${left.id}" và "${right.id}" có thể cùng khớp dù kết luận khác nhau; cần kiểm tra lại biểu thức.`,
+          `Đường đáp án "${left.id}" và "${right.id}" có thể cùng khớp dù kết luận khác nhau; cần kiểm tra lại biểu thức.`,
         )
       }
     }
@@ -744,27 +744,27 @@ export function lintCase(
 
   // Consistency rules
   for (const rule of caseFile.consistency_rules) {
-    expectExists(rule.scope.person_id, characters, 'rule_person', `rule "${rule.id}".scope`)
-    expectExists(rule.scope.conduct_event_id, conductEvents, 'rule_event', `rule "${rule.id}".scope`)
-    validateExprAgainst(rule.when, `rule "${rule.id}".when`)
-    validateExprAgainst(rule.assert, `rule "${rule.id}".assert`)
+    expectExists(rule.scope.person_id, characters, 'rule_person', `quy tắc "${rule.id}".scope`)
+    expectExists(rule.scope.conduct_event_id, conductEvents, 'rule_event', `quy tắc "${rule.id}".scope`)
+    validateExprAgainst(rule.when, `quy tắc "${rule.id}".when`)
+    validateExprAgainst(rule.assert, `quy tắc "${rule.id}".assert`)
   }
 
   // Criteria
   for (const criterion of caseFile.criteria) {
     for (const outcomeId of criterion.learning_outcome_ids) {
       if (!outcomes.has(outcomeId)) {
-        err('criterion_outcome', `Criterion "${criterion.id}": outcome "${outcomeId}" không có trong catalog.`)
+        err('criterion_outcome', `Tiêu chí "${criterion.id}": mục tiêu "${outcomeId}" không có trong danh mục.`)
       }
       if (!caseFile.metadata.learning_outcome_ids.includes(outcomeId)) {
         warn(
           'criterion_outcome_undeclared',
-          `Criterion "${criterion.id}" dùng outcome "${outcomeId}" nhưng metadata không công bố outcome này.`,
+          `Tiêu chí "${criterion.id}" dùng mục tiêu "${outcomeId}" nhưng metadata không công bố mục tiêu này.`,
         )
       }
     }
     for (const fieldId of criterion.answer_field_ids) {
-      expectExists(fieldId, fields, 'criterion_field', `criterion "${criterion.id}".answer_field_ids`)
+      expectExists(fieldId, fields, 'criterion_field', `tiêu chí "${criterion.id}".answer_field_ids`)
     }
   }
   for (const outcomeId of caseFile.metadata.learning_outcome_ids) {
@@ -774,30 +774,30 @@ export function lintCase(
     if (!measured) {
       err(
         'outcome_unmeasured',
-        `Outcome "${outcomeId}" được công bố nhưng không criterion nào đo nó.`,
+        `Mục tiêu "${outcomeId}" được công bố nhưng không tiêu chí nào đo nó.`,
       )
     }
   }
 
-  // Scoring
+  // Chấm điểm
   const weightById = new Map<string, (typeof caseFile.scoring.path_weights)[number]>()
   for (const weight of caseFile.scoring.path_weights) {
     if (weightById.has(weight.path_id)) {
-      err('weight_duplicate', `path_weights có nhiều entry cho path "${weight.path_id}".`)
+      err('weight_duplicate', `path_weights có nhiều mục cho đường đáp án "${weight.path_id}".`)
     }
     weightById.set(weight.path_id, weight)
     expectExists(weight.path_id, paths, 'weight_path', 'scoring.path_weights')
     const sum = Object.values(weight.criterion_points).reduce((total, value) => total + value, 0)
     if (Math.abs(sum - 100) > 0.001) {
-      err('weight_sum', `Path "${weight.path_id}" có tổng điểm ${sum}, yêu cầu đúng 100.`)
+      err('weight_sum', `Đường đáp án "${weight.path_id}" có tổng điểm ${sum}, yêu cầu đúng 100.`)
     }
     for (const criterionId of Object.keys(weight.criterion_points)) {
-      expectExists(criterionId, criteria, 'weight_criterion', `path "${weight.path_id}"`)
+      expectExists(criterionId, criteria, 'weight_criterion', `đường đáp án "${weight.path_id}"`)
     }
   }
   for (const path of caseFile.answer_paths) {
     if (!weightById.has(path.id)) {
-      err('weight_missing', `Path "${path.id}" không có scoring.path_weights tương ứng.`)
+      err('weight_missing', `Đường đáp án "${path.id}" không có scoring.path_weights tương ứng.`)
     }
   }
   for (const path of caseFile.answer_paths) {
@@ -812,7 +812,7 @@ export function lintCase(
       if (!hasExpectation) {
         err(
           'weight_no_expectation',
-          `Path "${path.id}": criterion "${criterionId}" có ${points} điểm nhưng không có expectation áp dụng.`,
+          `Đường đáp án "${path.id}": tiêu chí "${criterionId}" có ${points} điểm nhưng không có kỳ vọng áp dụng.`,
         )
       }
     }
@@ -823,7 +823,7 @@ export function lintCase(
       if (weight && !(expectation.criterion_id in weight.criterion_points)) {
         warn(
           'expectation_criterion_unweighted',
-          `Expectation "${expectation.id}" thuộc criterion "${expectation.criterion_id}" nhưng path "${pathId}" không cấp điểm cho criterion này.`,
+          `Kỳ vọng "${expectation.id}" thuộc tiêu chí "${expectation.criterion_id}" nhưng đường đáp án "${pathId}" không cấp điểm cho tiêu chí này.`,
         )
       }
     }
@@ -838,7 +838,7 @@ export function lintCase(
       push({
         severity,
         code: `law_${check.status}`,
-        message: `conduct_event "${check.conductEventId}": ${message}`,
+        message: `hành vi "${check.conductEventId}": ${message}`,
       })
     }
     if (check.messages.length === 0) {
@@ -850,12 +850,12 @@ export function lintCase(
     }
   }
 
-  // Layer 2 — semantic invariants (scoring, path policy, orphan content, cycles)
+  // Lớp 2 — bất biến ngữ nghĩa (chấm điểm, chính sách đường đáp án, nội dung mồ côi, chu trình)
   for (const issue of semanticFindingsToLintIssues(validateCaseSemantics(caseFile, options))) {
     push(issue)
   }
 
-  // Publish gates
+  // Cổng xuất bản
   if (options.mode === 'publish') {
     const blockers = collectPublishBlockers(caseFile)
     for (const blocker of blockers) push(blocker)
@@ -865,7 +865,7 @@ export function lintCase(
       push({
         severity: 'info',
         code: 'publish_gate',
-        message: `Case đang ở trạng thái nháp: ${blockers.length} mục chặn publish (chạy lint:content --publish để xem chi tiết).`,
+        message: `Hồ sơ đang ở trạng thái nháp: ${blockers.length} mục chặn xuất bản (chạy lint:content --publish để xem chi tiết).`,
       })
     }
   }
@@ -889,45 +889,45 @@ export function collectPublishBlockers(caseFile: CaseFile): LintIssue[] {
     add('publish_review', `review.status là "${caseFile.review.status}", cần "approved".`)
   }
   if (caseFile.review.review_ids.length === 0) {
-    add('publish_review_ids', 'review.review_ids rỗng; cần ghi nhận người/ngày rà soát.')
+    add('publish_review_ids', 'review.review_ids rỗng; cần ghi nhận người và ngày rà soát.')
   }
   for (const bundle of caseFile.law_bundles) {
     for (const provision of bundle.provisions) {
       if (provision.review_status !== 'approved') {
         add(
           'publish_provision',
-          `Provision "${provision.id}" chưa được duyệt (${provision.review_status}).`,
+          `Điều khoản "${provision.id}" chưa được duyệt (${provision.review_status}).`,
         )
       }
       if (!provision.effective_from) {
-        add('publish_effective', `Provision "${provision.id}" thiếu effective_from.`)
+        add('publish_effective', `Điều khoản "${provision.id}" thiếu ngày bắt đầu hiệu lực.`)
       }
       if (!provision.source_ref || /^\[|\bTBD\b/i.test(provision.source_ref)) {
-        add('publish_source', `Provision "${provision.id}" thiếu nguồn chính thức đã đối chiếu.`)
+        add('publish_source', `Điều khoản "${provision.id}" thiếu nguồn chính thức đã đối chiếu.`)
       }
     }
   }
   for (const defect of caseFile.procedural_defects) {
     if (defect.review_status !== 'approved') {
-      add('publish_defect', `Procedural defect "${defect.id}" chưa được duyệt.`)
+      add('publish_defect', `Khiếm khuyết thủ tục "${defect.id}" chưa được duyệt.`)
     }
   }
   for (const rule of caseFile.age_rules) {
     if (rule.review_status !== 'approved') {
-      add('publish_age', `Age rule "${rule.id}" chưa được duyệt.`)
+      add('publish_age', `Quy tắc tuổi "${rule.id}" chưa được duyệt.`)
     }
     if (rule.conditions.length === 0) {
-      add('publish_age_conditions', `Age rule "${rule.id}" chưa có conditions.`)
+      add('publish_age_conditions', `Quy tắc tuổi "${rule.id}" chưa có điều kiện.`)
     }
   }
   for (const circumstance of caseFile.circumstances) {
     if (circumstance.review_status !== 'approved') {
-      add('publish_circumstance', `Circumstance "${circumstance.id}" chưa được duyệt.`)
+      add('publish_circumstance', `Tình tiết "${circumstance.id}" chưa được duyệt.`)
     }
   }
   for (const check of checkLawResolution(caseFile)) {
     if (check.status !== 'ok') {
-      add('publish_law', `conduct_event "${check.conductEventId}": ${check.messages.join(' ')}`)
+      add('publish_law', `hành vi "${check.conductEventId}": ${check.messages.join(' ')}`)
     }
   }
   for (const issueId of caseFile.critical_issue_ids ?? []) {
@@ -939,11 +939,11 @@ export function collectPublishBlockers(caseFile: CaseFile): LintIssue[] {
   const serialized = JSON.stringify(caseFile)
   const patterns: Array<[RegExp, string]> = [
     [/\[chưa xác minh[^\]]*\]/gi, 'chưa xác minh'],
-    [/\[reviewer[^\]]*\]/gi, 'reviewer placeholder'],
-    [/\[nguồn luật chưa xác minh[^\]]*\]/gi, 'nguồn luật placeholder'],
+    [/\[reviewer[^\]]*\]/gi, 'chỗ người rà soát chưa điền'],
+    [/\[nguồn luật chưa xác minh[^\]]*\]/gi, 'nguồn luật chưa xác minh'],
     [/\[giả định học tập[^\]]*\]/gi, 'nhãn giả định học tập'],
     [/\bTBD\b/g, 'TBD'],
-    [/placeholder/gi, 'placeholder'],
+    [/placeholder/gi, 'chỗ chưa xác minh'],
     [/effect_to_be_reviewed/gi, 'effect_to_be_reviewed'],
     [/not_reviewed/gi, 'not_reviewed'],
   ]
@@ -957,13 +957,13 @@ export function collectPublishBlockers(caseFile: CaseFile): LintIssue[] {
   if (found.length > 0) {
     add(
       'publish_placeholder',
-      `Còn nội dung placeholder/chưa xác minh: ${found.slice(0, MAX_EXAMPLES).join(', ')}.`,
+      `Còn nội dung chưa xác minh: ${found.slice(0, MAX_EXAMPLES).join(', ')}.`,
     )
   }
 
   for (const conclusion of caseFile.conclusions) {
     if (!conclusion.label || /^\[/.test(conclusion.label) || /\bTBD\b/i.test(conclusion.label)) {
-      add('publish_conclusion_label', `Conclusion "${conclusion.id}" thiếu nhãn hiển thị đã duyệt.`)
+      add('publish_conclusion_label', `Kết luận "${conclusion.id}" thiếu nhãn hiển thị đã duyệt.`)
     }
   }
 

@@ -5,7 +5,7 @@ import { EvidenceDetail } from '../evidence-detail'
 import { EVIDENCE_STATE_LABELS, EVIDENCE_TYPE_LABELS } from '../labels'
 
 export function InvestigationScreen() {
-  const { caseFile, session, dispatch, navigate, readOnly } = useGame()
+  const { caseFile, session, dispatch, navigate, readOnly, lookups } = useGame()
   const progress = evidenceProgress(session, caseFile.evidence)
   const scoredEvidenceIds = new Set(
     caseFile.answer_fields
@@ -37,7 +37,11 @@ export function InvestigationScreen() {
             const state = evidenceState(evidence, session)
             const discovered = isEvidenceDiscovered(state)
             const rule = evidence.discovery ?? { kind: 'always' as const }
-            const locked = lockedReason(evidence, session)
+            const locked = lockedReason(
+              evidence,
+              session,
+              (id) => lookups.evidence.get(id)?.title ?? id,
+            )
             const isScored = scoredEvidenceIds.has(evidence.id)
             const isCheck = rule.kind === 'check'
             return (
@@ -152,7 +156,7 @@ export function InvestigationScreen() {
       <Callout tone="info" title="Nhắc lại về chứng cứ">
         <p>
           Một tài liệu không tự chứng minh sự kiện. Khi đánh giá, hãy tách nguồn/tính toàn vẹn, quy
-          trình thu thập, độ tin cậy và mức liên quan. Engine không tự loại bỏ chứng cứ vì có khiếm
+          trình thu thập, độ tin cậy và mức liên quan. Hệ thống không tự loại bỏ chứng cứ vì có khiếm
           khuyết thủ tục.
         </p>
       </Callout>

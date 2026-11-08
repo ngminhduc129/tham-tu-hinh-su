@@ -14,7 +14,6 @@ import { Badge, Button, Callout, Card, Stepper } from './ui/components'
 import { HomeScreen } from './ui/screens/Home'
 import { BriefScreen } from './ui/screens/Brief'
 import { CaseFileScreen } from './ui/screens/CaseFile'
-import { InvestigationScreen } from './ui/screens/Investigation'
 import { EvidenceBoardScreen } from './ui/screens/EvidenceBoard'
 import { HypothesesScreen } from './ui/screens/Hypotheses'
 import { ProofMatrixScreen } from './ui/screens/ProofMatrix'
@@ -24,7 +23,10 @@ import { FeedbackScreen } from './ui/screens/Feedback'
 import { NotebookScreen } from './ui/screens/Notebook'
 import { SettingsScreen } from './ui/screens/Settings'
 
-const STAGE_ROUTES = new Map<string, Stage>(STAGES.map((stage) => [stage.route, stage.id]))
+const STAGE_ROUTES = new Map<string, Stage>([
+  ...STAGES.map((stage) => [stage.route, stage.id] as [string, Stage]),
+  ['investigation', 'evidence'],
+])
 
 interface BootResult {
   session: GameSession
@@ -50,7 +52,7 @@ function bootSession(caseFile: CaseFile): BootResult {
       session: createSession(caseFile),
       issue: {
         reason:
-          'Trình duyệt không cho phép truy cập localStorage, nên tiến độ sẽ không được lưu tự động trong phiên này.',
+          'Trình duyệt không cho phép truy cập bộ nhớ cục bộ, nên tiến độ sẽ không được lưu tự động trong phiên này.',
         raw: '',
         backupKey: null,
       },
@@ -64,7 +66,7 @@ function NotFoundScreen() {
     <main id="main-content" className="app-main">
       <Card>
         <h1>Không tìm thấy trang</h1>
-        <p>Đường dẫn không tồn tại hoặc case không có trong bản dựng này.</p>
+        <p>Đường dẫn không tồn tại hoặc hồ sơ không có trong bản dựng này.</p>
         <Button variant="primary" onClick={() => navigateRoute('')}>
           Về trang chủ
         </Button>
@@ -77,9 +79,9 @@ function LoadErrorScreen({ errors }: { errors: string[] }) {
   return (
     <main id="main-content" className="app-main">
       <Card>
-        <h1>Không tải được nội dung case</h1>
+        <h1>Không tải được nội dung hồ sơ</h1>
         <p>
-          Nội dung chưa qua kiểm tra hoặc tệp case/law bundle bị thiếu. Ứng dụng không cố chấp nhận
+          Nội dung chưa qua kiểm tra hoặc tệp hồ sơ hoặc bộ văn bản luật bị thiếu. Ứng dụng không cố chấp nhận
           dữ liệu sai cấu trúc.
         </p>
         <Callout tone="danger" title="Chi tiết lỗi">
@@ -107,7 +109,7 @@ function CaseScreenRouter({
   const screen = route.screen
   if (screen === 'brief') return <BriefScreen />
   if (screen === 'casefile') return <CaseFileScreen />
-  if (screen === 'investigation') return <InvestigationScreen />
+  if (screen === 'investigation') return <EvidenceBoardScreen />
   if (screen === 'evidence') return <EvidenceBoardScreen />
   if (screen === 'hypotheses') return <HypothesesScreen />
   if (screen === 'analysis') return <AnalysisScreen />
@@ -119,7 +121,7 @@ function CaseScreenRouter({
     <Card>
       <h1>Màn hình chưa hỗ trợ</h1>
       <p>
-        Route “{screen}” chưa được nối trong bản dựng này của case {caseFile.metadata.id}.
+        Màn hình này chưa được nối trong bản dựng hiện tại của hồ sơ {caseFile.metadata.id}.
       </p>
     </Card>
   )
@@ -160,6 +162,36 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
     dispatch({ type: 'RESET', session: createSession(caseFile) })
   }
 
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const saved = window.localStorage.getItem('theme')
+      if (saved === 'dark' || saved === 'light') return saved
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    } catch {
+      return 'light'
+    }
+  })
+
+  useEffect(() => {
+    try {
+      document.documentElement.setAttribute('data-theme', theme)
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+      window.localStorage.setItem('theme', theme)
+    } catch {
+      // Bỏ qua nếu không có localStorage
+    }
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))
+  }
+
   const contextValue: GameContextValue = {
     caseFile,
     lookups,
@@ -171,6 +203,8 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
     storageIssue,
     dismissStorageIssue: () => setStorageIssue(null),
     restartCase,
+    theme,
+    toggleTheme,
   }
 
   const caseMatches =
@@ -203,10 +237,19 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
           </button>
 
           <div className="app-header__meta">
-            <span className="case-chip" title="Case đang mở">
-              {caseFile.metadata.id} · v{caseFile.metadata.version}
+            <span className="case-chip" title="Hồ sơ vụ án đang mở">
+              Vụ án {caseFile.metadata.id === 'case_001' ? '001' : caseFile.metadata.id} · bản {caseFile.metadata.version}
             </span>
-            {session.status === 'submitted' && <Badge tone="success">Đã nộp</Badge>}
+            {session.status === 'submitted' && <Badge tone="success">Đã nộp bài</Badge>}
+            <button
+              type="button"
+              className="theme-toggle-button"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối'}
+              title={theme === 'dark' ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối'}
+            >
+              {theme === 'dark' ? '☀️ Sáng' : '🌙 Tối'}
+            </button>
             <nav className="header-nav" aria-label="Điều hướng phụ">
               <button
                 type="button"
@@ -297,7 +340,7 @@ function GameShell({ caseFile, route }: { caseFile: CaseFile; route: Route }) {
           Không mô phỏng đầy đủ thủ tục tố tụng Việt Nam.
         </p>
         <p className="muted small">
-          {manifest.app.name} {appVersion} · dữ liệu lưu cục bộ · không telemetry
+          {manifest.app.name} {appVersion} · dữ liệu lưu cục bộ · không dùng dữ liệu đo lường từ xa
         </p>
       </footer>
     </GameContext.Provider>
@@ -309,7 +352,7 @@ export function App() {
   const loaded = useMemo(() => {
     const firstCase = manifest.cases[0]
     if (!firstCase) {
-      return { ok: false as const, errors: ['Manifest không có case nào.'] }
+      return { ok: false as const, errors: ['Danh mục không có hồ sơ nào.'] }
     }
     return loadCase(firstCase.id)
   }, [])

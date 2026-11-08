@@ -20,6 +20,8 @@ export interface GameContextValue {
   storageIssue: StorageIssue | null
   dismissStorageIssue: () => void
   restartCase: () => void
+  theme: 'light' | 'dark'
+  toggleTheme: () => void
 }
 
 export const GameContext = createContext<GameContextValue | null>(null)

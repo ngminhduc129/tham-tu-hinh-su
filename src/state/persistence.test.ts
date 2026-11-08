@@ -104,7 +104,7 @@ describe('lưu và tải phiên chơi', () => {
     const result = loadSession(storage, caseFile.metadata.id, caseFile.metadata.version)
     expect(result.status).toBe('invalid')
     if (result.status !== 'invalid') return
-    expect(result.reason).toContain('schema')
+    expect(result.reason).toContain('lược đồ')
     expect(result.backupKey).not.toBeNull()
   })
 

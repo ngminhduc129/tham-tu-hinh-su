@@ -14,7 +14,7 @@ import { getSingle, getValues } from '../../domain/answers'
 import { blockingFailures, evaluateConsistency } from '../../domain/matching'
 import { scoreSubmission } from '../../domain/scoring'
 import { createSession } from '../../state/reducer'
-import { FIELD_HINTS, fieldLabel } from '../labels'
+import { FIELD_HINTS, PROVISION_LABELS, fieldLabel, formatCitation } from '../labels'
 import type { ScoreResult } from '../../domain/types'
 
 interface ChecklistItem {
@@ -106,7 +106,7 @@ export function SubmissionScreen() {
     },
     {
       id: 'circumstance',
-      label: 'Đánh giá tình tiết case yêu cầu',
+      label: 'Đánh giá tình tiết hồ sơ yêu cầu',
       done: circumstancesDone,
       detail: `${caseFile.circumstances.length} tình tiết`,
     },
@@ -177,9 +177,9 @@ export function SubmissionScreen() {
     return (
       <div className="screen">
         <SectionHeading
-          eyebrow="Giai đoạn 6 · Kết luận"
+          eyebrow="Giai đoạn 5 · Kết luận"
           title="Bạn đã nộp bài"
-          description={<p>Kết quả được lưu cùng phiên bản case và law bundle tại thời điểm nộp.</p>}
+          description={<p>Kết quả được lưu cùng phiên bản hồ sơ và bộ văn bản luật tại thời điểm nộp.</p>}
         />
         <Card>
           <div className="submitted-summary">
@@ -245,7 +245,7 @@ export function SubmissionScreen() {
   return (
     <div className="screen">
       <SectionHeading
-        eyebrow="Giai đoạn 6 · Kết luận"
+        eyebrow="Giai đoạn 5 · Kết luận"
         title="Chọn kết luận và căn cứ"
         description={
           <p>
@@ -308,7 +308,10 @@ export function SubmissionScreen() {
               <MultiChoice
                 legend={fieldLabel(legalBasisField.id)}
                 hint={FIELD_HINTS[legalBasisField.id]}
-                options={legalBasisField.options}
+                options={legalBasisField.options.map((opt) => ({
+                  ...opt,
+                  label: PROVISION_LABELS[opt.id] ?? formatCitation(opt.label, opt.id),
+                }))}
                 values={legalBasisValues}
                 readOnly={readOnly}
                 onToggle={(value) =>
@@ -323,8 +326,8 @@ export function SubmissionScreen() {
             )}
             <Callout tone="warn" title="Căn cứ trong bản nháp">
               <p>
-                Mọi căn cứ trong case đang ở trạng thái chưa xác minh và chưa có ngày hiệu lực. Việc
-                chọn căn cứ chỉ là bài tập đối chiếu thư viện case, không phải kết luận áp dụng luật.
+                Mọi căn cứ trong hồ sơ đang ở trạng thái chưa xác minh và chưa có ngày hiệu lực. Việc
+                chọn căn cứ chỉ là bài tập đối chiếu thư viện hồ sơ, không phải kết luận áp dụng luật.
               </p>
             </Callout>
           </Card>
@@ -336,7 +339,7 @@ export function SubmissionScreen() {
               value={session.notes['conclusion:explanation'] ?? ''}
               readOnly={readOnly}
               rows={4}
-              placeholder="Ví dụ: Nhật ký ra vào chỉ chứng minh thời điểm quẹt thẻ; khoảng trống camera không chứng minh hành vi. Vì vậy…"
+              placeholder="Ví dụ: Nhật ký ra vào chỉ chứng minh thời điểm quẹt thẻ; khoảng trống máy quay không chứng minh hành vi. Vì vậy…"
               onChange={(value) =>
                 dispatch({ type: 'SET_NOTE', key: 'conclusion:explanation', value })
               }
@@ -363,7 +366,7 @@ export function SubmissionScreen() {
               </ul>
               <p>
                 Hãy quay lại phần phân tích hoặc kết luận để sửa. Hệ thống không gán điểm tùy tiện
-                khi còn mâu thuẫn blocking.
+                khi còn mâu thuẫn chặn nộp bài.
               </p>
             </Callout>
           )}
@@ -468,7 +471,7 @@ export function SubmissionScreen() {
       >
         <p>
           Bạn sẽ không thể sửa câu trả lời cho đến khi chọn “Mở lại”. Kết quả được lưu cùng phiên
-          bản case {session.caseVersion} và law bundle {session.lawBundleId || 'chưa phân giải'}.
+          bản hồ sơ {session.caseVersion} và bộ văn bản luật {session.lawBundleId || 'chưa phân giải'}.
         </p>
         {criticalWarnings.length > 0 && (
           <Callout tone="warn" title="Còn mục trọng tâm chưa trả lời">
@@ -480,7 +483,7 @@ export function SubmissionScreen() {
           </Callout>
         )}
         {preview?.blocking && (
-          <Callout tone="danger" title="Có lỗi blocking">
+          <Callout tone="danger" title="Có mâu thuẫn chặn nộp bài">
             <p>Không thể chấm điểm cho đến khi sửa các mâu thuẫn đã liệt kê.</p>
           </Callout>
         )}

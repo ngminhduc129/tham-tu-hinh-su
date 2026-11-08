@@ -7,7 +7,7 @@
     "status": "draft",
     "jurisdiction": "VN",
     "legal_time_anchor": "reviewer_defined",
-    "legal_time_anchor_reason": "[Reviewer xác nhận] Bản nháp dùng bối cảnh tháng 5–6/2024; chưa có kết luận về thời điểm áp dụng do toàn bộ căn cứ còn ở trạng thái chưa xác minh.",
+    "legal_time_anchor_reason": "[Người rà soát xác nhận] Bản nháp dùng bối cảnh tháng 5–6/2024; chưa có kết luận về thời điểm áp dụng do toàn bộ căn cứ còn ở trạng thái chưa xác minh.",
     "law_bundle_ids": ["law_bundle_v1"],
     "learning_outcome_ids": [
       "lo_source_fact_01",
@@ -20,7 +20,7 @@
     ]
   },
   "brief": {
-    "narrative": "Khoảng 03:40 ngày 01/06/2024, bảo vệ ca đêm Trần Thị B kiểm tra khu kho số 2 của xưởng cơ khí Đông An (địa danh và nhân vật hư cấu) và ghi nhận cửa kho không khóa. Thùng linh kiện mã LX-24 không còn ở vị trí được kiểm kê lúc 21:00 ngày 31/05/2024.\n\nNhật ký ra vào ghi nhận Nguyễn Văn A quẹt thẻ vào khu kho lúc 22:10 và ra lúc 22:35. Camera hành lang có hình ảnh nhưng thiếu dữ liệu từ 22:35 đến 22:47. Phiếu xuất kho số 118 do quản lý Lê Minh C ký có ghi thùng LX-24, nhưng chưa xác định được ai là người nhận hàng.\n\nHồ sơ mô phỏng dừng ở việc xác định dữ kiện nào được ghi nhận trực tiếp, dữ kiện nào còn thiếu, và có đủ căn cứ để kết luận một định danh hay không. Đây không phải vụ việc thật và không phải tư vấn pháp lý.",
+    "narrative": "Khoảng 03:40 ngày 01/06/2024, bảo vệ ca đêm Trần Thị B kiểm tra khu kho số 2 của xưởng cơ khí Đông An (địa danh và nhân vật hư cấu) và ghi nhận cửa kho không khóa. Thùng linh kiện mã LX-24 không còn ở vị trí được kiểm kê lúc 21:00 ngày 31/05/2024.\n\nNhật ký ra vào ghi nhận Nguyễn Văn A quẹt thẻ vào khu kho lúc 22:10 và ra lúc 22:35. Máy quay hành lang có hình ảnh nhưng thiếu dữ liệu từ 22:35 đến 22:47. Phiếu xuất kho số 118 do quản lý Lê Minh C ký có ghi thùng LX-24, nhưng chưa xác định được ai là người nhận hàng.\n\nHồ sơ mô phỏng dừng ở việc xác định dữ kiện nào được ghi nhận trực tiếp, dữ kiện nào còn thiếu, và có đủ căn cứ để kết luận một định danh hay không. Đây không phải vụ việc thật và không phải tư vấn pháp lý.",
     "task_prompt": "Trong phạm vi hồ sơ mô phỏng, hãy: (1) đánh giá nguồn và giới hạn của từng chứng cứ trọng tâm; (2) so sánh hai giả thuyết cạnh tranh; (3) đối chiếu mệnh đề trọng tâm với các nguồn; (4) ánh xạ dữ kiện vào từng dấu hiệu cấu thành; và (5) chọn kết luận có thể bảo vệ được bằng hồ sơ, kèm căn cứ.",
     "player_role": "learner_case_analyst"
   },
@@ -94,7 +94,7 @@
     },
     {
       "id": "fact_03",
-      "text": "Nhật ký ra vào ghi Nguyễn Văn A vào khu kho lúc 22:10 và ra lúc 22:35 ngày 31/05/2024; camera không ghi rõ vật mang theo.",
+      "text": "Nhật ký ra vào ghi Nguyễn Văn A vào khu kho lúc 22:10 và ra lúc 22:35 ngày 31/05/2024; máy quay không ghi rõ vật mang theo.",
       "source_ids": ["ev_record_01"]
     },
     {
@@ -113,8 +113,8 @@
       "id": "ev_record_01",
       "type": "record",
       "title": "Biên bản giao ca và trích xuất nhật ký ra vào",
-      "summary": "Ghi nhận thời điểm phát hiện cửa kho mở, lượt quẹt thẻ của A và việc thiếu dữ liệu camera.",
-      "content": "Biên bản giao ca ngày 01/06/2024 ghi: 03:40, cửa kho số 2 không khóa; thùng LX-24 không còn ở vị trí kiểm kê lúc 21:00 hôm trước. Nhật ký ra vào trích xuất từ phần mềm ghi nhận lượt quẹt thẻ của Nguyễn Văn A lúc 22:10 và 22:35 ngày 31/05/2024. Camera hành lang thiếu dữ liệu 22:35–22:47. Bản trích xuất không kèm biên bản xác nhận thời điểm và người thực hiện.",
+      "summary": "Ghi nhận thời điểm phát hiện cửa kho mở, lượt quẹt thẻ của A và việc thiếu dữ liệu máy quay.",
+      "content": "Biên bản giao ca ngày 01/06/2024 ghi: 03:40, cửa kho số 2 không khóa; thùng LX-24 không còn ở vị trí kiểm kê lúc 21:00 hôm trước. Nhật ký ra vào trích xuất từ phần mềm ghi nhận lượt quẹt thẻ của Nguyễn Văn A lúc 22:10 và 22:35 ngày 31/05/2024. Máy quay hành lang thiếu dữ liệu 22:35–22:47. Bản trích xuất không kèm biên bản xác nhận thời điểm và người thực hiện.",
       "source": {
         "origin": "Phòng bảo vệ xưởng Đông An (hư cấu)",
         "integrity_notes": [
@@ -155,7 +155,7 @@
       "content": "Phiếu xuất kho số 118 ngày 31/05/2024 ghi: thùng linh kiện LX-24, số lượng 01. Người lập phiếu: Lê Minh C. Chữ ký quản lý: có. Chữ ký người nhận: để trống. Ghi chú: 'giao theo lịch kiểm kê'.",
       "source": {
         "origin": "Bộ phận kho xưởng Đông An (hư cấu)",
-        "integrity_notes": ["Bản giấy có chữ ký; bản scan thiếu góc phải."]
+        "integrity_notes": ["Bản giấy có chữ ký; bản quét thiếu góc phải."]
       },
       "procedural_defect_ids": [],
       "limitation_ids": ["limit_02"],
@@ -184,19 +184,19 @@
     {
       "id": "ev_camera_02",
       "type": "record",
-      "title": "Nhật ký camera hành lang kho số 2",
+      "title": "Nhật ký máy quay hành lang kho số 2",
       "summary": "Còn ảnh chụp màn hình; thiếu 12 phút dữ liệu gốc.",
-      "content": "Nhật ký camera hành lang ghi: 22:10 A vào kho; 22:35 A rời kho, góc camera không ghi rõ vật mang theo; 22:47 hình ảnh trở lại, cửa kho đóng. Tệp gốc từ 22:35 đến 22:47 không còn; chỉ còn ảnh chụp màn hình do bảo vệ lưu.",
+      "content": "Nhật ký máy quay hành lang ghi: 22:10 A vào kho; 22:35 A rời kho, góc máy quay không ghi rõ vật mang theo; 22:47 hình ảnh trở lại, cửa kho đóng. Tệp gốc từ 22:35 đến 22:47 không còn; chỉ còn ảnh chụp màn hình do bảo vệ lưu.",
       "source": {
-        "origin": "Hệ thống camera nội bộ xưởng Đông An (hư cấu)",
-        "integrity_notes": ["Tệp gốc bị ghi đè theo chu kỳ 30 ngày.", "Chỉ còn ảnh chụp màn hình, không có metadata."]
+        "origin": "Hệ thống máy quay nội bộ xưởng Đông An (hư cấu)",
+        "integrity_notes": ["Tệp gốc bị ghi đè theo chu kỳ 30 ngày.", "Chỉ còn ảnh chụp màn hình, không có thông tin mô tả tệp."]
       },
       "procedural_defect_ids": ["defect_02"],
       "limitation_ids": ["limit_04"],
       "issue_ids": ["issue_01", "issue_02"],
       "discovery": {
         "kind": "check",
-        "label": "Yêu cầu trích xuất nhật ký camera",
+        "label": "Yêu cầu trích xuất nhật ký máy quay",
         "requires_viewed": ["ev_record_01"]
       }
     },
@@ -229,7 +229,7 @@
     {
       "id": "defect_02",
       "evidence_id": "ev_camera_02",
-      "step": "Thu thập dữ liệu camera",
+      "step": "Thu thập dữ liệu máy quay",
       "observed_issue": "Thiếu 12 phút dữ liệu gốc; không rõ nguyên nhân và không có biên bản ghi nhận việc thiếu dữ liệu tại thời điểm thu thập.",
       "legal_basis_ids": ["provision_placeholder_01"],
       "review_status": "not_reviewed",
@@ -267,10 +267,10 @@
     {
       "id": "hypothesis_a",
       "label": "H1 — Thùng hàng bị dịch chuyển trong khoảng 22:10 ngày 31/05 – 03:40 ngày 01/06",
-      "description": "Thùng LX-24 bị đưa ra khỏi kho trong khoảng từ lượt quẹt thẻ cuối của A đến khi bảo vệ phát hiện cửa kho mở; camera không ghi liên tục trong một phần khoảng này.",
+      "description": "Thùng LX-24 bị đưa ra khỏi kho trong khoảng từ lượt quẹt thẻ cuối của A đến khi bảo vệ phát hiện cửa kho mở; máy quay không ghi liên tục trong một phần khoảng này.",
       "missing_information": [
         "Lịch phân công ca làm việc đêm 31/05/2024.",
-        "Dữ liệu camera gốc từ 22:35 đến 22:47.",
+        "Dữ liệu máy quay gốc từ 22:35 đến 22:47.",
         "Biên bản giao nhận thùng LX-24 sau khi xuất kho."
       ]
     },
@@ -281,7 +281,7 @@
       "missing_information": [
         "Bản gốc phiếu xuất kho số 118 và biên bản giao nhận.",
         "Giải trình của quản lý kho về chỗ sửa trong biên bản kiểm kê.",
-        "Dữ liệu camera gốc từ 22:35 đến 22:47."
+        "Dữ liệu máy quay gốc từ 22:35 đến 22:47."
       ]
     }
   ],
@@ -322,7 +322,7 @@
       "charge_id": "charge_a",
       "element_type": "conduct",
       "label": "Hành vi dịch chuyển tài sản ra khỏi khu vực quản lý",
-      "legal_test": "[Reviewer điền sau khi xác minh] Mô tả dấu hiệu hành vi theo văn bản được chọn.",
+      "legal_test": "[Người rà soát điền sau khi xác minh] Mô tả dấu hiệu hành vi theo văn bản được chọn.",
       "required": true,
       "fact_ids": ["fact_01", "fact_02", "fact_03"],
       "evidence_ids": ["ev_record_01", "ev_camera_02", "ev_statement_01"],
@@ -333,7 +333,7 @@
       "charge_id": "charge_b",
       "element_type": "mental_state",
       "label": "Mục đích chiếm đoạt tồn tại trước hoặc tại thời điểm hành vi",
-      "legal_test": "[Reviewer điền sau khi xác minh] Mô tả dấu hiệu mục đích theo văn bản được chọn.",
+      "legal_test": "[Người rà soát điền sau khi xác minh] Mô tả dấu hiệu mục đích theo văn bản được chọn.",
       "required": true,
       "fact_ids": ["fact_05"],
       "evidence_ids": ["ev_statement_01", "ev_message_01"],
@@ -1013,7 +1013,7 @@
       "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_a" },
       "assert": { "op": "equals", "field_id": "element_status", "target_id": "element_a_01", "value": "supported" },
       "severity": "blocking",
-      "message": "Định danh A cần dấu hiệu bắt buộc element_a_01 được đánh giá là có dữ kiện hỗ trợ."
+      "message": "Định danh A cần dấu hiệu bắt buộc về hành vi được đánh giá là có dữ kiện hỗ trợ."
     },
     {
       "id": "rule_charge_b_element",
@@ -1021,7 +1021,7 @@
       "when": { "op": "equals", "field_id": "selected_charge", "target_id": "person_a:conduct_01", "value": "charge_b" },
       "assert": { "op": "equals", "field_id": "element_status", "target_id": "element_b_01", "value": "supported" },
       "severity": "blocking",
-      "message": "Định danh B cần dấu hiệu bắt buộc element_b_01 được đánh giá là có dữ kiện hỗ trợ."
+      "message": "Định danh B cần dấu hiệu bắt buộc về mục đích được đánh giá là có dữ kiện hỗ trợ."
     },
     {
       "id": "rule_conclusion_a_requires_charge_a",
@@ -1184,7 +1184,7 @@
     {
       "id": "explanation_procedure",
       "title": "Nhận diện vấn đề thủ tục, không tự loại chứng cứ",
-      "body": "Bản trích xuất nhật ký không có biên bản xác nhận thời điểm, người thực hiện và phạm vi trích xuất. Trong bài học, người chơi nhận diện vấn đề và nêu hệ quả cần reviewer xác định; engine không tự động loại bỏ chứng cứ.",
+      "body": "Bản trích xuất nhật ký không có biên bản xác nhận thời điểm, người thực hiện và phạm vi trích xuất. Trong bài học, người chơi nhận diện vấn đề và nêu hệ quả cần người rà soát xác định; hệ thống không tự động loại bỏ chứng cứ.",
       "legal_basis_ids": ["provision_placeholder_01"]
     },
     {
@@ -1196,19 +1196,19 @@
     {
       "id": "explanation_relevance",
       "title": "Liên quan và sức hỗ trợ",
-      "body": "Nhật ký ra vào và khoảng trống camera định hướng khả năng thùng hàng bị dịch chuyển. Lời trình bày của B phản bác mệnh đề này vì B khẳng định thùng vẫn còn lúc 22:50. Liên quan không đồng nghĩa đủ sức chứng minh.",
+      "body": "Nhật ký ra vào và khoảng trống máy quay định hướng khả năng thùng hàng bị dịch chuyển. Lời trình bày của B phản bác mệnh đề này vì B khẳng định thùng vẫn còn lúc 22:50. Liên quan không đồng nghĩa đủ sức chứng minh.",
       "legal_basis_ids": []
     },
     {
       "id": "explanation_hypothesis",
       "title": "Hai giả thuyết cạnh tranh",
-      "body": "H1 được nhật ký ra vào và khoảng trống camera hỗ trợ, bị lời trình bày của B phản bác. H2 được lời trình bày của B hỗ trợ, bị nhật ký ra vào phản bác. Một bài học tốt phải giữ cả hai giả thuyết cho đến khi có dữ kiện độc lập.",
+      "body": "H1 được nhật ký ra vào và khoảng trống máy quay hỗ trợ, bị lời trình bày của B phản bác. H2 được lời trình bày của B hỗ trợ, bị nhật ký ra vào phản bác. Một bài học tốt phải giữ cả hai giả thuyết cho đến khi có dữ kiện độc lập.",
       "legal_basis_ids": []
     },
     {
       "id": "explanation_proof",
       "title": "Mệnh đề trọng tâm chỉ được hỗ trợ trong giới hạn",
-      "body": "Mệnh đề về việc thùng hàng bị dịch chuyển có dữ kiện định hướng (sự có mặt của A, khoảng trống camera) nhưng đồng thời bị lời trình bày của B phản bác. Vì vậy ma trận chỉ được coi là 'đủ sức hỗ trợ' khi người chơi thực sự kết luận dấu hiệu hành vi được hỗ trợ; ở nhánh chưa đủ căn cứ hoặc định danh B, ma trận còn hỗn hợp nên phải để 'chưa phân định'. Cần phân biệt 'có dữ kiện hỗ trợ' với 'đã chứng minh'.",
+      "body": "Mệnh đề về việc thùng hàng bị dịch chuyển có dữ kiện định hướng (sự có mặt của A, khoảng trống máy quay) nhưng đồng thời bị lời trình bày của B phản bác. Vì vậy ma trận chỉ được coi là 'đủ sức hỗ trợ' khi người chơi thực sự kết luận dấu hiệu hành vi được hỗ trợ; ở nhánh chưa đủ căn cứ hoặc định danh B, ma trận còn hỗn hợp nên phải để 'chưa phân định'. Cần phân biệt 'có dữ kiện hỗ trợ' với 'đã chứng minh'.",
       "legal_basis_ids": []
     },
     {
@@ -1225,14 +1225,14 @@
     },
     {
       "id": "explanation_circumstance",
-      "title": "Tình tiết được case yêu cầu",
-      "body": "Hồ sơ không có lịch phân công ca, nên chưa thể xác nhận A có mặt tại kho theo phân công hay không. Trạng thái phù hợp là 'chưa đủ thông tin', trừ khi có dữ kiện bổ sung đã được reviewer chấp nhận.",
+      "title": "Tình tiết được hồ sơ yêu cầu",
+      "body": "Hồ sơ không có lịch phân công ca, nên chưa thể xác nhận A có mặt tại kho theo phân công hay không. Trạng thái phù hợp là 'chưa đủ thông tin', trừ khi có dữ kiện bổ sung đã được người rà soát chấp nhận.",
       "legal_basis_ids": []
     },
     {
       "id": "explanation_law",
       "title": "Căn cứ pháp luật trong bản nháp",
-      "body": "Mọi căn cứ trong case này đang ở trạng thái chưa xác minh và chưa có ngày hiệu lực. Với nhánh 'chưa đủ dữ kiện', không nên gắn một căn cứ buộc tội; với nhánh hỗ trợ định danh, chỉ chọn căn cứ tương ứng đã được khai báo trong thư viện case. Reviewer phải thay bằng nguồn chính thức trước khi publish.",
+      "body": "Mọi căn cứ trong hồ sơ này đang ở trạng thái chưa xác minh và chưa có ngày hiệu lực. Với nhánh 'chưa đủ dữ kiện', không nên gắn một căn cứ buộc tội; với nhánh hỗ trợ định danh, chỉ chọn căn cứ tương ứng đã được khai báo trong thư viện hồ sơ. Người rà soát phải thay bằng nguồn chính thức trước khi xuất bản.",
       "legal_basis_ids": ["provision_placeholder_01"]
     },
     {
@@ -1244,7 +1244,7 @@
     {
       "id": "explanation_02",
       "title": "Phân biệt định danh A và định danh B",
-      "body": "Hai định danh khác nhau ở dấu hiệu phân biệt: dấu hiệu hành vi (element_a_01) và dấu hiệu mục đích (element_b_01). Phải đánh giá từng dấu hiệu bằng dữ kiện riêng; không suy dấu hiệu mục đích chỉ từ việc có mặt tại kho.",
+      "body": "Hai định danh khác nhau ở dấu hiệu phân biệt: dấu hiệu hành vi và dấu hiệu mục đích. Phải đánh giá từng dấu hiệu bằng dữ kiện riêng; không suy dấu hiệu mục đích chỉ từ việc có mặt tại kho.",
       "legal_basis_ids": ["provision_placeholder_01"]
     }
   ],
@@ -1292,7 +1292,7 @@
       "level": 2,
       "order": 2,
       "issue_id": "issue_01",
-      "text": "Một bản sao không có biên bản xác nhận thời điểm trích xuất đặt ra vấn đề về quy trình. Hãy nhận diện vấn đề và nêu hệ quả cần reviewer xác định, thay vì tự loại chứng cứ.",
+      "text": "Một bản sao không có biên bản xác nhận thời điểm trích xuất đặt ra vấn đề về quy trình. Hãy nhận diện vấn đề và nêu hệ quả cần người rà soát xác định, thay vì tự loại chứng cứ.",
       "rubric_id": null
     },
     {

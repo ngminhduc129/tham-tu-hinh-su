@@ -13,15 +13,14 @@ describe('Navigation, Header & Stepper', () => {
 
     // Kiểm tra các nhãn giai đoạn có mặt
     expect(screen.getByText('Hồ sơ')).toBeDefined()
-    expect(screen.getByText('Khám phá')).toBeDefined()
     expect(screen.getByText('Chứng cứ')).toBeDefined()
     expect(screen.getByText('Giả thuyết')).toBeDefined()
     expect(screen.getByText('Phân tích')).toBeDefined()
     expect(screen.getByText('Kết luận')).toBeDefined()
 
-    // Bấm nút chuyển sang giai đoạn Khám phá
-    fireEvent.click(screen.getByText('Khám phá'))
-    expect(navigate).toHaveBeenCalledWith(`case/${caseFile.metadata.id}/investigation`)
+    // Bấm nút chuyển sang giai đoạn Chứng cứ
+    fireEvent.click(screen.getByText('Chứng cứ'))
+    expect(navigate).toHaveBeenCalledWith(`case/${caseFile.metadata.id}/evidence`)
 
     // Bấm nút chuyển sang giai đoạn Phân tích
     fireEvent.click(screen.getByText('Phân tích'))

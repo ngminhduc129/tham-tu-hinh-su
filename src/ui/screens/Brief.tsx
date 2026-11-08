@@ -1,7 +1,7 @@
 import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { checkLawResolution, formatDateInterval } from '../../domain/legalVersion'
-import { PLAYER_ROLE_COPY } from '../labels'
+import { PLAYER_ROLE_COPY, PRECISION_LABELS, conductEventLabel } from '../labels'
 
 export function BriefScreen() {
   const { caseFile, navigate } = useGame()
@@ -50,14 +50,14 @@ export function BriefScreen() {
               conductEvent?.date_interval.start_date ?? null,
               conductEvent?.date_interval.end_date ?? null,
             )}{' '}
-            · độ chính xác: {conductEvent?.date_interval.precision ?? 'chưa xác định'}.
+            · độ chính xác: {PRECISION_LABELS[conductEvent?.date_interval.precision ?? ''] ?? conductEvent?.date_interval.precision ?? 'chưa xác định'}.
           </p>
           {unresolved.length > 0 && (
             <Callout tone="info" title="Chưa phân giải phiên bản luật">
               <p>
-                Case đang khai báo thời điểm pháp luật ở trạng thái chưa phân giải. Bạn có thể chơi
+                Hồ sơ đang khai báo thời điểm pháp luật ở trạng thái chưa phân giải. Bạn có thể chơi
                 và học cách đối chiếu dữ kiện, nhưng kết luận không có hiệu lực pháp lý và không được
-                publish cho đến khi reviewer xác nhận phiên bản luật.
+                xuất bản cho đến khi người rà soát xác nhận phiên bản luật.
               </p>
             </Callout>
           )}
@@ -69,7 +69,7 @@ export function BriefScreen() {
             <p className="role-title">{role.title}</p>
             <p>{role.body}</p>
             <p className="muted small">
-              Bạn không được gọi là người có thẩm quyền tố tụng thật. Các quyết định trong game không
+              Bạn không được gọi là người có thẩm quyền tố tụng thật. Các quyết định trong trò chơi không
               tương đương quyết định của cơ quan tiến hành tố tụng.
             </p>
           </Card>
@@ -80,7 +80,7 @@ export function BriefScreen() {
             <ul className="status-list">
               {lawChecks.map((check) => (
                 <li key={check.conductEventId}>
-                  <span>{check.conductEventId}</span>
+                  <span>{conductEventLabel(check.conductEventId)}</span>
                   <Badge tone={check.status === 'ok' ? 'success' : 'warn'}>
                     {check.status === 'ok' ? 'Đã đối chiếu' : 'Chưa phân giải'}
                   </Badge>
@@ -106,8 +106,8 @@ export function BriefScreen() {
         <Button variant="secondary" onClick={() => navigate(`case/${caseFile.metadata.id}/casefile`)}>
           Xem hồ sơ chi tiết
         </Button>
-        <Button variant="primary" onClick={() => navigate(`case/${caseFile.metadata.id}/investigation`)}>
-          Bắt đầu khám phá
+        <Button variant="primary" onClick={() => navigate(`case/${caseFile.metadata.id}/evidence`)}>
+          Bắt đầu khám phá chứng cứ
         </Button>
       </div>
     </div>

@@ -80,7 +80,7 @@ function addDays(date: Date, days: number): Date {
 
 /**
  * Kiểm tra phân giải luật cho từng conduct event.
- * Engine chỉ đối chiếu dữ liệu; không tự chọn phiên bản luật.
+ * Hệ thống chỉ đối chiếu dữ liệu; không tự chọn phiên bản luật.
  */
 export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
   return caseFile.temporal_context.conduct_events.map((event) => {
@@ -91,10 +91,10 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
 
     if (resolution.status === 'unresolved') {
       if (resolution.bundle_id) {
-        messages.push('law_resolution.status là unresolved nhưng lại có bundle_id.')
+        messages.push('Trạng thái phân giải luật là chưa phân giải nhưng lại có mã bộ văn bản luật.')
       }
       if (segments.length > 0) {
-        messages.push('law_resolution.status là unresolved nhưng lại có segments.')
+        messages.push('Trạng thái phân giải luật là chưa phân giải nhưng lại có các đoạn hiệu lực.')
       }
       return {
         conductEventId: event.id,
@@ -103,7 +103,7 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
         messages:
           messages.length > 0
             ? messages
-            : ['Chưa phân giải được law bundle cho hành vi này.'],
+            : ['Chưa phân giải được bộ văn bản luật cho hành vi này.'],
         referencedProvisionIds: referenced,
         segments,
       }
@@ -112,7 +112,7 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
     if (resolution.status === 'crosses_version') {
       if (segments.length === 0) {
         messages.push(
-          'Khoảng ngày hành vi cắt qua thời điểm chuyển phiên bản luật; cần ít nhất hai segment và review riêng.',
+          'Khoảng ngày hành vi cắt qua thời điểm chuyển phiên bản luật; cần ít nhất hai đoạn hiệu lực và rà soát riêng.',
         )
         return {
           conductEventId: event.id,
@@ -126,12 +126,12 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
 
       if (segments.length < 2) {
         messages.push(
-          `crosses_version cần ít nhất hai segment; hiện có ${segments.length}.`,
+          `Trạng thái cắt qua phiên bản cần ít nhất hai đoạn hiệu lực; hiện có ${segments.length}.`,
         )
       }
       if (resolution.bundle_id) {
         messages.push(
-          'crosses_version đang có cả bundle_id và segments; bundle_id bị bỏ qua khi segments tồn tại.',
+          'Trạng thái cắt qua phiên bản đang có cả mã bộ văn bản luật và các đoạn hiệu lực; mã bộ văn bản luật bị bỏ qua khi có các đoạn hiệu lực.',
         )
       }
 
@@ -151,20 +151,20 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
         if (!item.start || !item.end) {
           invalid = true
           messages.push(
-            `Segment ${item.index} thiếu start_date/end_date hợp lệ để đối chiếu hiệu lực.`,
+            `Đoạn ${item.index} thiếu ngày bắt đầu hoặc ngày kết thúc hợp lệ để đối chiếu hiệu lực.`,
           )
           continue
         }
         if (item.start.getTime() > item.end.getTime()) {
           invalid = true
           messages.push(
-            `Segment ${item.index} có start_date sau end_date: ${item.segment.start_date} > ${item.segment.end_date}.`,
+            `Đoạn ${item.index} có ngày bắt đầu sau ngày kết thúc: ${item.segment.start_date} > ${item.segment.end_date}.`,
           )
         }
         if (!item.bundle) {
           invalid = true
           messages.push(
-            `Không tìm thấy law bundle "${item.segment.bundle_id}" cho segment ${item.index}.`,
+            `Không tìm thấy bộ văn bản luật "${item.segment.bundle_id}" cho đoạn ${item.index}.`,
           )
         }
       }
@@ -181,12 +181,12 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
         if (current.start.getTime() <= previous.end.getTime()) {
           invalid = true
           messages.push(
-            `Segment ${previous.index} và ${current.index} chồng lấn thời gian.`,
+            `Đoạn ${previous.index} và ${current.index} chồng lấn thời gian.`,
           )
         } else if (addDays(previous.end, 1).getTime() < current.start.getTime()) {
           crosses = true
           messages.push(
-            `Có khoảng trống giữa segment ${previous.index} (${previous.segment.end_date}) và segment ${current.index} (${current.segment.start_date}).`,
+            `Có khoảng trống giữa đoạn ${previous.index} (${previous.segment.end_date}) và đoạn ${current.index} (${current.segment.start_date}).`,
           )
         }
       }
@@ -195,7 +195,7 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
       const eventEnd = parseIsoDate(event.date_interval.end_date)
       if (!eventStart || !eventEnd) {
         incomplete = true
-        messages.push('Thiếu ngày hành vi để kiểm tra segment có phủ kín khoảng ngày.')
+        messages.push('Thiếu ngày hành vi để kiểm tra các đoạn hiệu lực có phủ kín khoảng ngày.')
       } else if (sortable.length > 0) {
         const first = sortable[0]
         const last = sortable[sortable.length - 1]
@@ -217,7 +217,7 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
         const provision = provisionById(caseFile, provisionId)
         if (!provision) {
           invalid = true
-          messages.push(`Provision "${provisionId}" không tồn tại trong case.`)
+          messages.push(`Điều khoản "${provisionId}" không tồn tại trong hồ sơ.`)
           continue
         }
         const owner = sortable.find((item) =>
@@ -226,28 +226,28 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
         if (!owner) {
           invalid = true
           messages.push(
-            `Provision "${provisionId}" không thuộc bundle của segment nào.`,
+            `Điều khoản "${provisionId}" không thuộc bộ văn bản luật của đoạn hiệu lực nào.`,
           )
           continue
         }
         if (provision.review_status !== 'approved') {
           incomplete = true
           messages.push(
-            `Provision "${provisionId}" chưa được duyệt (${provision.review_status}).`,
+            `Điều khoản "${provisionId}" chưa được duyệt (${provision.review_status}).`,
           )
         }
         const from = parseIsoDate(provision.effective_from)
         const to = parseIsoDate(provision.effective_to)
         if (!from) {
           incomplete = true
-          messages.push(`Provision "${provisionId}" thiếu effective_from.`)
+          messages.push(`Điều khoản "${provisionId}" thiếu ngày hiệu lực bắt đầu.`)
         } else if (
           from.getTime() > owner.end.getTime() ||
           (to && to.getTime() < owner.start.getTime())
         ) {
           crosses = true
           messages.push(
-            `Provision "${provisionId}" không có hiệu lực trong segment tương ứng.`,
+            `Điều khoản "${provisionId}" không có hiệu lực trong đoạn tương ứng.`,
           )
         }
       }
@@ -272,17 +272,17 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
 
     // status === 'resolved'
     if (segments.length > 0) {
-      messages.push('law_resolution.status là resolved nhưng lại có segments.')
+      messages.push('Trạng thái phân giải luật là đã phân giải nhưng lại có các đoạn hiệu lực.')
     }
     if (!resolution.bundle_id) {
-      messages.push('law_resolution.status là resolved nhưng thiếu bundle_id.')
+      messages.push('Trạng thái phân giải luật là đã phân giải nhưng thiếu mã bộ văn bản luật.')
     }
     if (!resolution.review_id) {
-      messages.push('law_resolution.status là resolved nhưng thiếu review_id.')
+      messages.push('Trạng thái phân giải luật là đã phân giải nhưng thiếu mã rà soát.')
     }
     const bundle = bundleById(caseFile, resolution.bundle_id)
     if (!bundle) {
-      messages.push(`Không tìm thấy law bundle "${resolution.bundle_id}" trong case.`)
+      messages.push(`Không tìm thấy bộ văn bản luật "${resolution.bundle_id}" trong hồ sơ.`)
     }
 
     let invalid = messages.length > 0
@@ -293,23 +293,23 @@ export function checkLawResolution(caseFile: CaseFile): LawCheck[] {
         const provision = bundle.provisions.find((item) => item.id === provisionId)
         if (!provision) {
           invalid = true
-          messages.push(`Provision "${provisionId}" không thuộc bundle "${bundle.id}".`)
+          messages.push(`Điều khoản "${provisionId}" không thuộc bộ văn bản luật "${bundle.id}".`)
           continue
         }
         if (provision.review_status !== 'approved') {
           incomplete = true
-          messages.push(`Provision "${provisionId}" chưa được duyệt (${provision.review_status}).`)
+          messages.push(`Điều khoản "${provisionId}" chưa được duyệt (${provision.review_status}).`)
         }
         const containment = intervalContains(provision, event)
         if (containment === 'crosses') {
           crosses = true
           messages.push(
-            `Khoảng ngày hành vi "${event.id}" nằm ngoài hiệu lực của provision "${provisionId}".`,
+            `Khoảng ngày hành vi "${event.id}" nằm ngoài hiệu lực của điều khoản "${provisionId}".`,
           )
         } else if (containment === 'incomplete') {
           incomplete = true
           messages.push(
-            `Provision "${provisionId}" thiếu ngày hiệu lực hoặc ngày hành vi để đối chiếu.`,
+            `Điều khoản "${provisionId}" thiếu ngày hiệu lực hoặc ngày hành vi để đối chiếu.`,
           )
         }
       }

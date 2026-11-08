@@ -108,7 +108,7 @@ describe('phân giải phiên bản luật', () => {
 
     const checks = checkLawResolution(caseFile)
     expect(checks[0].status).toBe('invalid')
-    expect(checks[0].messages.join(' ')).toContain('ít nhất hai segment')
+    expect(checks[0].messages.join(' ')).toContain('ít nhất hai đoạn hiệu lực')
   })
 
   it('báo crosses khi các segment có khoảng trống không phủ ngày hành vi', () => {
@@ -161,7 +161,7 @@ describe('phân giải phiên bản luật', () => {
 
     const checks = checkLawResolution(caseFile)
     expect(checks[0].status).toBe('invalid')
-    expect(checks[0].messages.join(' ')).toContain('resolved')
+    expect(checks[0].messages.join(' ')).toContain('đã phân giải')
   })
 
   it('báo incomplete khi provision chưa được duyệt', () => {

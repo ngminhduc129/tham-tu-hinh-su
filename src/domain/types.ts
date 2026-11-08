@@ -1,4 +1,4 @@
-/** Kiểu dữ liệu cho case, luật, phiên chơi và kết quả chấm. */
+/** Kiểu dữ liệu cho hồ sơ, luật, phiên chơi và kết quả chấm. */
 
 export type Stage =
   | 'brief'
@@ -11,8 +11,7 @@ export type Stage =
 
 export const STAGES: Array<{ id: Stage; label: string; shortLabel: string; route: string }> = [
   { id: 'brief', label: 'Giới thiệu hồ sơ', shortLabel: 'Hồ sơ', route: 'brief' },
-  { id: 'investigation', label: 'Khám phá tài liệu', shortLabel: 'Khám phá', route: 'investigation' },
-  { id: 'evidence', label: 'Bảng chứng cứ', shortLabel: 'Chứng cứ', route: 'evidence' },
+  { id: 'evidence', label: 'Khám phá & Đánh giá chứng cứ', shortLabel: 'Chứng cứ', route: 'evidence' },
   { id: 'hypotheses', label: 'Giả thuyết', shortLabel: 'Giả thuyết', route: 'hypotheses' },
   { id: 'analysis', label: 'Phân tích pháp lý', shortLabel: 'Phân tích', route: 'analysis' },
   { id: 'submission', label: 'Kết luận và nộp bài', shortLabel: 'Kết luận', route: 'submission' },
@@ -489,7 +488,7 @@ export interface LintIssue {
   severity: 'error' | 'warning' | 'info'
   code: string
   message: string
-  /** Vị trí dữ liệu để reviewer đối chiếu, ví dụ "expected_responses[3].field_id". */
+  /** Vị trí dữ liệu để người rà soát đối chiếu, ví dụ "expected_responses[3].field_id". */
   path?: string
 }
 

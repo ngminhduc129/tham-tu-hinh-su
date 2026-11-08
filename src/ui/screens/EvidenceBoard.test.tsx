@@ -5,15 +5,16 @@ import { EvidenceBoardScreen } from './EvidenceBoard'
 import { fixtureCase } from '../../domain/test-helpers'
 
 describe('EvidenceBoardScreen', () => {
-  it('Hiển thị tiêu đề, thanh lọc theo vấn đề và nút quay lại khám phá', () => {
+  it('Hiển thị tiêu đề, thanh lọc theo vấn đề và nút quay lại tóm tắt hồ sơ', () => {
     const navigate = vi.fn()
     const caseFile = fixtureCase()
     renderWithGameContext(<EvidenceBoardScreen />, { navigate, caseFile })
 
-    expect(screen.getByText('Đánh giá chứng cứ theo bốn lớp')).toBeDefined()
-    const backBtn = screen.getByRole('button', { name: /Quay lại khám phá/i })
-    fireEvent.click(backBtn)
-    expect(navigate).toHaveBeenCalledWith(`case/${caseFile.metadata.id}/investigation`)
+    expect(screen.getByText('Khám phá hồ sơ & Đánh giá chứng cứ')).toBeDefined()
+    const backBtns = screen.getAllByRole('button', { name: /Tóm tắt hồ sơ/i })
+    expect(backBtns.length).toBeGreaterThan(0)
+    fireEvent.click(backBtns[0])
+    expect(navigate).toHaveBeenCalledWith(`case/${caseFile.metadata.id}/brief`)
   })
 
   it('Cho phép lọc theo vấn đề (issue filter chips)', () => {

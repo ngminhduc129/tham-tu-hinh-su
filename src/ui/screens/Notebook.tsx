@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { outcomeCatalog } from '../../domain/load'
 import { formatDateInterval } from '../../domain/legalVersion'
-import { REVIEW_STATUS_LABELS } from '../labels'
+import { REVIEW_STATUS_LABELS, formatCitation, formatSourceRef } from '../labels'
 import { Badge, Button, Callout, Card, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 
@@ -37,7 +37,7 @@ export function NotebookScreen() {
         title="Sổ tay thuật ngữ và nguồn pháp lý"
         description={
           <p>
-            Các thuật ngữ, điều khoản và mục tiêu học tập xuất hiện trong case. Nội dung pháp lý
+            Các thuật ngữ, điều khoản và mục tiêu học tập xuất hiện trong hồ sơ. Nội dung pháp lý
             trong bản nháp chỉ để luyện đối chiếu, chưa được thẩm định.
           </p>
         }
@@ -78,7 +78,7 @@ export function NotebookScreen() {
                       <p className="muted small">
                         Liên hệ:{' '}
                         {(entry.legal_basis_ids ?? [])
-                          .map((id) => lookups.provisions.get(id)?.citation ?? id)
+                          .map((id) => formatCitation(lookups.provisions.get(id)?.citation, id))
                           .join('; ')}
                       </p>
                     )}
@@ -100,12 +100,12 @@ export function NotebookScreen() {
                     <Badge tone="warn">
                       {REVIEW_STATUS_LABELS[provision.review_status] ?? provision.review_status}
                     </Badge>
-                    <Badge tone="neutral">{bundle.version}</Badge>
+                    <Badge tone="neutral">{bundle.version === 'placeholder-0.1.0' ? 'Bản chưa xác minh' : bundle.version}</Badge>
                     {referencedProvisions.has(provision.id) && (
-                      <Badge tone="accent">Case tham chiếu</Badge>
+                      <Badge tone="accent">Hồ sơ tham chiếu</Badge>
                     )}
                   </div>
-                  <p>{provision.citation}</p>
+                  <p>{formatCitation(provision.citation, provision.id)}</p>
                   <dl className="meta-list meta-list--compact">
                     <div>
                       <dt>Hiệu lực</dt>
@@ -115,12 +115,12 @@ export function NotebookScreen() {
                     </div>
                     <div>
                       <dt>Nguồn</dt>
-                      <dd>{provision.source_ref}</dd>
+                      <dd>{formatSourceRef(provision.source_ref)}</dd>
                     </div>
                     <div>
-                      <dt>Bundle</dt>
+                      <dt>Bộ quy định</dt>
                       <dd>
-                        {bundle.id} · {bundle.jurisdiction}
+                        {bundle.id === 'law_bundle_v1' ? 'Bộ quy định pháp luật (BLHS & BLTTHS 2015)' : bundle.id} · {bundle.jurisdiction === 'VN' ? 'Việt Nam' : bundle.jurisdiction}
                       </dd>
                     </div>
                   </dl>
@@ -136,13 +136,13 @@ export function NotebookScreen() {
         <aside className="stack">
           <Callout tone="warn" title="Nguồn pháp lý chưa xác minh">
             <p>
-              Toàn bộ điều khoản trong case nháp đang ở trạng thái chưa rà soát hoặc chưa có ngày
+              Toàn bộ điều khoản trong hồ sơ nháp đang ở trạng thái chưa rà soát hoặc chưa có ngày
               hiệu lực. Không dùng nội dung này như tư vấn pháp lý hoặc trích dẫn chính thức.
             </p>
           </Callout>
 
           <Card>
-            <h3>Mục tiêu học tập của case</h3>
+            <h3>Mục tiêu học tập của hồ sơ</h3>
             <ul className="outcome-list">
               {outcomes.map((outcome) => (
                 <li key={outcome.id}>

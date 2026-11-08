@@ -35,6 +35,40 @@
   --max-width: 1180px;
 }
 
+[data-theme="dark"],
+html.dark {
+  --bg: #121614;
+  --bg-deep: #0b0f0d;
+  --surface: #1a221d;
+  --surface-alt: #212c26;
+  --ink: #f1efe8;
+  --ink-soft: #c8c5b8;
+  --muted: #94988f;
+  --line: #2b3731;
+  --line-strong: #3e4f46;
+  --accent: #2e8b6e;
+  --accent-strong: #41ba95;
+  --accent-soft: #173327;
+  --warn: #e2a03f;
+  --warn-soft: #352512;
+  --danger: #e26c67;
+  --danger-soft: #381917;
+  --success: #2e8b6e;
+  --success-soft: #173327;
+  --info: #5fa5c2;
+  --info-soft: #152b36;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] body,
+html.dark body {
+  background:
+    radial-gradient(1200px 520px at 12% -8%, #182620 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  color: var(--ink);
+}
+
 *,
 *::before,
 *::after {
@@ -218,6 +252,11 @@ code {
   backdrop-filter: blur(10px);
 }
 
+[data-theme="dark"] .app-header,
+html.dark .app-header {
+  background: rgba(26, 34, 29, 0.92);
+}
+
 .app-header__inner {
   display: flex;
   align-items: center;
@@ -233,7 +272,8 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0;
+  padding: 0.2rem 0.4rem;
+  margin: -0.2rem -0.4rem;
   border: 0;
   background: none;
   color: inherit;
@@ -241,6 +281,16 @@ code {
   text-align: left;
   cursor: pointer;
   border-radius: 10px;
+  transition: opacity 150ms ease, background-color 150ms ease, transform 100ms ease;
+}
+
+.brand:hover {
+  opacity: 0.92;
+  background-color: var(--accent-soft);
+}
+
+.brand:active {
+  transform: scale(0.98);
 }
 
 .brand__mark {
@@ -294,6 +344,35 @@ code {
   white-space: nowrap;
 }
 
+.theme-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 38px;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease,
+    transform 100ms ease;
+  user-select: none;
+}
+
+.theme-toggle-button:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.theme-toggle-button:active {
+  transform: scale(0.96);
+}
+
 .header-nav {
   display: flex;
   gap: 0.25rem;
@@ -311,11 +390,16 @@ code {
   font-size: 0.88rem;
   font-weight: 550;
   cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
 }
 
 .header-link:hover {
   background: var(--accent-soft);
   color: var(--accent-strong);
+}
+
+.header-link:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 .app-banner {
@@ -451,12 +535,13 @@ code {
   line-height: 1.25;
   text-align: center;
   cursor: pointer;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease,
-    transform 80ms ease;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease,
+    box-shadow 150ms ease, transform 100ms ease;
+  user-select: none;
 }
 
 .button:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: scale(0.98) translateY(1px);
 }
 
 .button:disabled {
@@ -474,6 +559,11 @@ code {
 .button--primary:hover:not(:disabled) {
   border-color: var(--accent-strong);
   background: var(--accent-strong);
+}
+
+.button--primary:active:not(:disabled) {
+  background: var(--accent-strong);
+  box-shadow: none;
 }
 
 .button--secondary {
@@ -510,9 +600,12 @@ code {
 }
 
 .link-button {
-  display: inline;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0.2rem 0.4rem;
   border: 0;
+  border-radius: 4px;
   background: none;
   color: var(--accent);
   font: inherit;
@@ -521,10 +614,16 @@ code {
   text-decoration: underline;
   text-underline-offset: 0.18em;
   cursor: pointer;
+  transition: opacity 150ms ease, background-color 150ms ease;
 }
 
 .link-button:hover {
   color: var(--accent-strong);
+  background-color: var(--accent-soft);
+}
+
+.link-button:active {
+  opacity: 0.7;
 }
 
 .inline-actions {
@@ -813,12 +912,16 @@ code {
   font-size: 0.87rem;
   line-height: 1.45;
   cursor: pointer;
-  transition: border-color 120ms ease, background-color 120ms ease;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 100ms ease;
 }
 
 .choice:hover {
   border-color: var(--line-strong);
   background: var(--surface-alt);
+}
+
+.choice:active:not(.choice--readonly) {
+  transform: scale(0.995);
 }
 
 .choice input {
@@ -907,7 +1010,7 @@ code {
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e8e5da;
+  background: var(--line);
 }
 
 .progress__fill {
@@ -925,7 +1028,7 @@ code {
   padding: 0.4rem;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface-alt);
   overflow-x: auto;
 }
 
@@ -942,7 +1045,8 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.4rem 0.6rem;
+  padding: 0.4rem 0.65rem;
+  min-height: 38px;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -952,10 +1056,15 @@ code {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
+}
+
+.stepper__item:active:not(:disabled) {
+  transform: scale(0.96);
 }
 
 .stepper__item:hover:not(:disabled) {
-  background: #efede4;
+  background: var(--surface);
   color: var(--ink);
 }
 
@@ -1389,7 +1498,7 @@ code {
 }
 
 .filter-chip {
-  padding: 0.32rem 0.7rem;
+  padding: 0.32rem 0.75rem;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   background: var(--surface);
@@ -1398,10 +1507,15 @@ code {
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 150ms ease;
 }
 
 .filter-chip:hover {
   border-color: var(--accent);
+}
+
+.filter-chip:active {
+  transform: scale(0.96);
 }
 
 .filter-chip--active {
@@ -2087,10 +2201,15 @@ code {
   font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
 }
 
 .modal__close:hover {
   background: #f0ede5;
+}
+
+.modal__close:active {
+  transform: scale(0.9);
 }
 
 .modal__body {

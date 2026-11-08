@@ -4,7 +4,20 @@ import { getSingle } from '../../domain/answers'
 import { evaluateConsistency } from '../../domain/matching'
 import { computeAgeRange, formatAgeRange } from '../../domain/age'
 import { checkLawResolution, formatDateInterval } from '../../domain/legalVersion'
-import { CATEGORY_LABELS, ELEMENT_TYPE_LABELS, FIELD_HINTS, REVIEW_STATUS_LABELS, fieldLabel } from '../labels'
+import {
+  CATEGORY_LABELS,
+  ELEMENT_TYPE_LABELS,
+  FIELD_HINTS,
+  PRECISION_LABELS,
+  REVIEW_STATUS_LABELS,
+  fieldLabel,
+  formatChargeLabel,
+  formatCitation,
+  formatLegalTest,
+  formatSourceRef,
+  provisionLabel,
+  conductEventLabel,
+} from '../labels'
 
 export function AnalysisScreen() {
   const { caseFile, session, dispatch, readOnly, navigate, lookups } = useGame()
@@ -25,7 +38,7 @@ export function AnalysisScreen() {
   return (
     <div className="screen">
       <SectionHeading
-        eyebrow="Giai đoạn 5 · Phân tích pháp lý"
+        eyebrow="Giai đoạn 4 · Phân tích pháp lý"
         title="Ánh xạ dữ kiện vào từng dấu hiệu"
         description={
           <p>
@@ -43,13 +56,13 @@ export function AnalysisScreen() {
               {lawChecks.map((check) => (
                 <div key={check.conductEventId} className="status-row">
                   <div>
-                    <strong>{check.conductEventId}</strong>
+                    <strong>{conductEventLabel(check.conductEventId)}</strong>
                     <p className="muted small">
                       {formatDateInterval(
                         conductEvent?.date_interval.start_date ?? null,
                         conductEvent?.date_interval.end_date ?? null,
                       )}{' '}
-                      · precision {conductEvent?.date_interval.precision}
+                      · độ chính xác: {PRECISION_LABELS[conductEvent?.date_interval.precision ?? ''] ?? conductEvent?.date_interval.precision}
                     </p>
                   </div>
                   <Badge tone={check.status === 'ok' ? 'success' : 'warn'}>
@@ -76,7 +89,7 @@ export function AnalysisScreen() {
             {lawChecks.some((check) => check.status !== 'ok') && (
               <Callout tone="warn" title="Không tự chọn luật">
                 <p>
-                  Engine không chọn phiên bản luật thay bạn hay thay reviewer. Case đang chưa phân
+                  Hệ thống không chọn phiên bản luật thay bạn hay thay người rà soát. Hồ sơ đang chưa phân
                   giải thời điểm áp dụng, nên kết luận chỉ có giá trị học tập.
                 </p>
               </Callout>
@@ -101,16 +114,18 @@ export function AnalysisScreen() {
                     </Badge>
                   ))}
                 </div>
-                <h3>{charge.display_label ?? charge.id}</h3>
+                <h3>{formatChargeLabel(charge)}</h3>
                 <p className="muted small">
                   Người: {lookups.characters.get(charge.person_id) ?? charge.person_id} · hành vi:{' '}
-                  {charge.conduct_event_ids.join(', ')}
+                  {charge.conduct_event_ids
+                    .map((id) => (id === 'conduct_01' ? 'Khoảng 22:10 - 22:35 ngày 31/05/2024' : id))
+                    .join(', ')}
                 </p>
                 <p className="small">
-                  Căn cứ khai báo:{' '}
+                  Căn cứ pháp luật:{' '}
                   {charge.legal_basis_ids.map((basisId) => (
                     <span key={basisId} className="source-chip">
-                      {lookups.provisions.get(basisId)?.citation ?? basisId}
+                      {lookups.provisions.get(basisId)?.citation ?? provisionLabel(basisId)}
                     </span>
                   ))}
                 </p>
@@ -134,7 +149,7 @@ export function AnalysisScreen() {
                           )}
                         </div>
                         <h4>{element.label ?? element.id}</h4>
-                        <p className="small muted">{element.legal_test}</p>
+                        <p className="small muted">{formatLegalTest(element.id, element.legal_test)}</p>
 
                         <details className="disclosure">
                           <summary>Dữ kiện và chứng cứ liên quan</summary>
@@ -185,7 +200,7 @@ export function AnalysisScreen() {
           )}
 
           <Card>
-            <h3>Tình tiết case yêu cầu đánh giá</h3>
+            <h3>Tình tiết hồ sơ yêu cầu đánh giá</h3>
             {caseFile.circumstances.map((circumstance) => {
               const facts = (circumstance.fact_ids ?? [])
                 .map((factId) => lookups.facts.get(factId))
@@ -279,13 +294,13 @@ export function AnalysisScreen() {
               })}
             </ul>
             <p className="muted small">
-              Engine không áp ngưỡng tuổi chịu trách nhiệm hình sự; ngưỡng và hệ quả thuộc quy tắc đã
-              được reviewer duyệt.
+              Hệ thống không áp ngưỡng tuổi chịu trách nhiệm hình sự; ngưỡng và hệ quả thuộc quy tắc đã
+              được người rà soát duyệt.
             </p>
           </Card>
 
           <Card>
-            <h3>Thư viện luật của case</h3>
+            <h3>Thư viện luật của hồ sơ</h3>
             <ul className="law-list">
               {caseFile.references.legal_basis_ids.map((basisId) => {
                 const provision = lookups.provisions.get(basisId)
@@ -295,13 +310,13 @@ export function AnalysisScreen() {
                       <Badge tone="warn">
                         {REVIEW_STATUS_LABELS[provision?.review_status ?? 'not_reviewed']}
                       </Badge>
-                      <span className="mono small">{basisId}</span>
+                      <span className="small font-medium">{formatCitation(provision?.citation, basisId)}</span>
                     </div>
-                    <p className="small">{provision?.citation}</p>
+                    <p className="small">{formatCitation(provision?.citation, basisId)}</p>
                     <p className="muted small">
                       Hiệu lực: {formatDateInterval(provision?.effective_from ?? null, provision?.effective_to ?? null)}
                     </p>
-                    <p className="muted small">Nguồn: {provision?.source_ref}</p>
+                    <p className="muted small">Nguồn: {formatSourceRef(provision?.source_ref)}</p>
                   </li>
                 )
               })}

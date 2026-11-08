@@ -30,6 +30,7 @@ export function renderWithGameContext(
   const storageIssue = options.storageIssue ?? null
   const dismissStorageIssue = vi.fn()
   const restartCase = vi.fn()
+  const toggleTheme = vi.fn()
 
   const contextValue: GameContextValue = {
     caseFile,
@@ -42,6 +43,8 @@ export function renderWithGameContext(
     storageIssue,
     dismissStorageIssue,
     restartCase,
+    theme: 'light',
+    toggleTheme,
   }
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => (

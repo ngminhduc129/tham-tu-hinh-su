@@ -2,7 +2,7 @@ import type { EvidenceRecord } from '../domain/types'
 import { useGame } from './GameContext'
 import { getSingle } from '../domain/answers'
 import { SingleChoice } from './components'
-import { FIELD_HINTS, fieldLabel } from './labels'
+import { FIELD_HINTS, fieldLabel, formatCitation } from './labels'
 
 export function EvidenceAssessmentFields({ evidenceId }: { evidenceId: string }) {
   const { caseFile, session, dispatch, readOnly } = useGame()
@@ -13,7 +13,7 @@ export function EvidenceAssessmentFields({ evidenceId }: { evidenceId: string })
   if (fields.length === 0) {
     return (
       <p className="muted small">
-        Tài liệu này không có mục đánh giá bắt buộc trong cấu hình case. Bạn vẫn có thể đọc và dùng
+        Tài liệu này không có mục đánh giá bắt buộc trong cấu hình hồ sơ. Bạn vẫn có thể đọc và dùng
         nội dung cho các phần sau.
       </p>
     )
@@ -97,7 +97,7 @@ export function EvidenceDetail({
                     {String(defect.observed_issue ?? '')}{' '}
                     {(defect.legal_basis_ids ?? []).map((basisId) => (
                       <span key={basisId} className="muted small">
-                        [{lookups.provisions.get(basisId)?.citation ?? basisId}]
+                        [{formatCitation(lookups.provisions.get(basisId)?.citation, basisId)}]
                       </span>
                     ))}
                   </li>

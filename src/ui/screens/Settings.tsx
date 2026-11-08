@@ -8,7 +8,7 @@ import {
   saveSession,
   SESSION_SCHEMA_VERSION,
 } from '../../state/persistence'
-import { REVIEW_STATUS_LABELS } from '../labels'
+import { REVIEW_STATUS_LABELS, STATUS_LABELS } from '../labels'
 import { Badge, Button, Callout, Card, Modal, SectionHeading } from '../components'
 import { useGame } from '../GameContext'
 import { downloadText, timestampForFilename } from '../download'
@@ -23,6 +23,8 @@ export function SettingsScreen() {
     storageIssue,
     dismissStorageIssue,
     restartCase,
+    theme,
+    toggleTheme,
   } = useGame()
   const inputRef = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState<{ tone: 'success' | 'danger'; text: string } | null>(null)
@@ -38,7 +40,7 @@ export function SettingsScreen() {
         `phien-${caseFile.metadata.id}-${timestampForFilename()}.json`,
         exportSessionPayload(stored),
       )
-      setMessage({ tone: 'success', text: 'Đã tạo tệp JSON chứa phiên chơi hiện tại.' })
+      setMessage({ tone: 'success', text: 'Đã tạo tệp dữ liệu chứa phiên chơi hiện tại.' })
     } catch {
       setMessage({
         tone: 'danger',
@@ -102,8 +104,8 @@ export function SettingsScreen() {
         title="Quản lý phiên chơi trên thiết bị"
         description={
           <p>
-            Trò chơi không có tài khoản, không gửi dữ liệu lên máy chủ và không dùng telemetry. Tiến
-            độ nằm trong localStorage của trình duyệt này.
+            Trò chơi không có tài khoản, không gửi dữ liệu lên máy chủ và không dùng dữ liệu đo lường
+            từ xa. Tiến độ nằm trong bộ nhớ cục bộ của trình duyệt này.
           </p>
         }
         actions={
@@ -161,6 +163,31 @@ export function SettingsScreen() {
       <div className="two-column">
         <div className="stack">
           <Card>
+            <h3>Giao diện hiển thị</h3>
+            <p className="small">
+              Tùy chọn chế độ sáng hoặc tối để phù hợp với môi trường làm việc của bạn.
+            </p>
+            <div className="settings-actions">
+              <Button
+                variant={theme === 'light' ? 'primary' : 'secondary'}
+                onClick={() => {
+                  if (theme !== 'light') toggleTheme()
+                }}
+              >
+                ☀️ Chế độ sáng
+              </Button>
+              <Button
+                variant={theme === 'dark' ? 'primary' : 'secondary'}
+                onClick={() => {
+                  if (theme !== 'dark') toggleTheme()
+                }}
+              >
+                🌙 Chế độ tối
+              </Button>
+            </div>
+          </Card>
+
+          <Card>
             <h3>Sao lưu và khôi phục</h3>
             <p className="small">
               Tệp xuất chứa toàn bộ câu trả lời, ghi chú, tiến độ mở tài liệu và kết quả đã nộp. Chỉ
@@ -168,7 +195,7 @@ export function SettingsScreen() {
             </p>
             <div className="settings-actions">
               <Button variant="primary" onClick={handleExport}>
-                Xuất phiên chơi (JSON)
+                Xuất phiên chơi (tệp dữ liệu)
               </Button>
               <Button variant="secondary" onClick={() => inputRef.current?.click()}>
                 Nhập phiên từ tệp
@@ -185,7 +212,7 @@ export function SettingsScreen() {
               />
             </div>
             <p className="muted small">
-              Tệp nhập phải đúng case, đúng phiên bản case và đúng schema phiên chơi. Tệp không hợp
+              Tệp nhập phải đúng hồ sơ, đúng phiên bản hồ sơ và đúng lược đồ phiên chơi. Tệp không hợp
               lệ sẽ bị từ chối, không ghi đè dữ liệu hiện tại.
             </p>
           </Card>
@@ -198,7 +225,7 @@ export function SettingsScreen() {
             </p>
             <div className="settings-actions">
               <Button variant="secondary" onClick={() => setResetOpen(true)}>
-                Làm lại case hiện tại
+                Làm lại hồ sơ hiện tại
               </Button>
               <Button variant="danger" onClick={() => setClearOpen(true)}>
                 Xóa toàn bộ dữ liệu trò chơi
@@ -220,7 +247,7 @@ export function SettingsScreen() {
               </p>
             </Callout>
             <p className="muted small">
-              Không có backend, không có tài khoản, không có telemetry. Dữ liệu chỉ tồn tại trong
+              Không có máy chủ, không có tài khoản, không dùng dữ liệu đo lường từ xa. Dữ liệu chỉ tồn tại trong
               trình duyệt cho đến khi bạn xóa.
             </p>
           </Card>
@@ -235,36 +262,36 @@ export function SettingsScreen() {
                 <dd>{manifest.app.version}</dd>
               </div>
               <div>
-                <dt>Schema case</dt>
+                <dt>Lược đồ hồ sơ</dt>
                 <dd>{manifest.app.schemaVersion}</dd>
               </div>
               <div>
-                <dt>Schema phiên chơi</dt>
+                <dt>Lược đồ phiên chơi</dt>
                 <dd>{SESSION_SCHEMA_VERSION}</dd>
               </div>
               <div>
-                <dt>Case</dt>
+                <dt>Hồ sơ</dt>
                 <dd>
                   {caseFile.metadata.id} · {caseFile.metadata.version}
                 </dd>
               </div>
               <div>
-                <dt>Trạng thái case</dt>
+                <dt>Trạng thái hồ sơ</dt>
                 <dd>
-                  <Badge tone="warn">{caseFile.metadata.status}</Badge>
+                  <Badge tone="warn">{STATUS_LABELS[caseFile.metadata.status] ?? caseFile.metadata.status}</Badge>
                 </dd>
               </div>
             </dl>
           </Card>
 
           <Card>
-            <h3>Thư viện luật của case</h3>
+            <h3>Thư viện luật của hồ sơ</h3>
             <ul className="law-list">
               {caseFile.law_bundles.map((bundle) => (
                 <li key={bundle.id}>
-                  <strong>{bundle.id}</strong>
+                  <strong>{bundle.id === 'law_bundle_v1' ? 'Bộ quy định pháp luật (BLHS & BLTTHS 2015)' : bundle.id}</strong>
                   <p className="muted small">
-                    {bundle.version} · {bundle.jurisdiction}
+                    {bundle.version === 'placeholder-0.1.0' ? 'Bản chưa xác minh' : bundle.version} · {bundle.jurisdiction === 'VN' ? 'Việt Nam' : bundle.jurisdiction}
                   </p>
                   <ul className="tight-list small">
                     {bundle.provisions.map((provision) => (
@@ -287,7 +314,7 @@ export function SettingsScreen() {
             <ul className="status-list">
               {lawChecks.map((check) => (
                 <li key={check.conductEventId}>
-                  <span>{check.conductEventId}</span>
+                  <span>{check.conductEventId === 'conduct_01' ? 'Hành vi ngày 31/05/2024 (22:10 - 22:35)' : check.conductEventId}</span>
                   <Badge tone={check.status === 'ok' ? 'success' : 'warn'}>
                     {check.status === 'ok' ? 'Đã đối chiếu' : 'Chưa phân giải'}
                   </Badge>
@@ -295,7 +322,7 @@ export function SettingsScreen() {
               ))}
             </ul>
             <p className="muted small">
-              Kết quả học tập vẫn được lưu cùng phiên bản case và law bundle tại thời điểm nộp.
+              Kết quả học tập vẫn được lưu cùng phiên bản hồ sơ và bộ văn bản luật tại thời điểm nộp.
             </p>
           </Card>
 
@@ -311,7 +338,7 @@ export function SettingsScreen() {
 
       <Modal
         open={resetOpen}
-        title="Làm lại case hiện tại?"
+        title="Làm lại hồ sơ hiện tại?"
         onClose={() => setResetOpen(false)}
         footer={
           <>
@@ -325,7 +352,7 @@ export function SettingsScreen() {
         }
       >
         <p>
-          Toàn bộ câu trả lời, ghi chú, gợi ý đã mở và kết quả đã nộp của case này sẽ bị xóa khỏi
+          Toàn bộ câu trả lời, ghi chú, gợi ý đã mở và kết quả đã nộp của hồ sơ này sẽ bị xóa khỏi
           thiết bị.
         </p>
       </Modal>
@@ -347,7 +374,7 @@ export function SettingsScreen() {
       >
         <p>
           Thao tác này xóa mọi phiên chơi và bản sao lưu do trò chơi lưu trong trình duyệt này. Nếu
-          muốn giữ tiến độ, hãy xuất tệp JSON trước.
+          muốn giữ tiến độ, hãy xuất tệp dữ liệu trước.
         </p>
       </Modal>
     </div>

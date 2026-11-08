@@ -35,18 +35,18 @@ export function getAllCaseEntries(): CaseManifestEntry[] {
 }
 
 /**
- * Ghép case với các law bundle tách riêng, sau đó validate toàn bộ tài liệu.
- * Case trên đĩa chỉ khai báo metadata.law_bundle_ids; luật là nguồn duy nhất
- * trong src/content/laws để tránh trùng lặp giữa nhiều case.
+ * Ghép hồ sơ với các bộ văn bản luật tách riêng, sau đó kiểm tra toàn bộ tài liệu.
+ * Hồ sơ trên đĩa chỉ khai báo metadata.law_bundle_ids; luật là nguồn duy nhất
+ * trong src/content/laws để tránh trùng lặp giữa nhiều hồ sơ.
  */
 export function loadCase(caseId: string): CaseLoadResult {
   const entry = getCaseEntry(caseId)
   if (!entry) {
-    return { ok: false, errors: [`Không tìm thấy case "${caseId}" trong manifest.`] }
+    return { ok: false, errors: [`Không tìm thấy hồ sơ "${caseId}" trong danh mục.`] }
   }
   const raw = RAW_CASES[caseId]
   if (!raw) {
-    return { ok: false, errors: [`Không tìm thấy tệp nội dung cho case "${caseId}".`] }
+    return { ok: false, errors: [`Không tìm thấy tệp nội dung cho hồ sơ "${caseId}".`] }
   }
 
   const rawRecord = raw as { metadata?: { law_bundle_ids?: string[] } }
@@ -56,7 +56,7 @@ export function loadCase(caseId: string): CaseLoadResult {
   for (const bundleId of bundleIds) {
     const bundle = LAW_BUNDLES[bundleId]
     if (!bundle) {
-      errors.push(`Không tìm thấy law bundle "${bundleId}" trong thư viện luật.`)
+      errors.push(`Không tìm thấy bộ văn bản luật "${bundleId}" trong thư viện luật.`)
     } else {
       bundles.push(bundle)
     }
@@ -70,12 +70,12 @@ export function loadCase(caseId: string): CaseLoadResult {
 
   if (result.caseFile.metadata.id !== entry.id) {
     errors.push(
-      `metadata.id "${result.caseFile.metadata.id}" không khớp manifest "${entry.id}".`,
+      `metadata.id "${result.caseFile.metadata.id}" không khớp danh mục "${entry.id}".`,
     )
   }
   if (result.caseFile.metadata.version !== entry.version) {
     errors.push(
-      `metadata.version "${result.caseFile.metadata.version}" không khớp manifest "${entry.version}".`,
+      `metadata.version "${result.caseFile.metadata.version}" không khớp danh mục "${entry.version}".`,
     )
   }
   if (errors.length > 0) {

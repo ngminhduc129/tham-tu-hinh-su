@@ -19,7 +19,7 @@ export function HypothesesScreen() {
   return (
     <div className="screen">
       <SectionHeading
-        eyebrow="Giai đoạn 4 · Giả thuyết"
+        eyebrow="Giai đoạn 3 · Giả thuyết"
         title="Hai giả thuyết cạnh tranh"
         description={
           <p>

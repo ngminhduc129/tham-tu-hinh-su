@@ -12,7 +12,7 @@ export function HomeScreen() {
 
   const entry = manifest.cases.find((item) => item.id === caseFile.metadata.id)
   const submitted = session.status === 'submitted'
-  const startLabel = submitted ? 'Xem lại kết quả' : hasProgress ? 'Tiếp tục phiên học' : 'Bắt đầu case'
+  const startLabel = submitted ? 'Xem lại kết quả' : hasProgress ? 'Tiếp tục phiên học' : 'Bắt đầu hồ sơ'
   const target = submitted ? 'feedback' : hasProgress ? session.currentStage : 'brief'
 
   return (
@@ -34,7 +34,7 @@ export function HomeScreen() {
             </Button>
           </div>
           <ul className="hero__facts" aria-label="Thông tin nhanh">
-            <li>10–20 phút mỗi case</li>
+            <li>10–20 phút mỗi hồ sơ</li>
             <li>Không cần tài khoản</li>
             <li>Tiến độ lưu trên thiết bị</li>
           </ul>
@@ -71,14 +71,14 @@ export function HomeScreen() {
         <Card className="principle">
           <h2>Không ép kết luận</h2>
           <p>
-            “Chưa đủ dữ kiện/căn cứ” là một kết quả học tập hợp lệ. Case luôn có nhánh cho tình huống
+            “Chưa đủ dữ kiện/căn cứ” là một kết quả học tập hợp lệ. Hồ sơ luôn có nhánh cho tình huống
             hồ sơ còn khoảng trống.
           </p>
         </Card>
         <Card className="principle">
           <h2>Tách sự kiện khỏi đánh giá</h2>
           <p>
-            Độ tin cậy, vấn đề thủ tục và sức hỗ trợ của chứng cứ được đánh giá riêng. Engine không tự
+            Độ tin cậy, vấn đề thủ tục và sức hỗ trợ của chứng cứ được đánh giá riêng. Hệ thống không tự
             kết luận giá trị pháp lý của chứng cứ.
           </p>
         </Card>
@@ -86,9 +86,9 @@ export function HomeScreen() {
 
       <section className="case-library">
         <SectionHeading
-          eyebrow="Thư viện case"
-          title="Case khả dụng"
-          description="MVP hiện có một case hoàn chỉnh. Case mới chỉ được thêm khi đi qua cùng pipeline kiểm duyệt."
+          eyebrow="Thư viện hồ sơ"
+          title="Hồ sơ khả dụng"
+          description="Bản thử nghiệm hiện có một hồ sơ hoàn chỉnh. Hồ sơ mới chỉ được thêm khi đi qua cùng quy trình kiểm duyệt."
         />
         <article className="case-card">
           <div className="case-card__head">
@@ -104,7 +104,7 @@ export function HomeScreen() {
             <div className="case-card__status">
               <span className="muted small">Phiên bản</span>
               <strong>{caseFile.metadata.version}</strong>
-              <span className="muted small">Case + law bundle</span>
+              <span className="muted small">Hồ sơ + bộ văn bản luật</span>
             </div>
           </div>
 
@@ -121,16 +121,16 @@ export function HomeScreen() {
             </div>
             <div>
               <dt>Thời điểm pháp luật</dt>
-              <dd>Chưa phân giải — chờ reviewer</dd>
+              <dd>Chưa phân giải — chờ người rà soát</dd>
             </div>
             <div>
               <dt>Căn cứ pháp luật</dt>
-              <dd>Placeholder chưa xác minh</dd>
+              <dd>Chưa xác minh</dd>
             </div>
           </dl>
 
-          <Callout tone="warn" title="Case đang ở trạng thái nháp">
-            {entry?.notice} Bạn vẫn có thể chơi để kiểm chứng luồng học tập và engine chấm điểm; kết
+          <Callout tone="warn" title="Hồ sơ đang ở trạng thái nháp">
+            {entry?.notice} Bạn vẫn có thể chơi để kiểm chứng luồng học tập và hệ thống chấm điểm; kết
             quả không phải kết luận pháp lý và không được dùng như nội dung đã duyệt.
           </Callout>
 
@@ -151,7 +151,7 @@ export function HomeScreen() {
           phẩm không mô phỏng đầy đủ thủ tục tố tụng Việt Nam và không tự động diễn giải luật.
         </Callout>
         <p className="muted small">
-          Phiên bản ứng dụng {manifest.app.version} · schema case {manifest.app.schemaVersion} · dữ
+          Phiên bản ứng dụng {manifest.app.version} · lược đồ hồ sơ {manifest.app.schemaVersion} · dữ
           liệu lưu cục bộ trên trình duyệt.
         </p>
       </section>
