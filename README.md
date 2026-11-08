@@ -29,6 +29,7 @@ Mở địa chỉ Vite in ra trong terminal. Ứng dụng không có máy chủ,
 | `npm test` | Chạy toàn bộ Vitest (160 bài kiểm thử) |
 | `npm run test:watch` | Chạy kiểm thử ở chế độ theo dõi |
 | `npm run test:corpus` | Chạy riêng bộ dữ liệu kiểm thử lược đồ 2.1.0, bộ kiểm tra ngữ nghĩa và bất biến nội dung |
+| `npm run test:e2e` | Chạy Playwright trên Chromium: tràn ngang, cỡ chữ và font tiếng Việt |
 | `npm run lint:content` | Kiểm tra nội dung ở chế độ nháp |
 | `npm run lint:content -- --publish` | Chạy cổng xuất bản; hồ sơ nháp phải thất bại |
 | `npm run build` | Bước dựng trước kiểm tra nội dung nháp, sau đó `tsc --noEmit` và `vite build` |
@@ -39,6 +40,8 @@ Mở địa chỉ Vite in ra trong terminal. Ứng dụng không có máy chủ,
 
 - React 19 + TypeScript, Vite 7
 - Vitest
+- Playwright + Chromium cho kiểm thử bố cục và kiểu chữ trên trình duyệt
+- Source Serif 4, IBM Plex Sans, IBM Plex Mono (tự lưu qua `@fontsource`, có subset tiếng Việt)
 - Ajv 2020 + ajv-formats để kiểm tra lược đồ JSON bản 2020-12
 - Bộ định tuyến hash tự viết (không dùng React Router)
 - Bộ nhớ cục bộ cho tiến độ; không dùng dữ liệu đo lường từ xa
@@ -50,10 +53,13 @@ index.html
 schemas/case.schema.json          # Lược đồ JSON 2.1.0 (tương thích ngược 2.0.0)
 docs/schema-2.1.0.md              # thay đổi lược đồ và ma trận tương thích
 docs/semantic-validator.md        # Bộ kiểm tra ngữ nghĩa lớp 2
+docs/typography.md                # quy chuẩn kiểu chữ và bảng mapping
 scripts/lint-content.ts           # Công cụ dòng lệnh kiểm tra nội dung và cổng xuất bản
+e2e/typography.spec.ts            # Playwright: tràn ngang, cỡ chữ, font tiếng Việt
+playwright.config.ts              # Cấu hình Playwright + máy chủ dev
 src/
   App.tsx                         # khởi động, tự lưu, định tuyến, chặn nộp bài
-  main.tsx
+  main.tsx                        # nạp font tự lưu + gắn ứng dụng
   styles.css                      # giao diện học thuật sáng, thích ứng tới 360px
   content/
     manifest.json                 # danh mục hồ sơ, cờ chơi được/xuất bản được
@@ -298,7 +304,14 @@ Danh mục đặt `publishable: false`. Công cụ dòng lệnh cũng chặn tr�
 - `reducer.test.ts`: câu trả lời, ghi chú, gợi ý, nộp/mở lại/đặt lại/nhập
 - `content.test.ts`: bộ bất biến nội dung C-01 → C-16 cho `case_001`
 - `src/ui/**/*.test.tsx`: hiển thị và tương tác các màn hình chính bằng Testing Library + happy-dom
-- `src/test/e2e-playthrough.test.ts`: hành trình bộ giảm trạng thái từ xem chứng cứ đến nộp bài, chưa phải kiểm thử đầu-cuối trên trình duyệt
+- `src/test/e2e-playthrough.test.ts`: hành trình bộ giảm trạng thái từ xem chứng cứ đến nộp bài (không phải kiểm thử trình duyệt)
+
+Kiểm thử trình duyệt nằm ở `e2e/typography.spec.ts` (Playwright + Chromium, 7 bài):
+
+- 5 độ rộng × 7 màn hình × sáng/tối: không tràn ngang và không có chữ dưới 11px
+- thang cỡ chữ đúng theo breakpoint 1440 / 768 / 390 / 360px
+- `document.fonts.check` xác nhận font tự lưu phủ dấu tiếng Việt, computed family đúng
+- ảnh chụp lưu ở `test-results/` để rà soát thủ công, không dùng baseline pixel
 
 ## Giới hạn đã biết
 
@@ -308,6 +321,6 @@ Danh mục đặt `publishable: false`. Công cụ dòng lệnh cũng chặn tr�
 - `path_selection` chống chồng lấn bằng phân tích tĩnh xấp xỉ; nhánh có `any` được bỏ qua thay vì khẳng định.
 - Không có máy chủ, tài khoản, đồng bộ đa thiết bị hoặc dữ liệu đo lường từ xa.
 - Không có chấm điểm văn bản tự do bằng trí tuệ nhân tạo.
-- Chưa có kiểm thử đầu-cuối trên trình duyệt (Playwright); các bài kiểm thử giao diện hiện chạy bằng Testing Library + happy-dom, chưa kiểm tra bố cục thật ở 360 px.
-- Gói JavaScript bản phát hành hiện khoảng 552 kB (Vite cảnh báo khối > 500 kB). Cảnh báo không chặn bản dựng.
+- Kiểm thử trình duyệt dùng Playwright chỉ kiểm tra tràn ngang, cỡ chữ và font; không có baseline pixel và chưa kiểm tra tương tác bàn phím.
+- Gói JavaScript bản phát hành hiện khoảng 557 kB (Vite cảnh báo khối > 500 kB). Font tự lưu thêm ~253 kB woff2 ở lần tải đầu (chỉ subset latin + vietnamese). Cảnh báo không chặn bản dựng.
 - Ứng dụng là mô phỏng học tập rút gọn, không phải quy trình tố tụng đầy đủ.

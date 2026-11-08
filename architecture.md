@@ -15,10 +15,12 @@ Trò chơi lập luận pháp lý tiếng Việt chạy trên trình duyệt: ng
 | Khung giao diện | React 19 + TypeScript |
 | Dựng | Vite 7 |
 | Kiểm thử | Vitest (160 bài kiểm thử, 21 tệp) + Testing Library + happy-dom |
+| Kiểm thử trình duyệt | Playwright (Chromium), đo tràn ngang và cỡ chữ ở 5 độ rộng |
 | Kiểm tra hợp lệ | Ajv 2020 + ajv-formats (lược đồ JSON bản 2020-12) |
 | Định tuyến | Bộ định tuyến hash tự viết (`#/case/<id>/<screen>`) |
 | Trạng thái | `useReducer` + lưu trữ bằng `localStorage` |
 | Giao diện | CSS tự viết (thuộc tính tuỳ chỉnh CSS, chủ đề sáng/tối) |
+| Kiểu chữ | Source Serif 4, IBM Plex Sans, IBM Plex Mono — tự lưu qua `@fontsource` |
 | Nội dung | JSON (hồ sơ, bộ văn bản luật, danh mục, mục tiêu học tập) |
 
 ### 1.3 Quyết định kiến trúc chính
@@ -36,8 +38,8 @@ Trò chơi lập luận pháp lý tiếng Việt chạy trên trình duyệt: ng
 ```
 src/
 ├── App.tsx                      # Khởi động, định tuyến, nhà cung cấp GameContext, khung ứng dụng
-├── main.tsx                     # Điểm vào
-├── styles.css                   # 2493 dòng: token thiết kế, thành phần, màn hình, thích ứng
+├── main.tsx                     # Điểm vào: nạp font tự lưu + gắn ứng dụng
+├── styles.css                   # 2606 dòng: token thiết kế, kiểu chữ, thành phần, màn hình, thích ứng
 ├── content/
 │   ├── manifest.json            # Danh mục hồ sơ, cờ chơi được/xuất bản được
 │   ├── learning-outcomes.json   # Danh mục mục tiêu học tập toàn cục
@@ -73,6 +75,9 @@ src/
     ├── setup.ts                 # Thiết lập Vitest
     ├── test-utils.tsx           # Hàm hỗ trợ hiển thị
     └── e2e-playthrough.test.ts  # Kiểm thử hành trình bộ giảm trạng thái
+e2e/
+└── typography.spec.ts           # Playwright: tràn ngang, cỡ chữ, font tiếng Việt
+playwright.config.ts             # Cấu hình Playwright + máy chủ dev
 ```
 
 ---
@@ -311,10 +316,32 @@ navigate(path): void   // gán window.location.hash
   --success: #1f6349;      --success-soft: #e8f4ee;
   --info: #2b5667;         --info-soft: #eaf2f5;
 
-  /* Kiểu chữ */
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  /* Kiểu chữ — family */
+  --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
+  --font-body: "IBM Plex Sans Variable", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Cascadia Code", Consolas, monospace;
+
+  /* Kiểu chữ — weight */
+  --weight-regular: 400;  --weight-medium: 500;
+  --weight-semibold: 600; --weight-bold: 700;
+
+  /* Kiểu chữ — thang cỡ (rem, gốc 16px) */
+  --text-display-xl: 3.5rem;   --text-display-lg: 3rem;
+  --text-h1: 2.25rem;          --text-h2: 1.875rem;
+  --text-h3: 1.5rem;           --text-h4: 1.25rem;
+  --text-case-title: 1.75rem;  --text-doc-title: 1.375rem;
+  --text-body-lg: 1.0625rem;   --text-body: 0.9375rem;
+  --text-body-sm: 0.875rem;    --text-label: 0.8125rem;
+  --text-caption: 0.75rem;     --text-micro: 0.6875rem;
+
+  /* Kiểu chữ — line height & tracking */
+  --leading-display: 1.12;  --leading-h1: 1.2;  --leading-h2: 1.25;
+  --leading-h3: 1.3;        --leading-h4: 1.35;
+  --leading-body: 1.65;     --leading-legal: 1.75;
+  --leading-compact: 1.4;   --leading-table: 1.5;
+  --tracking-display: -0.035em; --tracking-heading: -0.02em;
+  --tracking-normal: 0;         --tracking-label: 0.06em;
+  --tracking-mono: 0.01em;
 
   /* Khoảng cách / Bo góc / Đổ bóng */
   --radius: 14px;  --radius-sm: 9px;
@@ -325,6 +352,8 @@ navigate(path): void   // gán window.location.hash
 ```
 
 **Chế độ tối**: `[data-theme="dark"]` ghi đè toàn bộ màu + nền chuyển sắc.
+
+**Kiểu chữ**: ba vai trò — display (Source Serif 4), interface (IBM Plex Sans), data (IBM Plex Mono). Ngưỡng cỡ chữ nhỏ nhất là 11px và chỉ dùng cho metadata. Chi tiết quy tắc, bảng mapping và kiểm chứng nằm ở `docs/typography.md`.
 
 ### 6.2 Thành phần bố cục cơ bản
 
@@ -492,11 +521,26 @@ navigate(path): void   // gán window.location.hash
 npm test              # Toàn bộ kiểm thử
 npm run test:watch    # Chế độ theo dõi
 npm run test:corpus   # Bộ dữ liệu lược đồ 2.1.0 + bộ kiểm tra ngữ nghĩa
+npm run test:e2e      # Kiểm thử trình duyệt bằng Playwright (Chromium)
 npm run lint:content  # Kiểm tra nháp
 npm run lint:content -- --publish  # Cổng xuất bản
 npm run build         # Dựng trước (kiểm tra nháp) + tsc --noEmit + vite build
 npm run check         # Kiểm tra nháp + kiểm thử + dựng
 ```
+
+### 9.3 Kiểm thử trình duyệt (`e2e/typography.spec.ts`)
+
+Playwright chạy trên Chromium với máy chủ dev do `playwright.config.ts` tự khởi động. Bảy bài kiểm thử:
+
+| Bài kiểm thử | Nội dung |
+|---|---|
+| Không tràn ngang, sáng/tối | 5 độ rộng (360, 390, 768, 1024, 1440) × 7 màn hình; `scrollWidth` không vượt `clientWidth` quá 1px |
+| Sàn cỡ chữ, sáng/tối | Không phần tử văn bản hiển thị nào dưới 11px (bỏ qua `.sr-only` và phần tử ẩn) |
+| Thang chữ theo breakpoint | body 15px; hero 56/38/34px; tiêu đề hồ sơ 28/23px |
+| Font tiếng Việt | `document.fonts.check` với dấu kết hợp; computed family chứa đúng tên font tự lưu |
+| Ảnh chụp | 3 độ rộng × 3 màn hình × 2 chế độ, lưu vào `test-results/` để rà soát thủ công |
+
+Ảnh chụp **không** dùng làm baseline pixel; mục tiêu là phát hiện tràn bố cục và kiểm tra glyph tiếng Việt.
 
 ---
 
@@ -504,17 +548,18 @@ npm run check         # Kiểm tra nháp + kiểm thử + dựng
 
 | Lĩnh vực | Vấn đề |
 |------|-------|
-| **Kích thước gói** | ~552 KB JavaScript (Vite cảnh báo: khối > 500 KB) — không tách mã |
+| **Kích thước gói** | ~557 KB JavaScript (Vite cảnh báo: khối > 500 KB) — không tách mã |
+| **Tải font** | ~253 KB woff2 (latin + vietnamese) ở lần tải đầu; các subset cyrillic/greek không được tải |
 | **Nội dung nháp** | case_001 còn chỗ chưa xác minh, thiếu dòng chứng minh cho `element_b_01`, `issue_03` không có gợi ý, phần giải thích không dùng |
 | **Chồng lấn đường đáp án** | `conclusion_insufficient` + tự đánh giá `supported` → không khớp đường nào (chỉ có chẩn đoán) |
 | **Chọn đường đáp án** | Kiểm tra chồng lấn loại trừ dùng xấp xỉ tĩnh; bỏ qua nhánh `any` |
 | **Không có máy chủ** | Không đồng bộ, không tài khoản, không dữ liệu đo lường từ xa |
 | **Không chấm điểm bằng trí tuệ nhân tạo** | Không hỗ trợ câu trả lời văn bản tự do |
-| **Không có kiểm thử đầu-cuối trên trình duyệt** | Kiểm thử dùng happy-dom (không kiểm tra bố cục thật); Playwright chưa được cấu hình |
+| **Kiểm thử trình duyệt** | Playwright chỉ kiểm tra tràn ngang, cỡ chữ và font; không có baseline pixel, không kiểm tra tương tác bàn phím |
 | **Một hồ sơ duy nhất** | Toàn bộ kiểm thử/kiểm tra chỉ dựa trên case_001 |
-| **Chế độ tối** | Đã triển khai nhưng chưa kiểm thử đầy đủ trên mọi màn hình |
+| **Chế độ tối** | Đã kiểm tra 7 màn hình ở 5 độ rộng; modal và trạng thái lỗi lưu trữ chưa phủ |
 | **Bảng kiểu in** | Chưa triển khai (Feedback/Notebook có thể cần in) |
-| **Giảm chuyển động** | Chưa tôn trọng `prefers-reduced-motion` |
+| **Giảm chuyển động** | Đã tôn trọng `prefers-reduced-motion`; chưa kiểm tra trên thiết bị thật |
 
 ---
 
@@ -560,7 +605,9 @@ npm run check         # Kiểm tra nháp + kiểm thử + dựng
 | `src/ui/components.tsx` | 409 | Thư viện thành phần dùng chung |
 | `src/ui/labels.ts` | 230 | Toàn bộ nhãn hiển thị + bộ định dạng |
 | `src/ui/screens/*.tsx` | 12 tệp | 12 thành phần màn hình |
-| `src/styles.css` | 2493 | Hệ thống thiết kế đầy đủ |
+| `src/styles.css` | 2606 | Hệ thống thiết kế đầy đủ + token kiểu chữ |
+| `e2e/typography.spec.ts` | 155 | Kiểm thử trình duyệt: tràn ngang, cỡ chữ, font tiếng Việt |
+| `playwright.config.ts` | 20 | Cấu hình Playwright và máy chủ dev |
 | `src/content/cases/case_001.json` | ~1500 | Nội dung hồ sơ nháp |
 | `src/content/laws/law_bundle_v1.json` | ~100 | Bộ văn bản luật |
 | `src/content/manifest.json` | ~50 | Danh mục hồ sơ |
@@ -580,6 +627,7 @@ npm run dev
 npm test                 # Toàn bộ 160 bài kiểm thử
 npm run test:watch       # Chế độ theo dõi
 npm run test:corpus      # Lược đồ + bộ kiểm tra ngữ nghĩa
+npm run test:e2e         # Playwright: bố cục, cỡ chữ, font tiếng Việt
 
 # Kiểm tra nội dung
 npm run lint:content     # Chế độ nháp (0 lỗi, 7 cảnh báo)
